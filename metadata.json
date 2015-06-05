@@ -1,7 +1,7 @@
 {
-  "name": "puppet-aptly",
-  "version": "0.1.0",
-  "author": "Tubemogul Inc.",
+  "name": "TubeMogul-aptly",
+  "version": "1.0.0",
+  "author": "TubeMogul Inc.",
   "summary": "Module to manage aptly installations and configurations",
   "license": "Apache-2.0",
   "source": "git@github.com:tubemogul/puppet-aptly.git",

@@ -1,6 +1,2 @@
-2015-05-09 Release 0.1.1
-- Updating the module to work with the new version 2.0.x of the puppetlabs-apt
-  module
-2015-02-12 Release 0.1.0
-- Creating the initial module
-- Creating the initial spec tests
+2015-06-05 Release 1.0.0
+- Initial public release
