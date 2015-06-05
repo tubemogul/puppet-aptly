@@ -1,0 +1,30 @@
+{
+  "name": "puppet-aptly",
+  "version": "0.1.0",
+  "author": "Tubemogul Inc.",
+  "summary": "Module to manage aptly installations and configurations",
+  "license": "Apache-2.0",
+  "source": "git@github.com:tubemogul/puppet-aptly.git",
+  "project_page": "https://github.com/tubemogul/puppet-aptly",
+  "issues_url": "https://github.com/tubemogul/puppet-aptly/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem":
+      "Ubuntu",
+      "operatingsystemrelease":
+      [
+        "14.04"
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 1.0.0"
+    },
+    {
+      "name": "puppetlabs-apt",
+      "version_requirement": ">= 2.0.0"
+    }
+  ]
+}

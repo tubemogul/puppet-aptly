@@ -1,0 +1,51 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          aptly
+# Required-Start:    $network $named $remote_fs $syslog
+# Required-Stop:     $network $named $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+### END INIT INFO 
+
+. /lib/lsb/init-functions
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+NAME=aptly
+DESC="Aptly service"
+PIDFILE=/var/run/${NAME}.pid
+DAEMON=/usr/bin/aptly
+DAEMON_OPTS="serve --listen=\":80\""
+DAEMON_USER=<%=@user%>
+
+[ -f /etc/default/${NAME} ] && . /etc/default/${NAME}
+
+set -e
+
+case "$1" in
+    start)
+        log_daemon_msg "Starting $DESC: "
+        start-stop-daemon --start --user ${DAEMON_USER} --chuid ${DAEMON_USER} \
+             --quiet -b -m --pidfile $PIDFILE \
+            --exec $DAEMON -- $DAEMON_OPTS
+        log_end_msg $?
+        ;;
+    stop)
+        log_daemon_msg "Stopping $DESC: "
+        start-stop-daemon --stop --user ${DAEMON_USER} --quiet --oknodo --pidfile $PIDFILE
+        log_end_msg $?
+        rm -f $PIDFILE
+        ;;
+    restart|force-reload)
+        $0 stop
+        $0 start
+        ;;
+    status)
+        status_of_proc -p $PIDFILE $DAEMON $NAME && exit 0 || exit $?
+        ;;
+    *)
+        echo "Usage: service $NAME {start|stop|restart|status}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
