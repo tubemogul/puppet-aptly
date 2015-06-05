@@ -79,7 +79,7 @@ puppet module install tubemogul/aptly
 
 Basic usage example:
 ```
-class { 'stdlib': } -> class { 'aptly': }
+class { 'aptly': }
 ```
 
 NOTE: this will also install the official aptly repo in your sources.list.d.
