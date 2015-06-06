@@ -66,7 +66,7 @@ class aptly::install {
   }
 
   package { 'aptly':
-    ensure   => "${aptly::version}",
+    ensure   => $aptly::version,
   }
 
   file{ '/etc/init.d/aptly':
