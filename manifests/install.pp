@@ -42,16 +42,16 @@ class aptly::install {
         include 'apt'
 
         apt::source { 'aptly':
-          location    => $aptly::repo_location,
-          release     => $aptly::repo_release,
-          repos       => $aptly::repo_repos,
-          key         => {
-            id        => $aptly::repo_key,
-            server    => $aptly::repo_keyserver,
+          location => $aptly::repo_location,
+          release  => $aptly::repo_release,
+          repos    => $aptly::repo_repos,
+          key      => {
+            id     => $aptly::repo_key,
+            server => $aptly::repo_keyserver,
           },
-          include     => {
-            src       => false,
-            deb       => true,
+          include  => {
+            src => false,
+            deb => true,
           },
         }
 
@@ -66,7 +66,7 @@ class aptly::install {
   }
 
   package { 'aptly':
-    ensure   => "${aptly::version}",
+    ensure   => $aptly::version,
   }
 
   file{ '/etc/init.d/aptly':
