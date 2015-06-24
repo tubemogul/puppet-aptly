@@ -1,5 +1,12 @@
+# Aptly Puppet module
+
 [![TravisBuild](https://travis-ci.org/tubemogul/puppet-aptly.svg?branch=master)](https://travis-ci.org/tubemogul/puppet-aptly.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/tubemogul/puppet-aptly/badge.svg)](https://coveralls.io/r/tubemogul/puppet-aptly)
+
+Puppet forge statistics:
+[![Puppet Forge downloads](https://img.shields.io/puppetforge/dt/TubeMogul/aptly.svg)](https://forge.puppetlabs.com/TubeMogul/aptly)
+[![Puppet Forge latest release](https://img.shields.io/puppetforge/v/TubeMogul/aptly.svg)](https://forge.puppetlabs.com/TubeMogul/aptly)
+[![Puppet Forge score](https://img.shields.io/puppetforge/f/TubeMogul/aptly.svg)](https://forge.puppetlabs.com/TubeMogul/aptly)
 
 #### Table of Contents
 
