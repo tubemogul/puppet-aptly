@@ -1,2 +1,8 @@
+2015-XX-XX Release 1.0.2
+- Cleaning up the different supported versions
+- Dropping the support for version 2.7 as not supported by the dependencies
+(puppetlabs/apt module)
+2015-06-06 Release 1.0.1
+- Cleanup code quality warnings
 2015-06-05 Release 1.0.0
 - Initial public release

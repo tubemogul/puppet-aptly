@@ -19,8 +19,10 @@ It has been tested and used in production with:
 
  * Puppet 3.7 on Ubuntu 14.04 (trusty)
 
-It doesn't use the hiera automatic lookup functionnality of Puppet 3 to be
-compatible with Puppet 2.7 (not fully tested against it tho).
+The spec tests pass against puppet 3.{2,3,4,5,6,7} including the future parser.
+
+We had to drop the compatibility with Puppet 2.7 as we are using puppetlabs/apt
+module version >= 2.x which is not compatible with this version of Puppet.
 
 ## Module Description
 
@@ -95,3 +97,4 @@ There are still some work to do on this module including:
  * write acceptance tests
  * write smoke tests
  * test the module against other platforms
+ * test against puppet 4
