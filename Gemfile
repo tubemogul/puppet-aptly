@@ -21,3 +21,7 @@ group :system_tests do
   gem "beaker"
   gem "beaker-rspec"
 end
+
+if ENV['COVERAGE'] == 'yes'
+  gem 'coveralls', :require => false
+end

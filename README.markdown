@@ -1,3 +1,6 @@
+[![TravisBuild](https://travis-ci.org/tubemogul/puppet-aptly.svg?branch=master)](https://travis-ci.org/tubemogul/puppet-aptly.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/tubemogul/puppet-aptly/badge.svg)](https://coveralls.io/r/tubemogul/puppet-aptly)
+
 #### Table of Contents
 
 1. [Overview](#overview)
