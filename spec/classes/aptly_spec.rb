@@ -301,8 +301,8 @@ describe 'aptly', :type => :class do
         :lsbdistid       => lsbdistid,
         :lsbdistcodename => lsbdistcodename,
       }}
-      it { should create_file('/etc/aptly.conf').with_content(/"bucket":"repo",/) }
-      it { should create_file('/etc/aptly.conf').with_content(/"region":"us-east-1",/) }
+      it { should create_file('/etc/aptly.conf').with_content(/"bucket":"repo"/) }
+      it { should create_file('/etc/aptly.conf').with_content(/"region":"us-east-1"/) }
     end
 
     # Testing the service
