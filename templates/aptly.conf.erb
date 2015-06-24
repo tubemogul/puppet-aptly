@@ -1,10 +1,10 @@
 {
-  "rootDir": "<%= @rootDir -%>",
-  "architectures": ["<%= @config_arch.join('", "') %>"],
-  <% @config_props.each do |k, v| -%>
+  "rootDir": "<%= scope.lookupvar('aptly::rootDir') -%>",
+  "architectures": ["<%= scope.lookupvar('aptly::config_arch').join('", "') %>"],
+  <% scope.lookupvar('aptly::config_props').each do |k, v| -%>
     "<%=k -%>": <%=v%>,
   <% end -%>
-  "ppaDistributorID": "<%=@ppa_dist%>",
-  "ppaCodename": "<%=@ppa_codename%>",
-  "S3PublishEndpoints": <%= @s3publishpson.to_pson -%>
+  "ppaDistributorID": "<%= scope.lookupvar('aptly::ppa_dist') %>",
+  "ppaCodename": "<%= scope.lookupvar('aptly::ppa_codename') %>",
+  "S3PublishEndpoints": <%= scope.lookupvar('aptly::s3publishpson').to_pson %>
 }
