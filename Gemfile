@@ -5,7 +5,6 @@ group :test do
   gem "puppet", ENV['PUPPET_VERSION'] || '~> 3.7.0'
   gem "rspec-core", '< 3.2' if RUBY_VERSION < '1.9'
   gem "rspec-puppet", :git => 'https://github.com/rodjek/rspec-puppet.git'
-    gem "rspec"
   gem "puppetlabs_spec_helper"
   gem "metadata-json-lint"
 end

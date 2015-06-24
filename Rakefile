@@ -1,5 +1,8 @@
+require 'puppet/version'
+# Does not work with Puppet <= 3.5
+# Seems the same error as: https://github.com/maestrodev/puppet-blacksmith/issues/14
+require 'puppet/vendor/semantic/lib/semantic' unless Puppet.version.to_f <3.6
 require 'puppetlabs_spec_helper/rake_tasks'
-require 'puppet/vendor/semantic/lib/semantic'
 require 'puppet-lint/tasks/puppet-lint'
 require 'puppet-syntax/tasks/puppet-syntax'
 
