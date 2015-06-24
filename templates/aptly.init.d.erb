@@ -15,7 +15,7 @@ DESC="Aptly service"
 PIDFILE=/var/run/${NAME}.pid
 DAEMON=/usr/bin/aptly
 DAEMON_OPTS="serve --listen=\":80\""
-DAEMON_USER=<%=@user%>
+DAEMON_USER=<%= scope.lookupvar('aptly::user') %>
 
 [ -f /etc/default/${NAME} ] && . /etc/default/${NAME}
 

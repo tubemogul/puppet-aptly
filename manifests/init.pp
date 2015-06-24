@@ -123,8 +123,8 @@ class aptly (
     $user,
     $group,
     $rootDir)
-  validate_re($uid, '^[0-9]+$')
-  validate_re($gid, '^[0-9]+$')
+  if ! is_integer($uid) { fail("invalid ${uid} provided") }
+  if ! is_integer($gid) { fail("invalid ${gid} provided") }
   validate_re($repo_key, '^[A-F0-9]+$')
   validate_bool(
     $install_repo,
