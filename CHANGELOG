@@ -1,6 +1,8 @@
-2015-XX-XX Release 1.0.2
+2015-07-03 Release 1.0.2
+- Adding CI public tools integration
 - Cleaning up the different supported versions
 - Dropping the support for version 2.7 as not supported by the dependencies
+- Updating the dependecies list in metdata.json
 (puppetlabs/apt module)
 2015-06-06 Release 1.0.1
 - Cleanup code quality warnings
