@@ -10,9 +10,21 @@ class aptly::service {
     false => 'stopped',
   }
 
+  $api_ensure = $aptly::enable_api ? {
+    true  => 'running',
+    false => 'stopped',
+  }
+
   service { 'aptly':
     ensure     => $svc_ensure,
     enable     => $aptly::enable_service,
+    hasstatus  => true,
+    hasrestart => true,
+  }
+
+  service { 'aptly-api':
+    ensure     => $api_ensure,
+    enable     => $aptly::enable_api,
     hasstatus  => true,
     hasrestart => true,
   }

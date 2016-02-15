@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe 'aptly', :type => :class do
   [['Debian', 'ubuntu', 'trusty'], ['Debian', 'debian', 'jessie']].each do |osfamily, lsbdistid, lsbdistcodename|
+    let(:facts) {{
+      :osfamily        => osfamily,
+      :lsbdistid       => lsbdistid,
+      :lsbdistcodename => lsbdistcodename,
+    }}
     context 'default installation with installation repo on supported os' do
       describe "aptly class without any parameters on #{osfamily}" do
         let(:params) {{ }}
-        let(:facts) {{
-          :osfamily        => osfamily,
-          :lsbdistid       => lsbdistid,
-          :lsbdistcodename => lsbdistcodename,
-        }}
 
         it { is_expected.to compile.with_all_deps }
 
@@ -26,11 +26,6 @@ describe 'aptly', :type => :class do
     context 'default params on supported os - testing child classes' do
       describe "aptly class with all default parameters on #{osfamily}" do
         let(:params) {{ }}
-        let(:facts) {{
-          :osfamily        => osfamily,
-          :lsbdistid        => lsbdistid,
-          :lsbdistcodename => lsbdistcodename,
-        }}
 
         ###
         # aptly::installed
@@ -128,11 +123,6 @@ describe 'aptly', :type => :class do
           :config_filepath => '/home/aptly/.aptly.cfg',
           :rootDir         => '/aptly',
         }}
-        let(:facts) {{
-          :osfamily        => osfamily,
-          :lsbdistid       => lsbdistid,
-          :lsbdistcodename => lsbdistcodename,
-        }}
 
         it { is_expected.to contain_package('aptly').with_ensure('installed').with_provider('apt') }
         it { is_expected.not_to contain_class('apt') }
@@ -200,11 +190,6 @@ describe 'aptly', :type => :class do
             :repo_keyserver => 'my.internal.keyserver',
             :repo_key       => 'ABC12345',
           }}
-          let(:facts) {{
-            :osfamily        => osfamily,
-            :lsbdistid       => lsbdistid,
-            :lsbdistcodename => lsbdistcodename,
-          }}
 
           it { is_expected.to contain_package('aptly').with_ensure('0.0.1').with_provider('apt') }
           it { is_expected.to contain_class('apt') }
@@ -261,21 +246,11 @@ describe 'aptly', :type => :class do
     # Testing the parameters related to the config
     context 'limiting to specific architectures' do
       let(:params) {{ :config_arch => ['amd64', 'i386'] }}
-      let(:facts) {{
-        :osfamily        => osfamily,
-        :lsbdistid       => lsbdistid,
-        :lsbdistcodename => lsbdistcodename,
-      }}
       it { should create_file('/etc/aptly.conf').with_content(/"architectures": \["amd64", "i386"\],/) }
     end
 
     context 'using custom config properties' do
       let(:params) {{ :config_props => { 'gpgDisableVerify' => 'true', } }}
-      let(:facts) {{
-        :osfamily        => osfamily,
-        :lsbdistid       => lsbdistid,
-        :lsbdistcodename => lsbdistcodename,
-      }}
       it { should create_file('/etc/aptly.conf').with_content(/"gpgDisableVerify": true,/) }
       # Should not have the default values
       it { should_not create_file('/etc/aptly.conf').with_content(/"gpgDisableSign": false,/) }
@@ -296,11 +271,6 @@ describe 'aptly', :type => :class do
         }
       }
       }}
-      let(:facts) {{
-        :osfamily        => osfamily,
-        :lsbdistid       => lsbdistid,
-        :lsbdistcodename => lsbdistcodename,
-      }}
       it { should create_file('/etc/aptly.conf').with_content(/"bucket":"repo"/) }
       it { should create_file('/etc/aptly.conf').with_content(/"region":"us-east-1"/) }
     end
@@ -308,12 +278,6 @@ describe 'aptly', :type => :class do
     # Testing the service
     context 'enabling the service' do
       let(:params) {{ :enable_service => true }}
-      let(:facts) {{
-        :osfamily        => osfamily,
-        :lsbdistid       => lsbdistid,
-        :lsbdistcodename => lsbdistcodename,
-      }}
-
       it { should create_class('aptly::service') }
       it do
         should create_service('aptly')\
@@ -326,12 +290,6 @@ describe 'aptly', :type => :class do
 
     context 'Disable the service' do
       let(:params) {{ :enable_service => false }}
-      let(:facts) {{
-        :osfamily        => osfamily,
-        :lsbdistid       => lsbdistid,
-        :lsbdistcodename => lsbdistcodename,
-      }}
-
       it { should create_class('aptly::service') }
       it do
         should create_service('aptly')\
@@ -340,6 +298,16 @@ describe 'aptly', :type => :class do
           .with_hasstatus('true')\
           .with_hasrestart('true')
       end
+    end
+    context 'Uncorrect API Bind IP address' do
+      let(:params) {{ :api_bind => 'I_AM_A_BAD_IP' }}
+      it { should raise_error(Puppet::Error, /API Bind IP address is not correct/)}
+    end
+    context 'Enable API service' do
+      let(:params)  {{ :enable_api => true }}
+      it { should contain_service('aptly-api')\
+        .with_ensure('running')
+      }
     end
   end
 
@@ -378,7 +346,8 @@ describe 'aptly', :type => :class do
 
         let(:params) {{ :version => 'installed', :install_repo => false }}
         it { expect(Puppet::Util::Warnings.send('warnonce', "Module aptly not tested against #{os}")) }
-        it { is_expected.to contain_package('aptly').with_ensure('installed') }
+        it { should contain_file('/etc/init.d/aptly-api') }
+        it { should contain_package('aptly').with_ensure('installed') }
       end
     end
   end
