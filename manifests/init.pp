@@ -99,6 +99,10 @@
 #   Binding address for the Aptly API service.
 #   Default : 0.0.0.0
 #
+# [*api_nolock*]
+#   If true, the API service will not lock the database
+#   Default : false
+#
 class aptly (
   $version         = hiera('aptly::version', 'installed'),
   $install_repo    = hiera('aptly::install_repo', true),
@@ -134,6 +138,7 @@ class aptly (
   $enable_api      = hiera('aptly::enable_api', false),
   $api_port        = hiera('aptly::api_port', 8080),
   $api_bind        = hiera('aptly::api_bind', '0.0.0.0'),
+  $api_nolock      = hiera('aptly::api_nolock', false),
 ) {
 
   validate_string(
@@ -154,7 +159,8 @@ class aptly (
   validate_bool(
     $install_repo,
     $enable_service,
-    $enable_api)
+    $enable_api,
+    $api_nolock)
   validate_array($config_arch)
   validate_hash($config_props)
   validate_hash($s3publishpson)

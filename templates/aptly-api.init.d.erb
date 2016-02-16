@@ -14,7 +14,7 @@ NAME=aptly-api
 DESC="Aptly API service"
 PIDFILE=/var/run/${NAME}.pid
 DAEMON=/usr/bin/aptly
-DAEMON_OPTS="api serve --listen=<%= scope.lookupvar('aptly::api_bind') %>:<%= scope.lookupvar('aptly::api_port') %>"
+DAEMON_OPTS="api serve <%= @api_opts %>"
 DAEMON_USER=<%= scope.lookupvar('aptly::user') %>
 
 [ -f /etc/default/${NAME} ] && . /etc/default/${NAME}

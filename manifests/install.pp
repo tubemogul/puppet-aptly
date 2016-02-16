@@ -77,6 +77,13 @@ class aptly::install {
     group   => 'root',
   }
 
+  $nolock = $aptly::api_nolock ? {
+    true  => '--no-lock-true',
+    false => '',
+  }
+
+  $api_opts = "--listen ${aptly::api_bind}:${aptly::api_port} ${nolock}"
+
   file{ '/etc/init.d/aptly-api':
     ensure  => present,
     content => template('aptly/aptly-api.init.d.erb'),
