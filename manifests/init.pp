@@ -103,6 +103,10 @@
 #   If true, the API service will not lock the database
 #   Default : false
 #
+# [*mirrors*]
+#   Hash of the mirrors to create.
+#   Defaults to empty.
+
 class aptly (
   $version         = hiera('aptly::version', 'installed'),
   $install_repo    = hiera('aptly::install_repo', true),
@@ -139,6 +143,7 @@ class aptly (
   $api_port        = hiera('aptly::api_port', 8080),
   $api_bind        = hiera('aptly::api_bind', '0.0.0.0'),
   $api_nolock      = hiera('aptly::api_nolock', false),
+  $mirrors         = hiera('aptly::mirrors', {}),
 ) {
 
   validate_string(
@@ -164,6 +169,7 @@ class aptly (
   validate_array($config_arch)
   validate_hash($config_props)
   validate_hash($s3publishpson)
+  validate_hash($mirrors)
   validate_integer(
     $port,
     $api_port
@@ -183,4 +189,6 @@ class aptly (
   class { 'aptly::config':  } ~>
   class { 'aptly::service': } ->
   Class['::aptly']
+
+  create_resources('aptly::mirror', $mirrors)
 }
