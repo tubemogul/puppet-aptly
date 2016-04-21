@@ -5,7 +5,7 @@
 #
 define aptly::mirror (
   $location,
-  $ensure        = 'created',
+  $ensure        = 'present',
   $distribution  = $::lsbdistcodename,
   $architectures = [],
   $components    = [],
