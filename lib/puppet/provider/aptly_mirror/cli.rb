@@ -7,9 +7,9 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
   def create
     Puppet.info("Creating Aptly Mirror #{name}")
 
-    opts = "--architectures #{resource[:architectures].join(',')}"
+    opts = "--architectures #{resource[:architectures].join(',')} -with-sources=#{resource[:with_sources]} -with-udebs=#{resource[:with_udebs]}"
 
-    cmd = "aptly #{opts} mirror create #{name} #{resource[:archive_url]}"
+    cmd = "aptly #{opts} mirror create #{name} #{resource[:location]}"
     cmd += " #{resource[:distribution]} #{resource[:components].join(' ')}"
     run_cmd cmd
 
