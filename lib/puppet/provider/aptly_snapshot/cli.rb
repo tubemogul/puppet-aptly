@@ -1,35 +1,37 @@
 require 'puppet/provider'
+require 'net/http'
+require 'uri'
 
-Puppet::Type.type(:aptly_mirror).provide(:cli) do
+Puppet::Type.type(:aptly_snapshot).provide(:cli) do
 
   mk_resource_methods
 
   def create
-    Puppet.info("Creating Aptly Mirror #{name}")
+    Puppet.info("Creating Aptly Snapshot #{name} from a #{resource[:source_type]}")
 
-    opts = "--architectures #{resource[:architectures].join(',')}"
-
-    cmd = "aptly #{opts} mirror create #{name} #{resource[:archive_url]}"
-    cmd += " #{resource[:distribution]} #{resource[:components].join(' ')}"
-    run_cmd cmd
-
-    if resource[:update]
-      run_cmd "aptly mirror update #{name}"
+    from = case resource[:source_type]
+    when 'mirror'
+      'from mirror'
+    when 'repository'
+      'from repo'
+    when 'empty'
+      'empty'
+    else
+      raise Puppet::error "#{resource[:source_type]} is not supported"
     end
+
+    run_cmd "aptly snapshot create #{name} #{from} #{resource[:source_name]}"
   end
 
   def destroy
-    Puppet.info("Destroying Aptly Mirror #{name}")
-
-    optsforce = resource[:force] ? '-force' : ''
-
-    run_cmd "aptly mirror drop #{optsforce} #{name}"
+    Puppet.info("Destroying Aptly Snapshot #{name}")
+    run_cmd "aptly snapshot drop #{name}"
   end
 
   def exists?
     Puppet.debug("Check if #{name} exists")
     run_cmd_no_exception(
-      "aptly mirror show #{name}"
+      "aptly snapshot show #{name}"
     ) !~ /^ERROR/
   end
 
