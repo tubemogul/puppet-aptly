@@ -11,7 +11,13 @@ Puppet::Type.newtype(:aptly_mirror) do
   end
 
   newparam(:force, :boolean => true, :parent => Puppet::Parameter::Boolean) do
-    desc ""
+    desc "Force to delete the Apt mirror"
+    defaultto true
+  end
+
+  newparam(:update, :boolean => true, :parent => Puppet::Parameter::Boolean) do
+    desc "Automatically update the Apt mirror after the creation"
+    defaultto true
   end
 
   newproperty(:archive_url) do
