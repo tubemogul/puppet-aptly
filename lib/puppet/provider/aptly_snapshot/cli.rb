@@ -40,7 +40,7 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
   def run_cmd_no_exception(cmd)
     #TODO: find a better way to handle command with errors
     begin
-      result = Puppet::Util::Execution.execute([cmd])
+      result = Puppet::Util::Execution.execute([cmd], {:combine => true})
     rescue
       result
     end
