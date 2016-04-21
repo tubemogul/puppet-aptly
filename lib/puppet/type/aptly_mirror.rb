@@ -20,7 +20,7 @@ Puppet::Type.newtype(:aptly_mirror) do
     defaultto true
   end
 
-  newproperty(:archive_url) do
+  newproperty(:location) do
     desc "The URL for the source Debian repository"
     validate do |value|
       unless value.instance_of? String
@@ -47,6 +47,18 @@ Puppet::Type.newtype(:aptly_mirror) do
   newproperty(:architectures, :array_matching => :all) do
     desc ""
     defaultto :undef
+  end
+
+  newproperty(:with_sources) do
+    desc "Mirror Sources"
+    defaultto :false
+    newvalues(:true, :false)
+  end
+
+  newproperty(:with_udebs) do
+    desc "Download .udeb packages"
+    defaultto :false
+    newvalues(:true, :false)
   end
 
 end
