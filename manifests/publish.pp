@@ -13,5 +13,6 @@ define aptly::publish (
   aptly_publish { $source_name:
     ensure      => $ensure,
     source_type => $source_type,
+    notify      => Class['aptly::service'],
   }
 }
