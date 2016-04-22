@@ -24,6 +24,7 @@ define aptly::mirror (
   validate_re($location, ['\Ahttps?:\/\/', '\Aftp:\/\/', '\A\/\w+'])
 
   aptly_mirror { $name:
+    ensure        => $ensure,
     location      => $location,
     distribution  => $distribution,
     architectures => $architectures,
