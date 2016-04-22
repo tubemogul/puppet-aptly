@@ -143,7 +143,6 @@ class aptly (
   $api_port        = hiera('aptly::api_port', 8080),
   $api_bind        = hiera('aptly::api_bind', '0.0.0.0'),
   $api_nolock      = hiera('aptly::api_nolock', false),
-  $mirrors         = hiera('aptly::mirrors', {}),
 ) {
 
   validate_string(
@@ -189,6 +188,4 @@ class aptly (
   class { 'aptly::config':  } ~>
   class { 'aptly::service': } ->
   Class['::aptly']
-
-  create_resources('aptly::mirror', $mirrors)
 }
