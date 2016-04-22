@@ -20,7 +20,7 @@ Puppet::Type.newtype(:aptly_mirror) do
     defaultto true
   end
 
-  newproperty(:location) do
+  newparam(:location) do
     desc "The URL for the source Debian repository"
     validate do |value|
       unless value.instance_of? String
@@ -29,7 +29,7 @@ Puppet::Type.newtype(:aptly_mirror) do
     end
   end
 
-  newproperty(:distribution) do
+  newparam(:distribution) do
     desc ""
     validate do |value|
       unless value.instance_of? String
@@ -39,23 +39,23 @@ Puppet::Type.newtype(:aptly_mirror) do
     defaultto :undef
   end
 
-  newproperty(:components, :array_matching => :all) do
+  newparam(:components, :array_matching => :all) do
     desc "List of APT Debian components requested. Example : main"
     defaultto :undef
   end
 
-  newproperty(:architectures, :array_matching => :all) do
+  newparam(:architectures, :array_matching => :all) do
     desc ""
     defaultto :undef
   end
 
-  newproperty(:with_sources) do
+  newparam(:with_sources) do
     desc "Mirror Sources"
     defaultto :false
     newvalues(:true, :false)
   end
 
-  newproperty(:with_udebs) do
+  newparam(:with_udebs) do
     desc "Download .udeb packages"
     defaultto :false
     newvalues(:true, :false)
