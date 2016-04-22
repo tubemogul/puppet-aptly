@@ -15,7 +15,7 @@ Puppet::Type.newtype(:aptly_publish) do
     defaultto true
   end
 
-  newproperty(:source_type) do
+  newparam(:source_type) do
     desc "Type of the source for the snapshot : repository or snapshot"
     validate do |value|
       sourceTypes = ['repo', 'snapshot']

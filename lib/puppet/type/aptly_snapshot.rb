@@ -15,7 +15,7 @@ Puppet::Type.newtype(:aptly_snapshot) do
     defaultto true
   end
 
-  newproperty(:source_type) do
+  newparam(:source_type) do
     desc "Type of the source for the snapshot : mirror, repo or snapshot"
     validate do |value|
       sourceTypes = ['mirror', 'repository', 'snapshot', 'empty']
@@ -25,19 +25,19 @@ Puppet::Type.newtype(:aptly_snapshot) do
     end
   end
 
-  newproperty(:source_name) do
+  newparam(:source_name) do
     desc ""
   end
 
-  newproperty(:description) do
+  newparam(:description) do
     desc ""
   end
 
-  newproperty(:snapshots) do
+  newparam(:snapshots) do
     desc ""
   end
 
-  newproperty(:package_refs) do
+  newparam(:package_refs) do
     desc ""
   end
 end
