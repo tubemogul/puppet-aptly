@@ -111,7 +111,7 @@ class aptly (
   $repo_release    = hiera('aptly::repo_release', 'squeeze'),
   $repo_repos      = hiera('aptly::repo_repos', 'main'),
   $repo_keyserver  = hiera('aptly::repo_keyserver', 'keys.gnupg.net'),
-  $repo_key        = hiera('aptly::repo_key', '9E3E53F19C7DE460'),
+  $repo_key        = hiera('aptly::repo_key', 'DF32BC15E2145B3FA151AED19E3E53F19C7DE460'),
   $enable_service  = hiera('aptly::enable_service', true),
   $port            = hiera('aptly::port', '80'),
   $bind            = hiera('aptly::bind', '0.0.0.0'),
