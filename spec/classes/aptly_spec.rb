@@ -6,6 +6,7 @@ describe 'aptly', :type => :class do
       :osfamily        => osfamily,
       :lsbdistid       => lsbdistid,
       :lsbdistcodename => lsbdistcodename,
+      :puppetversion   => Puppet.version,
     }}
     context 'default installation with installation repo on supported os' do
       describe "aptly class without any parameters on #{osfamily}" do
