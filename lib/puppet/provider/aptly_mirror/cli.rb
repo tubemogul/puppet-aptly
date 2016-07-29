@@ -1,21 +1,32 @@
 require 'puppet/provider'
 
+module_lib = Pathname.new(__FILE__).parent.parent.parent.parent
+require File.join module_lib, 'puppet_x/aptly/cli'
+
 Puppet::Type.type(:aptly_mirror).provide(:cli) do
 
   mk_resource_methods
 
   def create
-    Puppet.info("Creating Aptly Mirror #{name}")
-
-    opts = "--architectures #{[resource[:architectures]].join(',')}"
-    opts += " -with-sources=#{resource[:with_sources]} -with-udebs=#{resource[:with_udebs]}"
-
-    cmd = "aptly #{opts} mirror create #{name} #{resource[:location]}"
-    cmd += " #{resource[:distribution]} #{[resource[:components]].join(' ')}"
-    run_cmd cmd
-
     if resource[:update]
-      run_cmd "aptly mirror update #{name}"
+      Puppet.info("Updating Aptly Mirror #{name}")
+      Puppet_X::Aptly::Cli.execute(
+        object: :mirror,
+        action: 'update',
+        arguments: [ name ],
+      )
+    else
+      Puppet.info("Creating Aptly Mirror #{name}")
+      Puppet_X::Aptly::Cli.execute(
+        object: :mirror,
+        action: 'create',
+        arguments: [ name, resource[:location], resource[:distribution], [resource[:components]].join(' ')],
+        flags: {
+          'architectures' => [resource[:architectures]].join(','),
+          'with-sources'  => resource[:with_sources],
+          'with-udebs'    => resource[:with_udebs],
+        }
+      )
     end
   end
 
@@ -24,34 +35,23 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
 
     optsforce = resource[:force] ? '-force' : ''
 
-    run_cmd "aptly mirror drop #{optsforce} #{name}"
+    Puppet_X::Aptly::Cli.execute(
+      object: :mirror,
+      action: 'drop',
+      arguments: [ name ],
+      flags: { optsforce => '' }
+    )
   end
 
   def exists?
     Puppet.debug("Check if #{name} exists")
-    run_cmd_no_exception(
-      "aptly mirror show #{name}"
+
+    Puppet_X::Aptly::Cli.execute(
+      object: :mirror,
+      action: 'show',
+      arguments: [ name ],
+      exceptions: false,
     ) !~ /^ERROR/
-  end
-
-  private
-  #TODO: put that in lib/puppet_x and refactor provider
-  def run_cmd_no_exception(cmd)
-    #TODO: find a better way to handle command with errors
-    begin
-      result = Puppet::Util::Execution.execute([cmd], {:combine => true})
-    rescue
-      result
-    end
-  end
-
-  def run_cmd(cmd)
-    begin
-      Puppet::Util::Execution.execute([cmd])
-    rescue => e
-      raise Puppet::Error,
-        e.message
-    end
   end
 
 end
