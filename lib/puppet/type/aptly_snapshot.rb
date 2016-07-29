@@ -6,23 +6,19 @@ Puppet::Type.newtype(:aptly_snapshot) do
 
   ensurable
 
-  newparam(:name, namevar: true) do
+  newparam(:name, :namevar => true) do
     desc "The name of the Aptly snapshot. Example : weekly-update"
   end
 
   newparam(:force, :boolean => true, :parent => Puppet::Parameter::Boolean) do
     desc ""
-    defaultto true
+    defaultto :true
   end
 
   newparam(:source_type) do
-    desc "Type of the source for the snapshot : mirror, repo or snapshot"
-    validate do |value|
-      sourceTypes = ['mirror', 'repository', 'snapshot', 'empty']
-      unless sourceTypes.include? value
-        raise ArgumentError , "#{value} is not a valid type of source. Types : #{sourceTypes}"
-      end
-    end
+    desc "Type of the source for the snapshot : mirror, repo, snapshot or empty. Defaults to repository."
+    newvalues(:mirror, :repository, :snapshot, :empty)
+    defaultto :repository
   end
 
   newparam(:source_name) do
