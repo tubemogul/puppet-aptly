@@ -52,14 +52,14 @@ describe Puppet::Type.type(:aptly_snapshot) do
   end
 
   describe 'source_type parameter' do
-    it 'should not support value other than repo or snapshot' do
+    it 'should not support value other than predefined values' do
       expect{described_class.new({
         :name        => '20160729-global-release',
         :source_type => 'foobar',
-      })}.to raise_error(Puppet::Error, /Invalid value.*Valid values are mirror, repository, snapshot, empty\./)
+      })}.to raise_error(Puppet::Error, /Invalid value.*Valid values are mirror, repository, empty\./)
     end
 
-    [ :mirror, :repository, :snapshot, :empty ].each do |value|
+    [ :mirror, :repository, :empty ].each do |value|
       it "should accept #{value}" do
         @snap[:source_type] = value
         expect(@snap[:source_type]).to eq(value)

@@ -35,15 +35,15 @@ module Puppet_X
         flags = options.fetch(:flags,{})
 
         cmd = 'aptly '
-        cmd << flags.map{|k,v| "-#{k} #{v}"}.join(' ')
+        cmd << flags.map{|k,v| "-#{k} #{v}".strip unless v == 'undef' }.join(' ')
 
         raise Puppet::Error, "Unknown aptly object: #{object}" unless [:mirror, :repo, :snapshot, :publish, :package, :db].include? object
         cmd << " #{object} #{action} "
-        cmd << arguments.join(' ')
+        cmd << arguments.delete_if{|val| val == 'undef'}.join(' ')
 
         begin
           result = Puppet::Util::Execution.execute(cmd)
-        rescue
+        rescue => e
           raise Puppet::Error, e.message if exceptions
         end
         result

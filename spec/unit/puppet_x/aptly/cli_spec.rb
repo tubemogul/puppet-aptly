@@ -11,9 +11,6 @@ describe Puppet_X::Aptly::Cli do
       end
     end
 
-    it "should call an exec (stub here)" do
-    end
-
     describe 'object parameter' do
       [ :mirror, :repo, :snapshot, :publish, :package, :db ].each do |objname|
         it "should accept #{objname}" do

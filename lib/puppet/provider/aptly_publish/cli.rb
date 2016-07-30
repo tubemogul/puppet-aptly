@@ -31,7 +31,7 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
   def exists?
     Puppet.debug("Check if #{name} exists")
 
-    Puppet_X::Aptly::Cli.execute(object: :publish, action: 'list').include? name
+    [ Puppet_X::Aptly::Cli.execute(object: :publish, action: 'list') ].flatten.include? name
   end
 
 end

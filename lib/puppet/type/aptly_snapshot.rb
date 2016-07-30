@@ -16,8 +16,8 @@ Puppet::Type.newtype(:aptly_snapshot) do
   end
 
   newparam(:source_type) do
-    desc "Type of the source for the snapshot : mirror, repo, snapshot or empty. Defaults to repository."
-    newvalues(:mirror, :repository, :snapshot, :empty)
+    desc "Type of the source for the snapshot : mirror, repo, or empty. Defaults to repository."
+    newvalues(:mirror, :repository, :empty)
     defaultto :repository
   end
 

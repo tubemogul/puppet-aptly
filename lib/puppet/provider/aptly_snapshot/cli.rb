@@ -11,14 +11,14 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
     Puppet.info("Creating Aptly Snapshot #{name} from a #{resource[:source_type]}")
 
     from = case resource[:source_type]
-    when 'mirror'
+    when :mirror
       'from mirror'
-    when 'repository'
+    when :repository
       'from repo'
-    when 'empty'
+    when :empty
       'empty'
     else
-      raise Puppet::error "#{resource[:source_type]} is not supported"
+      raise Puppet::Error, "#{resource[:source_type]} is not supported"
     end
 
     Puppet_X::Aptly::Cli.execute(

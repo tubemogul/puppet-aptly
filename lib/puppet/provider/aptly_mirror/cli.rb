@@ -8,14 +8,7 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
   mk_resource_methods
 
   def create
-    if resource[:update]
-      Puppet.info("Updating Aptly Mirror #{name}")
-      Puppet_X::Aptly::Cli.execute(
-        object: :mirror,
-        action: 'update',
-        arguments: [ name ],
-      )
-    else
+
       Puppet.info("Creating Aptly Mirror #{name}")
       Puppet_X::Aptly::Cli.execute(
         object: :mirror,
@@ -27,13 +20,22 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
           'with-udebs'    => resource[:with_udebs],
         }
       )
+
+    if resource[:update]
+      Puppet.info("Updating Aptly Mirror #{name}")
+      Puppet_X::Aptly::Cli.execute(
+        object: :mirror,
+        action: 'update',
+        arguments: [ name ],
+      )
     end
+
   end
 
   def destroy
     Puppet.info("Destroying Aptly Mirror #{name}")
 
-    optsforce = resource[:force] ? '-force' : ''
+    optsforce = resource[:force] ? 'force' : ''
 
     Puppet_X::Aptly::Cli.execute(
       object: :mirror,
