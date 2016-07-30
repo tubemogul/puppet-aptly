@@ -6,6 +6,7 @@ describe 'aptly', :type => :class do
       :osfamily        => osfamily,
       :lsbdistid       => lsbdistid,
       :lsbdistcodename => lsbdistcodename,
+      :puppetversion   => Puppet.version,
     }}
     context 'default installation with installation repo on supported os' do
       describe "aptly class without any parameters on #{osfamily}" do
@@ -14,9 +15,9 @@ describe 'aptly', :type => :class do
         it { is_expected.to compile.with_all_deps }
 
         it { is_expected.to create_class('aptly') }
-        it { is_expected.to contain_class('aptly::install').that_comes_before('aptly::config') }
+        it { is_expected.to contain_class('aptly::install').that_comes_before('Class[aptly::config]') }
         it { is_expected.to contain_class('aptly::config') }
-        it { is_expected.to contain_class('aptly::service').that_subscribes_to('aptly::config') }
+        it { is_expected.to contain_class('aptly::service').that_subscribes_to('Class[aptly::config]') }
 
         it { is_expected.to contain_service('aptly') }
         it { is_expected.to contain_package('aptly').with_ensure('installed') }
@@ -39,7 +40,7 @@ describe 'aptly', :type => :class do
             .with_location('http://repo.aptly.info')\
             .with_release('squeeze')\
             .with_repos('main')\
-            .with_key({ 'id' => 'B6140515643C2AE155596690E083A3782A194991', 'server' => 'keys.gnupg.net' })\
+            .with_key({ 'id' => 'DF32BC15E2145B3FA151AED19E3E53F19C7DE460', 'server' => 'keys.gnupg.net' })\
             .with_include({ 'src'=>false, 'deb'=>true})\
             .that_notifies('Class[apt::update]')
 
