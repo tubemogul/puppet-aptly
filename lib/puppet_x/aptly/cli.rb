@@ -27,13 +27,18 @@ module Puppet_X
       #   execution of the command fails.
       #
       # @return [String] or an exception in case of error 
-      def execute(object = :mirror, action = '', arguments = [], flags = {}, exceptions = :true)
+      def self.execute(options = {})
+        object = options.fetch(:object, :mirror)
+        action = options.fetch(:action, '')
+        exceptions = options.fetch(:exceptions, :true)
+        arguments = options.fetch(:arguments, [])
+        flags = options.fetch(:flags,{})
 
         cmd = 'aptly '
         cmd << flags.map{|k,v| "-#{k} #{v}"}.join(' ')
 
-        raise Puppet::Error, "Unknown aptly object: #{object}" unless [:mirror, :repo, :snapshot, :publish, :package, :db].include object
-        cmd << "#{object} #{action} "
+        raise Puppet::Error, "Unknown aptly object: #{object}" unless [:mirror, :repo, :snapshot, :publish, :package, :db].include? object
+        cmd << " #{object} #{action} "
         cmd << arguments.join(' ')
 
         begin
