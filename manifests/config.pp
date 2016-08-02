@@ -1,6 +1,6 @@
 # == Class aptly::config
 #
-# This class is called from aptly for service config.
+# This class is called from the aptly class for service configuration.
 #
 class aptly::config {
 
@@ -16,7 +16,7 @@ class aptly::config {
     content => template('aptly/aptly.conf.erb'),
   }
 
-  file { $aptly::rootDir:
+  file { $aptly::root_dir:
     ensure => directory,
     mode   => '0755',
   }

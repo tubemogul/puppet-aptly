@@ -1,5 +1,7 @@
 # == Define aptly::publish
 #
+# Manages the aptly publications (of repos, mirrors and snapshots)
+#
 define aptly::publish (
   $source_type,
   $source_name = $name,

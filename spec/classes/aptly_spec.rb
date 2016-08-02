@@ -122,7 +122,7 @@ describe 'aptly', :type => :class do
           :group           => 'repogrp',
           :gid             => 666,
           :config_filepath => '/home/aptly/.aptly.cfg',
-          :rootDir         => '/aptly',
+          :root_dir        => '/aptly',
         }}
 
         it { is_expected.to contain_package('aptly').with_ensure('installed').with_provider('apt') }
@@ -246,19 +246,19 @@ describe 'aptly', :type => :class do
 
     # Testing the parameters related to the config
     context 'limiting to specific architectures' do
-      let(:params) {{ :config_arch => ['amd64', 'i386'] }}
+      let(:params) {{ :architectures => ['amd64', 'i386'] }}
       it { should create_file('/etc/aptly.conf').with_content(/"architectures": \["amd64", "i386"\],/) }
     end
 
     context 'using custom config properties' do
-      let(:params) {{ :config_props => { 'gpgDisableVerify' => 'true', } }}
+      let(:params) {{ :properties => { 'gpgDisableVerify' => 'true', } }}
       it { should create_file('/etc/aptly.conf').with_content(/"gpgDisableVerify": true,/) }
       # Should not have the default values
       it { should_not create_file('/etc/aptly.conf').with_content(/"gpgDisableSign": false,/) }
     end
 
     context 'adding an s3 publish endpoint' do
-      let(:params) {{ :s3publishpson => {
+      let(:params) {{ :s3_publish_endpoints => {
         'test' => {
           'region'             => 'us-east-1',
           'bucket'             => 'repo',

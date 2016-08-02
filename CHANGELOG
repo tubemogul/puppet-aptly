@@ -1,3 +1,13 @@
+2016-XX-XX Release 2.0.0
+- Adding documentation
+- Adding the possiblity of setting up mirrors, snapshots and publications
+directly via puppet
+- Adding the management of the API
+- The following parameters have been renamed for a better coherence:
+aptly::rootDir => aptly::root_dir (was already available with this name in hiera),
+aptly::config_arch => aptly::architectures (was already available with this name in hiera),
+aptly::config_props => aptly::properties (was already available with this name in hiera),
+aptly::s3publishpson => aptly::s3_publish_endpoints (was available under aptly::s3PublishEndpoints in hiera before)
 2015-07-03 Release 1.0.2
 - Adding CI public tools integration
 - Cleaning up the different supported versions

@@ -1,7 +1,7 @@
 # == Class aptly::service
 #
-# This class is meant to be called from aptly.
-# It ensure the service is running.
+# This class is meant to be called by the aptly class.
+# It ensure the services are in the desired state.
 #
 class aptly::service {
 
