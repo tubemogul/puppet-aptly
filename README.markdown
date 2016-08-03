@@ -14,6 +14,8 @@
     * [Setup requirements](#setup-requirements)
     * [Beginning with aptly](#beginning-with-aptly)
 4. [Usage - Configuration options and additional functionality](#usage)
+    * [Basic example](#basic-example)
+    * [Enable aptly API endpoint](#enable-aptly-api-endpoint)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
   * [Public classes and defines](#public-classes-and-defines)
   * [Private classes](#private-classes)
@@ -35,7 +37,7 @@ What is this module capable to do?
  * Install the aptly package in a specific version (or just the latest available)
  * Manage a specific user and group (with their corresponding fixed uid/gid) dedicated to the service
  * Configure a specific debian repository (optional) where to find the package
- * Manage the /etc/aptly.conf file
+ * Manage the `/etc/aptly.conf` file
  * Enable/start or disable the service
  * Enable/start or disable the API
  * Manages the init.d service file
@@ -53,15 +55,15 @@ layer in addition to this module.
 
 Files managed by the module:
 
- * /etc/aptly.conf
- * /etc/apt/sources.list.d/aptly.list (optional)
- * /etc/init.d/aptly
+ * `/etc/aptly.conf`
+ * `/etc/apt/sources.list.d/aptly.list` (optional)
+ * `/etc/init.d/aptly`
 
 ### Setup Requirements
 
 The module requires:
- - [Puppetlabs stdlib](https://github.com/puppetlabs/puppetlabs-stdlib.git)
- - [Puppetlab's APT module](https://github.com/puppetlabs/puppetlabs-apt.git) at least version 2.0.x
+ * [Puppetlabs stdlib](https://github.com/puppetlabs/puppetlabs-stdlib.git)
+ * [Puppetlab's APT module](https://github.com/puppetlabs/puppetlabs-apt.git) at least version 2.0.x
 
 ### Beginning with aptly
 
@@ -78,21 +80,76 @@ puppet module install tubemogul/aptly
 
 ## Usage
 
-Basic usage example:
-```
-class { 'aptly': }
+Those examples include the puppet-only configuration, and the corresponding
+configuration for those who use hiera (I find it more convenient for copy/paste
+of a full configuration when you have both - yes, I'm lazy ;-) ).
+
+### Basic example
+
+The default values are normally sane enough to do as few parameters overwrites
+as possible.
+
+But let's say you want:
+ * Aptly to store its data in `/data` (that you created before hand)
+ * to only have the architectures `i386` and `amd64`
+ * to have your ppa codename to be `foo`
+
+Then you just do:
+```puppet
+class { 'aptly':
+  root_dir      => '/data',
+  architectures => ['i386', 'amd64'],
+  ppa_codename  => 'foo',
+}
 ```
 
-NOTE: this will also install the official aptly repo in your sources.list.d.
+Or using hiera:
+```yaml
+---
+aptly::root_dir: /data
+aptly::architectures:
+  - i386
+  - amd64
+aptly::ppa_codename: foo
+```
+
+**NOTE:** this will also install the official aptly repo in your sources.list.d.
+
+### Enable aptly API endpoint
+
+To:
+ * enable the aptly API management
+ * make it listen on port `42000`
+ * have it listen on the private interface of your server (let's say this interface has `10.0.0.123` AS IP)
+ * have started with no-lock mode as you are doing both cli and API calls
+
+Then you can do:
+```puppet
+class { 'aptly':
+  enable_api => true,
+  api_port   => 42000,
+  api_bind   => '10.0.0.123',
+  api_nolock => true,
+}
+```
+
+Or using hiera:
+```yaml
+---
+aptly::enable_api: true
+aptly::api_port: 42000
+aptly::api_nolock: 10.0.0.123
+aptly::api_nolock: true
+```
 
 ## Reference
 
 ### Public classes and defines
 
  * [`aptly`](#class-aptly): Installs and configures the aptly server.
- * [`aptly::mirror`](#define-aptly--mirror): Manages an aptly mirror.
- * [`aptly::snapshot`](#define-aptly--snapshot): Manages an aptly snapshot.
- * [`aptly::publish`](#define-aptly--publish): Manages an aptly publication.
+ * [`aptly::mirror`](#define-aptlymirror): Manages an aptly mirror.
+ * [`aptly::snapshot`](#define-aptlysnapshot): Manages an aptly snapshot.
+ * [`aptly::publish`](#define-aptlypublish): Manages an aptly publication.
 
 ### Private classes
 
@@ -400,5 +457,12 @@ it.
 
 ## Development
 
-See the CONTRIBUTING.md file.
+We're actually nice people and we rarely bite, so you're more than welcome to
+contribute to our repos via the usual GitHub PR and issues.
+
+What we ask generally is that when you push a change or a new functionnality,
+you add the corresponding tests at the same time. You'll find a lot of tests
+examples in this repository.
+
+See the [CONTRIBUTING.md](https://github.com/tubemogul/puppet-aptly/blob/master/CONTRIBUTING.md) file for more detailed guidelines.
 
