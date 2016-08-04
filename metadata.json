@@ -1,6 +1,6 @@
 {
   "name": "TubeMogul-aptly",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "author": "TubeMogul Inc.",
   "summary": "Module to manage, install, and configure aptly, a Debian repository management tool",
   "license": "Apache-2.0",
@@ -13,7 +13,7 @@
       "Ubuntu",
       "operatingsystemrelease":
       [
-        "14.04"
+        "14.04","16.0.4"
       ]
     }
   ],
