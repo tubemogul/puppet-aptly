@@ -1,7 +1,6 @@
 # == Define aptly::mirror
 #
-# This definition is meant to be called from aptly.
-# It manages APT Mirrors.
+# Manages an apt mirror.
 #
 define aptly::mirror (
   $location,

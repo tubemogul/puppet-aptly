@@ -1,6 +1,6 @@
 # == Class aptly::install
 #
-# This class is called from aptly for install.
+# This class is called from the aptly class for installing the service.
 #
 class aptly::install {
 
