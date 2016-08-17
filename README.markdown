@@ -26,13 +26,13 @@
 
 ## Overview
 
-This module installs the [aptly](www.aptly.info) Deb package repository manager and configures it.
+This module installs the [aptly](www.aptly.info) Debian packages repository manager and configures it.
 
-Need help of want a new feature? File an issue on our github repository: https://github.com/tubemogul/puppet-maxscale/issues
+Need help of want a new feature? File an issue on our github repository: https://github.com/tubemogul/puppet-aptly/issues
 
 ## Module Description
 
-What is this module capable to do?
+What is this module capable of doing?
 
  * Install the aptly package in a specific version (or just the latest available)
  * Manage a specific user and group (with their corresponding fixed uid/gid) dedicated to the service
@@ -43,9 +43,10 @@ What is this module capable to do?
  * Manages the init.d service file
  * Manage apt mirrors, snapshots, publications
  
-The aptly service will listen on port 80 on every interfaces (configurable) using the `aptly serve -listen=":80"` command.
+The aptly service will listen on port you configure (example: 80) on every interfaces (configurable)
+using the `aptly serve -listen=":80"` command.
 
-If you want to make the repository beeing served by an apache, nginx or whatever
+If you want to make the repository being served by an apache, nginx or whatever
 else, just disable the service and setup the http server you want for the HTTP(S)
 layer in addition to this module.
 
@@ -70,15 +71,24 @@ The module requires:
 The module can be used out of the box directly, it just requires puppetlabs' apt
 module and its stdlib to be in your modulepath.
 
-To install (with all the dependencies):
+To install:
+
+```
+puppet module install TubeMogul/aptly
+```
+
+Puppet will install the dependencies automatically, but if you want to install
+the dependencies 1 by 1, you can use this before:
 
 ```
 puppet module install puppetlabs/stdlib
 puppet module install puppetlabs/apt
-puppet module install tubemogul/aptly
 ```
 
 ## Usage
+
+**WARNING:** the aptly service won't start as long as nothing has been published
+in it. It is a totally expected behavior coming from aptly itself.
 
 Those examples include the puppet-only configuration, and the corresponding
 configuration for those who use hiera (I find it more convenient for copy/paste
@@ -119,9 +129,9 @@ aptly::ppa_codename: foo
 
 To:
  * enable the aptly API management
- * make it listen on port `42000`
- * have it listen on the private interface of your server (let's say this interface has `10.0.0.123` AS IP)
- * have started with no-lock mode as you are doing both cli and API calls
+ * make the API listen on port `42000`
+ * have the API listen on the private interface of your server (let's say this interface's IP is `10.0.0.123`)
+ * have the API configured in no-lock mode as you are doing both cli and API calls
 
 Then you can do:
 ```puppet
@@ -180,7 +190,7 @@ Default: `installed`
 
 ##### `install_repo`
 
-Boolean to manage wether or not you want to have a sources.list repo
+Boolean to manage whether or not you want to have a sources.list repo
 managed by the module.
 
 Default: `true`
@@ -267,7 +277,7 @@ Default: `450`
 
 ##### `root_dir`
 
-Root directory to use as root for storing the repo data.
+Root directory to use for storing the repo data.
 
 Default: `/var/aptly`
 
@@ -379,7 +389,7 @@ Default: `[]`
 
 ##### `with_sources`
 
-Mirror the sources or not.
+Mirror the sources packages or not.
 
 Default: `false`
 
@@ -433,7 +443,7 @@ Default: `undef`
 
 ##### `ensure`
 
-Ensures if the publication must be `present` (should exist) or `absent` (or be
+Ensures that the publication is `present` (should exist) or `absent` (or should be
 destroyed).
 
 Default: `present`
