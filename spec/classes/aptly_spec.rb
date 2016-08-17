@@ -53,7 +53,8 @@ describe 'aptly', :type => :class do
             .with_mode('0744')\
             .with_owner('root')\
             .with_group('root')\
-            .with_content(/^DAEMON_USER=aptly$/)
+            .with_content(/^DAEMON_USER=aptly$/)\
+            .with_content(/-config=\\"\/etc\/aptly.conf\\"/)
         end
 
         it do
@@ -164,6 +165,11 @@ describe 'aptly', :type => :class do
             .with_mode('0644')\
             .with_owner('reposvc')\
             .with_group('repogrp')
+        end
+
+        it do
+          is_expected.to create_file('/etc/init.d/aptly')\
+            .with_content(/-config=\\"\/home\/aptly\/.aptly.cfg\\"/)
         end
 
         it do
@@ -304,10 +310,23 @@ describe 'aptly', :type => :class do
       let(:params) {{ :api_bind => 'I_AM_A_BAD_IP' }}
       it { should raise_error(Puppet::Error, /API Bind IP address is not correct/)}
     end
+
     context 'Enable API service' do
       let(:params)  {{ :enable_api => true }}
       it { should contain_service('aptly-api')\
         .with_ensure('running')
+      }
+    end
+
+    context 'Enable no-lock on the API' do
+      let(:params)  {{ :enable_api => true, :api_nolock => true }}
+      it { is_expected.to contain_service('aptly-api').with_ensure('running') }
+
+      it { is_expected.to create_file('/etc/init.d/aptly-api')\
+        .with_mode('0744')\
+        .with_owner('root')\
+        .with_group('root')\
+        .with_content(/-no-lock=true/)
       }
     end
   end
