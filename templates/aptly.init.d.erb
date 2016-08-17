@@ -14,7 +14,7 @@ NAME=aptly
 DESC="Aptly service"
 PIDFILE=/var/run/${NAME}.pid
 DAEMON=/usr/bin/aptly
-DAEMON_OPTS="serve --listen=\"<%= scope.lookupvar('aptly::bind') %>:<%= scope.lookupvar('aptly::port') %>\""
+DAEMON_OPTS="serve --listen=\"<%= scope.lookupvar('aptly::bind') %>:<%= scope.lookupvar('aptly::port') %>\" -config=\"<%= scope.lookupvar('aptly::config_filepath') %>\""
 DAEMON_USER=<%= scope.lookupvar('aptly::user') %>
 
 [ -f /etc/default/${NAME} ] && . /etc/default/${NAME}

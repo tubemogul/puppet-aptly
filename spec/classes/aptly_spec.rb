@@ -53,7 +53,8 @@ describe 'aptly', :type => :class do
             .with_mode('0744')\
             .with_owner('root')\
             .with_group('root')\
-            .with_content(/^DAEMON_USER=aptly$/)
+            .with_content(/^DAEMON_USER=aptly$/)\
+            .with_content(/-config=\\"\/etc\/aptly.conf\\"/)
         end
 
         it do
@@ -164,6 +165,11 @@ describe 'aptly', :type => :class do
             .with_mode('0644')\
             .with_owner('reposvc')\
             .with_group('repogrp')
+        end
+
+        it do
+          is_expected.to create_file('/etc/init.d/aptly')\
+            .with_content(/-config=\\"\/home\/aptly\/.aptly.cfg\\"/)
         end
 
         it do
