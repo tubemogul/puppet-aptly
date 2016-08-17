@@ -24,7 +24,8 @@ module Puppet_X
       #   For more informations about global flags, see: https://www.aptly.info/doc/aptly/flags/
       #
       # @param exceptions [bool] whether or not to raise an exception when the
-      #   execution of the command fails.
+      #   execution of the command fails. Returns the error message without
+      #   raising an exception if false and an exception occurs.
       #
       # @return [String] or an exception in case of error 
       def self.execute(options = {})
@@ -35,16 +36,18 @@ module Puppet_X
         flags = options.fetch(:flags,{})
 
         cmd = 'aptly '
-        cmd << flags.map{|k,v| "-#{k} #{v}".strip unless v == 'undef' }.join(' ')
+        cmd << flags.map{|k,v| v.to_s == '' ? "-#{k}" : "-#{k}=#{v}".strip unless v == 'undef' }.join(' ')
 
         raise Puppet::Error, "Unknown aptly object: #{object}" unless [:mirror, :repo, :snapshot, :publish, :package, :db].include? object
         cmd << " #{object} #{action} "
         cmd << arguments.delete_if{|val| val == 'undef'}.join(' ')
 
         begin
+          Puppet.debug("Executing: #{cmd}")
           result = Puppet::Util::Execution.execute(cmd)
         rescue => e
           raise Puppet::Error, e.message if exceptions
+          e.message
         end
         result
       end

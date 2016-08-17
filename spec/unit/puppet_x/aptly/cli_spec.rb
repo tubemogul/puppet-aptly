@@ -47,7 +47,7 @@ describe Puppet_X::Aptly::Cli do
           :action    => 'create',
           :arguments => [ 'debian-main', 'http://ftp.us.debian.org' ],
           :flags     => { 'architectures' => 'amd64,i386', 'ignore-signatures' => 'false' },
-        )).to eq('aptly -architectures amd64,i386 -ignore-signatures false mirror create debian-main http://ftp.us.debian.org')
+        )).to eq('aptly -architectures=amd64,i386 -ignore-signatures=false mirror create debian-main http://ftp.us.debian.org')
       end
     end
 

@@ -46,7 +46,7 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
       action: 'show',
       arguments: [ name ],
       exceptions: false,
-    ) !~ /^ERROR/
+    ) !~ /ERROR/
   end
 
 end
