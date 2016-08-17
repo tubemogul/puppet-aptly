@@ -1,3 +1,9 @@
+2016-08-17 Release 2.0.1:
+- Forcing the -config parameter on the aptly service to ensure the right config
+is taken
+- Fixing the declaration of the no-lock flag in the aptly-api service making the
+API not start when no-lock was enable
+- Fix some issues in the documentation
 2016-08-04 Release 2.0.0
 - Adding documentation
 - Adding the possiblity of setting up mirrors, snapshots and publications
