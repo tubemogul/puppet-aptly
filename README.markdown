@@ -16,6 +16,7 @@
 4. [Usage - Configuration options and additional functionality](#usage)
     * [Basic example](#basic-example)
     * [Enable aptly API endpoint](#enable-aptly-api-endpoint)
+    * [Create an apt mirror](#create-an-apt-mirror)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
   * [Public classes and defines](#public-classes-and-defines)
   * [Private classes](#private-classes)
@@ -150,6 +151,90 @@ aptly::enable_api: true
 aptly::api_port: 42000
 aptly::api_nolock: 10.0.0.123
 aptly::api_nolock: true
+```
+
+### Create an apt mirror
+
+**Warning:** after creating the mirror, the update of the mirror from its source
+is initiated. This can take a significant amount of time.
+
+To create an APT repository:
+ * of the Debian US repo
+ * of the stable distribution
+ * only taking the main component
+ * only for the amd64 architecture
+
+Use:
+```puppet
+aptly::mirror { 'debian_stable':
+  location      => 'http://ftp.us.debian.org/debian/',
+  distribution  => 'stable',
+  components    => [ 'main' ],
+  architectures => ['amd64'],
+}
+```
+
+**Note:** This module does not manage the gpg keys directly, so if you don't take care of adding the gpg file of your target repository,
+you'll end up with the following error:
+
+```
+Error: /Stage[main]/Main/Aptly::Mirror[debian_stable]/Aptly_mirror[debian_stable]/ensure: change from absent to present failed: Execution of 'aptly -architectures=amd64 -with-sources=false -with-udebs=false mirror create debian_stable http://ftp.us.debian.org/debian/ stable main' returned 1: Looks like your keyring with trusted keys is empty. You might consider importing some keys.
+If you're running Debian or Ubuntu, it's a good idea to import current archive keys by running:
+
+  gpg --no-default-keyring --keyring /usr/share/keyrings/debian-archive-keyring.gpg --export | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+
+(for Ubuntu, use /usr/share/keyrings/ubuntu-archive-keyring.gpg)
+
+Downloading http://ftp.us.debian.org/debian/dists/stable/InRelease...
+Downloading http://ftp.us.debian.org/debian/dists/stable/Release...
+Downloading http://ftp.us.debian.org/debian/dists/stable/Release.gpg...
+gpgv: Signature made Sat Jun  4 08:26:51 2016 GMT+5 using RSA key ID 46925553
+gpgv: Can't check signature: public key not found
+gpgv: Signature made Sat Jun  4 08:26:51 2016 GMT+5 using RSA key ID 2B90D010
+gpgv: Can't check signature: public key not found
+gpgv: Signature made Sat Jun  4 08:36:26 2016 GMT+5 using RSA key ID 518E17E1
+gpgv: Can't check signature: public key not found
+
+Looks like some keys are missing in your trusted keyring, you may consider importing them from keyserver:
+
+gpg --no-default-keyring --keyring trustedkeys.gpg --keyserver keys.gnupg.net --recv-keys 8B48AD6246925553 7638D0442B90D010 CBF8D6FD518E17E1
+
+Sometimes keys are stored in repository root in file named Release.key, to import such key:
+
+wget -O - https://some.repo/repository/Release.key | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+
+ERROR: unable to fetch mirror: verification of detached signature failed: exit status 2
+```
+
+Here's a full example of how you can manage your gpg keys along with the mirror:
+```puppet
+aptly::mirror { 'debian_stable':
+  location      => 'http://ftp.us.debian.org/debian/',
+  distribution  => 'stable',
+  components    => [ 'main'] ,
+  architectures => ['amd64'],
+}
+
+exec { 'debian_stable_key_8B48AD6246925553':
+  command => '/usr/bin/gpg --no-default-keyring --keyring trustedkeys.gpg --keyserver keys.gnupg.net --recv-key 8B48AD6246925553',
+  unless  => '/usr/bin/gpg --no-default-keyring --keyring trustedkeys.gpg --list-key 8B48AD6246925553 > /dev/null 2>&1',
+}
+
+exec { 'debian_stable_key_7638D0442B90D010':
+  command => '/usr/bin/gpg --no-default-keyring --keyring trustedkeys.gpg --keyserver keys.gnupg.net --recv-key 7638D0442B90D010',
+  unless  => '/usr/bin/gpg --no-default-keyring --keyring trustedkeys.gpg --list-key 7638D0442B90D010 > /dev/null 2>&1',
+}
+
+exec { 'debian_stable_key_CBF8D6FD518E17E1':
+  command => '/usr/bin/gpg --no-default-keyring --keyring trustedkeys.gpg --keyserver keys.gnupg.net --recv-key CBF8D6FD518E17E1',
+  unless  => '/usr/bin/gpg --no-default-keyring --keyring trustedkeys.gpg --list-key CBF8D6FD518E17E1 > /dev/null 2>&1',
+}
+
+
+Exec['debian_stable_key_8B48AD6246925553']->
+Exec['debian_stable_key_7638D0442B90D010']->
+Exec['debian_stable_key_CBF8D6FD518E17E1']->
+Aptly::Mirror['debian_stable']
 ```
 
 ## Reference

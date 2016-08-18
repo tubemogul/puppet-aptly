@@ -53,7 +53,7 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
       action: 'show',
       arguments: [ name ],
       exceptions: false,
-    ) !~ /^ERROR/
+    ) !~ /ERROR/
   end
 
 end
