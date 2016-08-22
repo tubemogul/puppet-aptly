@@ -35,14 +35,14 @@ Need help of want a new feature? File an issue on our github repository: https:/
 
 What is this module capable of doing?
 
- * Install the aptly package in a specific version (or just the latest available)
- * Manage a specific user and group (with their corresponding fixed uid/gid) dedicated to the service
- * Configure a specific debian repository (optional) where to find the package
- * Manage the `/etc/aptly.conf` file
- * Enable/start or disable the service
- * Enable/start or disable the API
- * Manages the init.d service file
- * Manage apt mirrors, snapshots, publications
+ * Installing the aptly package in a specific version (or just the latest available)
+ * Managing a specific user and group (with their corresponding fixed uid/gid) dedicated to the service
+ * Configuring a specific debian repository (optional) where to find the package
+ * Managing the `/etc/aptly.conf` file
+ * Enabling/starting or disabling the service
+ * Enabling/starting or disabling the API
+ * Managing the init.d service file
+ * Managing apt mirrors, repositories, snapshots and publications
  
 The aptly service will listen on port you configure (example: 80) on every interfaces (configurable)
 using the `aptly serve -listen=":80"` command.
@@ -258,6 +258,7 @@ To manage the aptly resources, this modules embeds the following custom
 types and corresponding providers (to be accessed via the public defines):
 
  * `aptly_mirror` to manage an aptly mirror
+ * `aptly_repo` to manage an aptly repository
  * `aptly_snapshot` to manage an aptly snapshot
  * `aptly_publish` to manage an aptly publication
 
