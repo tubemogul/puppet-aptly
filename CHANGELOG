@@ -1,3 +1,8 @@
+2016-08-22 Release 2.1.0:
+- Adding aptly_repo type and provider and aptly::repo define and add
+documentation for them.
+- Fixing exist? function for publish and repo providers
+- Adding the params class to the specs
 2016-08-22 Release 2.0.2:
 - Fixing issues with broken providers
 - Adding an example of how to create a mirror
