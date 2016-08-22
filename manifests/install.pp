@@ -78,11 +78,11 @@ class aptly::install {
   }
 
   $nolock = $aptly::api_nolock ? {
-    true  => 'true',
-    false => 'false',
+    true  => '-no-lock=true',
+    false => '-no-lock=false',
   }
 
-  $api_opts = "--listen ${aptly::api_bind}:${aptly::api_port} -no-lock=${nolock}"
+  $api_opts = "--listen ${aptly::api_bind}:${aptly::api_port} ${nolock}"
 
   file{ '/etc/init.d/aptly-api':
     ensure  => present,
