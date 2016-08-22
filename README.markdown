@@ -17,6 +17,7 @@
     * [Basic example](#basic-example)
     * [Enable aptly API endpoint](#enable-aptly-api-endpoint)
     * [Create an apt mirror](#create-an-apt-mirror)
+    * [Create and drop apt repositories](#create-and-drop-apt-repositories)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
   * [Public classes and defines](#public-classes-and-defines)
   * [Private classes](#private-classes)
@@ -35,14 +36,14 @@ Need help of want a new feature? File an issue on our github repository: https:/
 
 What is this module capable of doing?
 
- * Install the aptly package in a specific version (or just the latest available)
- * Manage a specific user and group (with their corresponding fixed uid/gid) dedicated to the service
- * Configure a specific debian repository (optional) where to find the package
- * Manage the `/etc/aptly.conf` file
- * Enable/start or disable the service
- * Enable/start or disable the API
- * Manages the init.d service file
- * Manage apt mirrors, snapshots, publications
+ * Installing the aptly package in a specific version (or just the latest available)
+ * Managing a specific user and group (with their corresponding fixed uid/gid) dedicated to the service
+ * Configuring a specific debian repository (optional) where to find the package
+ * Managing the `/etc/aptly.conf` file
+ * Enabling/starting or disabling the service
+ * Enabling/starting or disabling the API
+ * Managing the init.d service file
+ * Managing apt mirrors, repositories, snapshots and publications
  
 The aptly service will listen on port you configure (example: 80) on every interfaces (configurable)
 using the `aptly serve -listen=":80"` command.
@@ -237,12 +238,33 @@ Exec['debian_stable_key_CBF8D6FD518E17E1']->
 Aptly::Mirror['debian_stable']
 ```
 
+### Create and drop apt repositories
+
+Using the `aptly::repo` is really simple. In this example, we will:
+ * drop the `my_custom_repo` repository
+ * create the `tubemogul_apps` repository (with "stable" as default component
+   for publishing)
+
+Use:
+```puppet
+# Dropping the 'my_custom_repo' repo
+aptly::repo {'my_custom_repo':
+  ensure => absent,
+}
+
+# Making sure that the 'tubemogul_apps' exists with the expected parameters
+aptly::repo {'tubemogul_apps':
+  default_component => 'stable',
+}
+```
+
 ## Reference
 
 ### Public classes and defines
 
  * [`aptly`](#class-aptly): Installs and configures the aptly server.
  * [`aptly::mirror`](#define-aptlymirror): Manages an aptly mirror.
+ * [`aptly::repo`](#define-aptlyrepo): Manages an aptly repository.
  * [`aptly::snapshot`](#define-aptlysnapshot): Manages an aptly snapshot.
  * [`aptly::publish`](#define-aptlypublish): Manages an aptly publication.
 
@@ -258,6 +280,7 @@ To manage the aptly resources, this modules embeds the following custom
 types and corresponding providers (to be accessed via the public defines):
 
  * `aptly_mirror` to manage an aptly mirror
+ * `aptly_repo` to manage an aptly repository
  * `aptly_snapshot` to manage an aptly snapshot
  * `aptly_publish` to manage an aptly publication
 
@@ -483,6 +506,27 @@ Default: `false`
 Download the .udeb packages.
 
 Default: `false`
+
+#### Define aptly::repo
+
+##### `ensure`
+
+Ensures if the repository must be `present` (should exist) or `absent` (or be
+destroyed).
+
+Default: `present`
+
+##### `default_distribution`
+
+Default distribution (used only when publishing).
+
+Default: `$::lsbdistcodename`
+
+##### `default_component`
+
+Default component (used only when publishing).
+
+Default: `main`
 
 #### Define aptly::snapshot
 

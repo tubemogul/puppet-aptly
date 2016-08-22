@@ -1,12 +1,11 @@
 require 'spec_helper'
-require 'puppet/type/aptly_publish'
+require 'puppet/type/aptly_repo'
 
-describe Puppet::Type.type(:aptly_publish).provider(:cli) do
+describe Puppet::Type.type(:aptly_repo).provider(:cli) do
   let(:resource) do
-    Puppet::Type.type(:aptly_publish).new(
-      :name         => 'test-snap',
+    Puppet::Type.type(:aptly_repo).new(
+      :name         => 'foo',
       :ensure       => 'present',
-      :source_type  => :snapshot,
     )
   end
 
@@ -21,40 +20,48 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
   end
 
   describe '#create' do
-    it 'should publish the snapshot' do
+    it 'should create the repo' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
-        object: :publish,
-        action: :snapshot,
-        arguments: [ 'test-snap' ],
+        object: :repo,
+        action: 'create',
+        arguments: [ 'foo' ],
+        flags: {
+        'component'    => 'main',
+        'distribution' => '',
+        }
       )
       provider.create
     end
   end
 
   describe '#destroy' do
-    it 'should drop the publication' do
+    it 'should drop the repo' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
-        object: :publish,
+        object: :repo,
         action: 'drop',
-        arguments: ['test-snap'],
-        flags: { 'force-drop' => 'true' },
+        arguments: ['foo'],
+        flags: { 'force' => 'true' },
       )
       provider.destroy
     end
   end
 
   describe '#exists?' do
-    it 'should check the publications list' do
+    it 'should check the repo list' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
-        object: :publish,
+        object: :repo,
         action: 'list',
+        flags: { 'raw' => 'true' },
+        exceptions: false,
       ).returns "foo\ntest-snap\nbar"
       expect(provider.exists?).to eq(true)
     end
-    it 'should handle empty publications' do
+    it 'should handle without repo' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
-        object: :publish,
+        object: :repo,
         action: 'list',
+        flags: { 'raw' => 'true' },
+        exceptions: false,
       ).returns ''
       expect(provider.exists?).to eq(false)
     end
