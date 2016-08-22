@@ -15,6 +15,7 @@ describe 'aptly', :type => :class do
         it { is_expected.to compile.with_all_deps }
 
         it { is_expected.to create_class('aptly') }
+        it { is_expected.to contain_class('aptly::params') }
         it { is_expected.to contain_class('aptly::install').that_comes_before('Class[aptly::config]') }
         it { is_expected.to contain_class('aptly::config') }
         it { is_expected.to contain_class('aptly::service').that_subscribes_to('Class[aptly::config]') }
