@@ -17,6 +17,7 @@
     * [Basic example](#basic-example)
     * [Enable aptly API endpoint](#enable-aptly-api-endpoint)
     * [Create an apt mirror](#create-an-apt-mirror)
+    * [Create and drop apt repositories](#create-and-drop-apt-repositories)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
   * [Public classes and defines](#public-classes-and-defines)
   * [Private classes](#private-classes)
@@ -235,6 +236,26 @@ Exec['debian_stable_key_8B48AD6246925553']->
 Exec['debian_stable_key_7638D0442B90D010']->
 Exec['debian_stable_key_CBF8D6FD518E17E1']->
 Aptly::Mirror['debian_stable']
+```
+
+### Create and drop apt repositories
+
+Using the `aptly::repo` is really simple. In this example, we will:
+ * drop the `my_custom_repo` repository
+ * create the `tubemogul_apps` repository (with "stable" as default component
+   for publishing)
+
+Use:
+```puppet
+# Dropping the 'my_custom_repo' repo
+aptly::repo {'my_custom_repo':
+  ensure => absent,
+}
+
+# Making sure that the 'tubemogul_apps' exists with the expected parameters
+aptly::repo {'tubemogul_apps':
+  default_component => 'stable',
+}
 ```
 
 ## Reference
