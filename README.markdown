@@ -243,6 +243,7 @@ Aptly::Mirror['debian_stable']
 
  * [`aptly`](#class-aptly): Installs and configures the aptly server.
  * [`aptly::mirror`](#define-aptlymirror): Manages an aptly mirror.
+ * [`aptly::repo`](#define-aptlyrepo): Manages an aptly repository.
  * [`aptly::snapshot`](#define-aptlysnapshot): Manages an aptly snapshot.
  * [`aptly::publish`](#define-aptlypublish): Manages an aptly publication.
 
@@ -484,6 +485,27 @@ Default: `false`
 Download the .udeb packages.
 
 Default: `false`
+
+#### Define aptly::repo
+
+##### `ensure`
+
+Ensures if the repository must be `present` (should exist) or `absent` (or be
+destroyed).
+
+Default: `present`
+
+##### `default_distribution`
+
+Default distribution (used only when publishing).
+
+Default: `$::lsbdistcodename`
+
+##### `default_component`
+
+Default component (used only when publishing).
+
+Default: `main`
 
 #### Define aptly::snapshot
 
