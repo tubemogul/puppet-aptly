@@ -48,14 +48,14 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         object: :publish,
         action: 'list',
-      ).returns ['foo', 'test-snap', 'bar']
+      ).returns "foo\ntest-snap\nbar"
       expect(provider.exists?).to eq(true)
     end
     it 'should handle empty publications' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         object: :publish,
         action: 'list',
-      ).returns nil
+      ).returns ''
       expect(provider.exists?).to eq(false)
     end
   end

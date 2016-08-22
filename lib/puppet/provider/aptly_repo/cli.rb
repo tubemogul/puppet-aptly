@@ -35,12 +35,12 @@ Puppet::Type.type(:aptly_repo).provide(:cli) do
   def exists?
     Puppet.debug("Check if Repository #{name} exists")
 
-    [ Puppet_X::Aptly::Cli.execute(
+    Puppet_X::Aptly::Cli.execute(
       object: :repo,
       action: 'list',
       flags: { 'raw' => 'true' },
       exceptions: false,
-    ) ].flatten.include? name
+    ).lines.map(&:chomp).include? name
   end
 
 end

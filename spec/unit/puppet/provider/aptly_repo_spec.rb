@@ -47,14 +47,23 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
   end
 
   describe '#exists?' do
-    it 'should check the repos list' do
-      Puppet_X::Aptly::Cli.expects(:execute).with(
+    it 'should check the repo list' do
+      Puppet_X::Aptly::Cli.stubs(:execute).with(
         object: :repo,
         action: 'list',
-        flags: {'raw' => 'true', },
+        flags: { 'raw' => 'true' },
         exceptions: false,
-      )
-      provider.exists?
+      ).returns "foo\ntest-snap\nbar"
+      expect(provider.exists?).to eq(true)
+    end
+    it 'should handle without repo' do
+      Puppet_X::Aptly::Cli.stubs(:execute).with(
+        object: :repo,
+        action: 'list',
+        flags: { 'raw' => 'true' },
+        exceptions: false,
+      ).returns ''
+      expect(provider.exists?).to eq(false)
     end
   end
 
