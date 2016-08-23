@@ -81,14 +81,23 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
   end
 
   describe '#exists?' do
-    it 'should check the mirrors list' do
-      Puppet_X::Aptly::Cli.expects(:execute).with(
+    it 'should check the mirror list' do
+      Puppet_X::Aptly::Cli.stubs(:execute).with(
         object: :mirror,
-        action: 'show',
-        arguments: ['debian-main'],
+        action: 'list',
+        flags: { 'raw' => 'true' },
         exceptions: false,
-      )
-      provider.exists?
+      ).returns "foo\ndebian-main\nbar"
+      expect(provider.exists?).to eq(true)
+    end
+    it 'should handle without mirror' do
+      Puppet_X::Aptly::Cli.stubs(:execute).with(
+        object: :mirror,
+        action: 'list',
+        flags: { 'raw' => 'true' },
+        exceptions: false,
+      ).returns ''
+      expect(provider.exists?).to eq(false)
     end
   end
 

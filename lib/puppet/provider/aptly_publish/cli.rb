@@ -31,7 +31,12 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
   def exists?
     Puppet.debug("Check if #{name} exists")
 
-    Puppet_X::Aptly::Cli.execute(object: :publish, action: 'list').lines.map(&:chomp).flatten.include? name
+    Puppet_X::Aptly::Cli.execute(
+      object: :publish,
+      action: 'list',
+      flags: { 'raw' => 'true' },
+      exceptions: false,
+    ).lines.map(&:chomp).include? name
   end
 
 end
