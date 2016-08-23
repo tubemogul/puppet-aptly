@@ -109,7 +109,8 @@ describe 'aptly', :type => :class do
             .with_ensure('directory')\
             .with_mode('0755')\
             .with_owner('aptly')\
-            .with_group('aptly')
+            .with_group('aptly')\
+            .with_recurse(true)
         end
       end
     end
