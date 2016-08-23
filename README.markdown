@@ -18,6 +18,7 @@
     * [Enable aptly API endpoint](#enable-aptly-api-endpoint)
     * [Create an apt mirror](#create-an-apt-mirror)
     * [Create and drop apt repositories](#create-and-drop-apt-repositories)
+    * [Create an aptly snapshot](#create-an-aptly-snapshot)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
   * [Public classes and defines](#public-classes-and-defines)
   * [Private classes](#private-classes)
@@ -255,6 +256,23 @@ aptly::repo {'my_custom_repo':
 # Making sure that the 'tubemogul_apps' exists with the expected parameters
 aptly::repo {'tubemogul_apps':
   default_component => 'stable',
+}
+```
+
+Once you've done that, you can add packages using the `aptly repo add tubemogul_apps my_package.deb` or using the API.
+
+### Create an aptly snapshot
+
+Once you've created your repo and added packages to it, you might want to take a
+snapshot of a stable stack or a coherent ensemble to publish it later.
+
+This example creates a snapshot named `nightly_20160823` based on the repository
+`tubemogul_apps` that we created in the previous example:
+
+```puppet
+aptly::snapshot { 'nightly_20160823':
+  source_type => 'repository',
+  source_name => 'tubemogul_apps',
 }
 ```
 
