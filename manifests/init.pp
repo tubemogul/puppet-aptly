@@ -53,10 +53,8 @@ class aptly (
   validate_array($architectures)
   validate_hash($properties)
   validate_hash($s3_publish_endpoints)
-  validate_integer(
-    $port,
-    $api_port
-  )
+  validate_integer($port, 49150)
+  validate_integer($api_port, 49150)
   validate_re(
     $bind,
     '^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$',
