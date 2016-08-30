@@ -43,10 +43,10 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
 
     Puppet_X::Aptly::Cli.execute(
       object: :snapshot,
-      action: 'show',
-      arguments: [ name ],
+      action: 'list',
+      flags: { 'raw' => 'true' },
       exceptions: false,
-    ) !~ /ERROR/
+    ).lines.map(&:chomp).include? name
   end
 
 end

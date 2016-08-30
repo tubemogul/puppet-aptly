@@ -44,13 +44,22 @@ describe Puppet::Type.type(:aptly_snapshot).provider(:cli) do
   end
 
   describe '#exists?' do
-    it 'should check the snapshots list' do
+    it 'should check the snapshot list' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         object: :snapshot,
-        action: 'show',
-        arguments: ['2016-07-30-daily'],
+        action: 'list',
+        flags: { 'raw' => 'true' },
         exceptions: false,
-      ).returns 'ERROR Unable to ...'
+      ).returns "foo\n2016-07-30-daily\nbar"
+      expect(provider.exists?).to eq(true)
+    end
+    it 'should handle without snapshot' do
+      Puppet_X::Aptly::Cli.stubs(:execute).with(
+        object: :snapshot,
+        action: 'list',
+        flags: { 'raw' => 'true' },
+        exceptions: false,
+      ).returns ''
       expect(provider.exists?).to eq(false)
     end
   end

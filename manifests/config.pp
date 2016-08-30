@@ -17,8 +17,9 @@ class aptly::config {
   }
 
   file { $aptly::root_dir:
-    ensure => directory,
-    mode   => '0755',
+    ensure  => directory,
+    mode    => '0755',
+    recurse => true,
   }
 
 }

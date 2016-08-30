@@ -48,6 +48,8 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         object: :publish,
         action: 'list',
+        flags: { 'raw' => 'true' },
+        exceptions: false,
       ).returns "foo\ntest-snap\nbar"
       expect(provider.exists?).to eq(true)
     end
@@ -55,6 +57,8 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         object: :publish,
         action: 'list',
+        flags: { 'raw' => 'true' },
+        exceptions: false,
       ).returns ''
       expect(provider.exists?).to eq(false)
     end

@@ -8,7 +8,7 @@ Puppet::Type.type(:aptly_repo).provide(:cli) do
   mk_resource_methods
 
   def create
-    Puppet.info("Creating Aptly Repository #{name}}")
+    Puppet.info("Creating Aptly Repository #{name}")
 
     Puppet_X::Aptly::Cli.execute(
       object: :repo,

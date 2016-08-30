@@ -50,10 +50,10 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
 
     Puppet_X::Aptly::Cli.execute(
       object: :mirror,
-      action: 'show',
-      arguments: [ name ],
+      action: 'list',
+      flags: { 'raw' => 'true' },
       exceptions: false,
-    ) !~ /ERROR/
+    ).lines.map(&:chomp).include? name
   end
 
 end
