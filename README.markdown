@@ -479,6 +479,12 @@ heavily use both the API and the cli for example).
 
 Default : `false`
 
+##### `manage_xz_utils`
+
+Boolean to enable or disable installation of the xz-utils package (required
+dependency for aptly).
+
+Default : `true`
 
 #### Define aptly::mirror
 
