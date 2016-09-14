@@ -65,6 +65,12 @@ class aptly::install {
     }
   }
 
+  if $aptly::manage_xz_utils == true {
+    package { 'xz-utils':
+      ensure => present,
+    }
+  }
+
   package { 'aptly':
     ensure   => $aptly::version,
   }
