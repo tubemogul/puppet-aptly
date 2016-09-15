@@ -39,4 +39,5 @@ class aptly::params {
   $api_port             = 8080
   $api_bind             = '0.0.0.0'
   $api_nolock           = false
+  $manage_xz_utils      = true
 }
