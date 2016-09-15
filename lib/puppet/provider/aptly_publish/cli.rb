@@ -13,6 +13,7 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
     Puppet_X::Aptly::Cli.execute(
       object: :publish,
       action: resource[:source_type],
+      flags: { 'config' => resource[:config], },
       arguments: [ name ],
     )
   end
@@ -24,7 +25,10 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
       object: :publish,
       action: 'drop',
       arguments: [ name ],
-      flags: { 'force-drop' => resource[:force] ? 'true' : 'false' }
+      flags: {
+        'force-drop' => resource[:force] ? 'true' : 'false',
+        'config' => resource[:config],
+      }
     )
   end
 
@@ -34,7 +38,10 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
     Puppet_X::Aptly::Cli.execute(
       object: :publish,
       action: 'list',
-      flags: { 'raw' => 'true' },
+      flags: {
+        'raw' => 'true',
+        'config' => resource[:config],
+      },
       exceptions: false,
     ).lines.map(&:chomp).include? name
   end

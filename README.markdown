@@ -601,6 +601,13 @@ destroyed).
 
 Default: `present`
 
+##### `config`
+
+Location of configuration file (if undef, the flag will not be specified in the
+aptly command-line so the aptly default will be taken).
+
+Default: `undef`
+
 
 
 ## Limitations

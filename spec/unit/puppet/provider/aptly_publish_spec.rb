@@ -26,6 +26,7 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
         object: :publish,
         action: :snapshot,
         arguments: [ 'test-snap' ],
+        flags: { 'config' => :undef },
       )
       provider.create
     end
@@ -37,7 +38,7 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
         object: :publish,
         action: 'drop',
         arguments: ['test-snap'],
-        flags: { 'force-drop' => 'true' },
+        flags: { 'force-drop' => 'true', 'config' => :undef },
       )
       provider.destroy
     end
@@ -48,7 +49,7 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         object: :publish,
         action: 'list',
-        flags: { 'raw' => 'true' },
+        flags: { 'raw' => 'true', 'config' => :undef },
         exceptions: false,
       ).returns "foo\ntest-snap\nbar"
       expect(provider.exists?).to eq(true)
@@ -57,7 +58,7 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         object: :publish,
         action: 'list',
-        flags: { 'raw' => 'true' },
+        flags: { 'raw' => 'true', 'config' => :undef },
         exceptions: false,
       ).returns ''
       expect(provider.exists?).to eq(false)

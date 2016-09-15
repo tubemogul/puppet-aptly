@@ -21,4 +21,8 @@ Puppet::Type.newtype(:aptly_publish) do
     defaultto :snapshot
   end
 
+  newparam(:config) do
+    desc "Location of configuration file (if undef, the flag will not be specified in the aptly command-line)"
+    defaultto :undef
+  end
 end
