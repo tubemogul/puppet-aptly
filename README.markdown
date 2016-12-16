@@ -454,6 +454,12 @@ Hash to describe the s3PublishEndpoints property of the aptly.conf.
 
 Default: `{}`
 
+##### `swift_publish_endpoints`
+
+Hash to describe the SwiftPublishEndpoints property of the aptly.conf.
+
+Default: `{}`
+
 ##### `enable_api`
 
 Enable Aptly API by starting the service

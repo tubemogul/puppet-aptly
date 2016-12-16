@@ -24,6 +24,7 @@ class aptly (
   $ppa_codename         = $aptly::params::ppa_codename,
   $properties           = $aptly::params::properties,
   $s3_publish_endpoints = $aptly::params::s3_publish_endpoints,
+  $swift_publish_endpoints = $aptly::params::swift_publish_endpoints,
   $enable_api           = $aptly::params::enable_api,
   $api_port             = $aptly::params::api_port,
   $api_bind             = $aptly::params::api_bind,
@@ -54,6 +55,7 @@ class aptly (
   validate_array($architectures)
   validate_hash($properties)
   validate_hash($s3_publish_endpoints)
+  validate_hash($swift_publish_endpoints)
   validate_integer($port, 49150)
   validate_integer($api_port, 49150)
   validate_re(

@@ -35,6 +35,7 @@ class aptly::params {
     'downloadSourcePackages'      => false,
     }
   $s3_publish_endpoints = {}
+  $swift_publish_endpoints = {}
   $enable_api           = false
   $api_port             = 8080
   $api_bind             = '0.0.0.0'
