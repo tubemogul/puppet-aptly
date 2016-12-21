@@ -284,6 +284,26 @@ describe 'aptly', :type => :class do
       it { should create_file('/etc/aptly.conf').with_content(/"region":"us-east-1"/) }
     end
 
+    context 'adding an swift publish endpoint' do
+      let(:params) {{ :swift_publish_endpoints => {
+        'test' => {
+          'container'          => 'repo',
+          'osname'             => '',
+          'password'           => '',
+          'prefix'             => '',
+          'authurl'            => '',
+          'tenant'             => '',
+          'tenantid'           => '',
+          'domain'             => '',
+          'domainid'           => '',
+          'tenantdomain'       => '',
+          'tenantdomainid'     => '',
+        }
+      }
+      }}
+      it { should create_file('/etc/aptly.conf').with_content(/"container":"repo"/) }
+    end
+
     # Testing the service
     context 'enabling the service' do
       let(:params) {{ :enable_service => true }}
