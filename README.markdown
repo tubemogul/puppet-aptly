@@ -151,7 +151,7 @@ Or using hiera:
 ---
 aptly::enable_api: true
 aptly::api_port: 42000
-aptly::api_nolock: 10.0.0.123
+aptly::api_bind: 10.0.0.123
 aptly::api_nolock: true
 ```
 
