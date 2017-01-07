@@ -12,7 +12,7 @@ class aptly::params {
   $repo_keyserver  = 'keys.gnupg.net'
   $repo_key        = 'DF32BC15E2145B3FA151AED19E3E53F19C7DE460'
   $enable_service  = true
-  $port            = '80'
+  $port            = '8080'
   $bind            = '0.0.0.0'
   $config_filepath = '/etc/aptly.conf'
   $user            = 'aptly'
@@ -37,7 +37,7 @@ class aptly::params {
   $s3_publish_endpoints = {}
   $swift_publish_endpoints = {}
   $enable_api           = false
-  $api_port             = 8080
+  $api_port             = 8081
   $api_bind             = '0.0.0.0'
   $api_nolock           = false
   $manage_xz_utils      = true
