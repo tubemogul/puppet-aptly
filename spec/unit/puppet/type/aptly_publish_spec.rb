@@ -10,7 +10,7 @@ describe Puppet::Type.type(:aptly_publish) do
   end
 
   describe 'validating parameters list' do
-    [ :name, :force, :source_type ].each do |param|
+    [ :name, :force, :source_type, :config ].each do |param|
       it "should have a #{param} parameter" do
         expect(described_class.attrtype(param)).to eq(:param)
       end

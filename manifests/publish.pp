@@ -6,6 +6,7 @@ define aptly::publish (
   $source_type,
   $source_name = $name,
   $ensure      = 'present',
+  $config      = undef,
 ) {
   validate_string(
     $source_type,
