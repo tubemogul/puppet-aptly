@@ -4,7 +4,6 @@ module_lib = Pathname.new(__FILE__).parent.parent.parent.parent
 require File.join module_lib, 'puppet_x/aptly/cli'
 
 Puppet::Type.type(:aptly_repo).provide(:cli) do
-
   mk_resource_methods
 
   def create
@@ -13,10 +12,10 @@ Puppet::Type.type(:aptly_repo).provide(:cli) do
     Puppet_X::Aptly::Cli.execute(
       object: :repo,
       action: 'create',
-      arguments: [ name ],
+      arguments: [name],
       flags: {
         'component'    => resource[:default_component],
-        'distribution' => resource[:default_distribution],
+        'distribution' => resource[:default_distribution]
       }
     )
   end
@@ -27,8 +26,8 @@ Puppet::Type.type(:aptly_repo).provide(:cli) do
     Puppet_X::Aptly::Cli.execute(
       object: :repo,
       action: 'drop',
-      arguments: [ name ],
-      flags: { 'force' => resource[:force] ? 'true' : 'false' },
+      arguments: [name],
+      flags: { 'force' => resource[:force] ? 'true' : 'false' }
     )
   end
 
@@ -39,8 +38,7 @@ Puppet::Type.type(:aptly_repo).provide(:cli) do
       object: :repo,
       action: 'list',
       flags: { 'raw' => 'true' },
-      exceptions: false,
+      exceptions: false
     ).lines.map(&:chomp).include? name
   end
-
 end

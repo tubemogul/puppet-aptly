@@ -2,15 +2,14 @@ require 'puppet'
 require 'puppet/type/aptly_snapshot'
 
 describe Puppet::Type.type(:aptly_snapshot) do
-
   before :each do
     @snap = Puppet::Type.type(:aptly_snapshot).new(
-      :name => '20160729-global-release',
+      name: '20160729-global-release'
     )
   end
 
   describe 'validating parameters list' do
-    [ :name, :force, :source_type, :source_name, :description, :snapshots, :package_refs ].each do |param|
+    [:name, :force, :source_type, :source_name, :description, :snapshots, :package_refs].each do |param|
       it "should have a #{param} parameter" do
         expect(described_class.attrtype(param)).to eq(:param)
       end
@@ -28,38 +27,37 @@ describe Puppet::Type.type(:aptly_snapshot) do
     expect(@snap[:name]).to eq('foobar')
   end
 
-  describe "force parameter" do
-    [ :true, :false ].each do |value|
+  describe 'force parameter' do
+    [:true, :false].each do |value|
       it "should support #{value} as a value" do
-        expect { described_class.new({
-          :name  => '20160729-global-release',
-          :force => value,
-        })}.to_not raise_error
+        expect do
+          described_class.new(name: '20160729-global-release',
+                              force: value)
+        end.to_not raise_error
       end
 
-      it "should not accept a non-boolean" do
-        expect { described_class.new({
-          :name  => '20160729-global-release',
-          :force => 'foo',
-        })}.to raise_error(Puppet::Error, /Invalid value/)
+      it 'should not accept a non-boolean' do
+        expect do
+          described_class.new(name: '20160729-global-release',
+                              force: 'foo')
+        end.to raise_error(Puppet::Error, /Invalid value/)
       end
 
-      it "should have a non-nil default value" do
+      it 'should have a non-nil default value' do
         expect(@snap[:force]).not_to be_nil
       end
-
     end
   end
 
   describe 'source_type parameter' do
     it 'should not support value other than predefined values' do
-      expect{described_class.new({
-        :name        => '20160729-global-release',
-        :source_type => 'foobar',
-      })}.to raise_error(Puppet::Error, /Invalid value.*Valid values are mirror, repository, empty\./)
+      expect do
+        described_class.new(name: '20160729-global-release',
+                            source_type: 'foobar')
+      end.to raise_error(Puppet::Error, /Invalid value.*Valid values are mirror, repository, empty\./)
     end
 
-    [ :mirror, :repository, :empty ].each do |value|
+    [:mirror, :repository, :empty].each do |value|
       it "should accept #{value}" do
         @snap[:source_type] = value
         expect(@snap[:source_type]).to eq(value)
@@ -72,7 +70,7 @@ describe Puppet::Type.type(:aptly_snapshot) do
   end
 
   describe 'string parameters list' do
-    [ :source_name, :description, :snapshots, :package_refs ].each do |param|
+    [:source_name, :description, :snapshots, :package_refs].each do |param|
       it "should accept a #{param}" do
         @snap[param] = 'foobar'
         expect(@snap[param]).to eq('foobar')

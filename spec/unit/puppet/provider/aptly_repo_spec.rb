@@ -4,8 +4,8 @@ require 'puppet/type/aptly_repo'
 describe Puppet::Type.type(:aptly_repo).provider(:cli) do
   let(:resource) do
     Puppet::Type.type(:aptly_repo).new(
-      :name         => 'foo',
-      :ensure       => 'present',
+      name: 'foo',
+      ensure: 'present'
     )
   end
 
@@ -13,7 +13,7 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
     described_class.new(resource)
   end
 
-  [:create, :destroy, :exists? ].each do |method|
+  [:create, :destroy, :exists?].each do |method|
     it "should have a(n) #{method}" do
       expect(provider).to respond_to(method)
     end
@@ -24,10 +24,10 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
       Puppet_X::Aptly::Cli.expects(:execute).with(
         object: :repo,
         action: 'create',
-        arguments: [ 'foo' ],
+        arguments: ['foo'],
         flags: {
-        'component'    => 'main',
-        'distribution' => '',
+          'component' => 'main',
+          'distribution' => ''
         }
       )
       provider.create
@@ -40,7 +40,7 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
         object: :repo,
         action: 'drop',
         arguments: ['foo'],
-        flags: { 'force' => 'true' },
+        flags: { 'force' => 'true' }
       )
       provider.destroy
     end
@@ -52,7 +52,7 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
         object: :repo,
         action: 'list',
         flags: { 'raw' => 'true' },
-        exceptions: false,
+        exceptions: false
       ).returns "foo\ntest-snap\nbar"
       expect(provider.exists?).to eq(true)
     end
@@ -61,10 +61,9 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
         object: :repo,
         action: 'list',
         flags: { 'raw' => 'true' },
-        exceptions: false,
+        exceptions: false
       ).returns ''
       expect(provider.exists?).to eq(false)
     end
   end
-
 end

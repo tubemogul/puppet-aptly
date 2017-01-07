@@ -4,32 +4,29 @@ module_lib = Pathname.new(__FILE__).parent.parent.parent.parent
 require File.join module_lib, 'puppet_x/aptly/cli'
 
 Puppet::Type.type(:aptly_mirror).provide(:cli) do
-
   mk_resource_methods
 
   def create
-
-      Puppet.info("Creating Aptly Mirror #{name}")
-      Puppet_X::Aptly::Cli.execute(
-        object: :mirror,
-        action: 'create',
-        arguments: [ name, resource[:location], resource[:distribution], [resource[:components]].join(' ')],
-        flags: {
-          'architectures' => [resource[:architectures]].join(','),
-          'with-sources'  => resource[:with_sources],
-          'with-udebs'    => resource[:with_udebs],
-        }
-      )
+    Puppet.info("Creating Aptly Mirror #{name}")
+    Puppet_X::Aptly::Cli.execute(
+      object: :mirror,
+      action: 'create',
+      arguments: [name, resource[:location], resource[:distribution], [resource[:components]].join(' ')],
+      flags: {
+        'architectures' => [resource[:architectures]].join(','),
+        'with-sources'  => resource[:with_sources],
+        'with-udebs'    => resource[:with_udebs]
+      }
+    )
 
     if resource[:update]
       Puppet.info("Updating Aptly Mirror #{name}")
       Puppet_X::Aptly::Cli.execute(
         object: :mirror,
         action: 'update',
-        arguments: [ name ],
+        arguments: [name]
       )
     end
-
   end
 
   def destroy
@@ -40,7 +37,7 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
     Puppet_X::Aptly::Cli.execute(
       object: :mirror,
       action: 'drop',
-      arguments: [ name ],
+      arguments: [name],
       flags: { optsforce => '' }
     )
   end
@@ -52,8 +49,7 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
       object: :mirror,
       action: 'list',
       flags: { 'raw' => 'true' },
-      exceptions: false,
+      exceptions: false
     ).lines.map(&:chomp).include? name
   end
-
 end
