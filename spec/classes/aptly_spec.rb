@@ -107,7 +107,7 @@ describe 'aptly', :type => :class do
         it do
           should create_file('/var/aptly')\
             .with_ensure('directory')\
-            .with_mode('0755')\
+            .with_mode('0644')\
             .with_owner('aptly')\
             .with_group('aptly')\
             .with_recurse(true)
@@ -177,7 +177,7 @@ describe 'aptly', :type => :class do
         it do
           should create_file('/aptly')\
             .with_ensure('directory')\
-            .with_mode('0755')\
+            .with_mode('0644')\
             .with_owner('reposvc')\
             .with_group('repogrp')
         end
