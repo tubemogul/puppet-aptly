@@ -4,27 +4,26 @@ module_lib = Pathname.new(__FILE__).parent.parent.parent.parent
 require File.join module_lib, 'puppet_x/aptly/cli'
 
 Puppet::Type.type(:aptly_snapshot).provide(:cli) do
-
   mk_resource_methods
 
   def create
     Puppet.info("Creating Aptly Snapshot #{name} from a #{resource[:source_type]}")
 
     from = case resource[:source_type]
-    when :mirror
-      'from mirror'
-    when :repository
-      'from repo'
-    when :empty
-      'empty'
-    else
-      raise Puppet::Error, "#{resource[:source_type]} is not supported"
+           when :mirror
+             'from mirror'
+           when :repository
+             'from repo'
+           when :empty
+             'empty'
+           else
+             raise Puppet::Error, "#{resource[:source_type]} is not supported"
     end
 
     Puppet_X::Aptly::Cli.execute(
       object: :snapshot,
       action: 'create',
-      arguments: [ name, from, resource[:source_name] ],
+      arguments: [name, from, resource[:source_name]]
     )
   end
 
@@ -34,7 +33,7 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
     Puppet_X::Aptly::Cli.execute(
       object: :snapshot,
       action: 'drop',
-      arguments: [ name ],
+      arguments: [name]
     )
   end
 
@@ -45,8 +44,7 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
       object: :snapshot,
       action: 'list',
       flags: { 'raw' => 'true' },
-      exceptions: false,
+      exceptions: false
     ).lines.map(&:chomp).include? name
   end
-
 end
