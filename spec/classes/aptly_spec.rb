@@ -51,7 +51,7 @@ describe 'aptly', :type => :class do
 
         it do
           is_expected.to create_file('/etc/init.d/aptly')\
-            .with_mode('0744')\
+            .with_mode('0755')\
             .with_owner('root')\
             .with_group('root')\
             .with_content(/^DAEMON_USER=aptly$/)\
@@ -136,7 +136,7 @@ describe 'aptly', :type => :class do
 
         it do
           is_expected.to create_file('/etc/init.d/aptly')\
-            .with_mode('0744')\
+            .with_mode('0755')\
             .with_owner('root')\
             .with_group('root')\
             .with_content(/^DAEMON_USER=reposvc$/)
@@ -235,7 +235,7 @@ describe 'aptly', :type => :class do
 
           it do
             is_expected.to create_file('/etc/init.d/aptly')\
-              .with_mode('0744')\
+              .with_mode('0755')\
               .with_owner('root')\
               .with_group('root')\
               .with_content(/^DAEMON_USER=reposvc$/)
@@ -345,7 +345,7 @@ describe 'aptly', :type => :class do
       it { is_expected.to contain_service('aptly-api').with_ensure('running') }
 
       it { is_expected.to create_file('/etc/init.d/aptly-api')\
-        .with_mode('0744')\
+        .with_mode('0755')\
         .with_owner('root')\
         .with_group('root')\
         .with_content(/-no-lock=true/)

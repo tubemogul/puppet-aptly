@@ -78,7 +78,7 @@ class aptly::install {
   file{ '/etc/init.d/aptly':
     ensure  => present,
     content => template('aptly/aptly.init.d.erb'),
-    mode    => '0744',
+    mode    => '0755',
     owner   => 'root',
     group   => 'root',
   }
@@ -93,7 +93,7 @@ class aptly::install {
   file{ '/etc/init.d/aptly-api':
     ensure  => present,
     content => template('aptly/aptly-api.init.d.erb'),
-    mode    => '0744',
+    mode    => '0755',
     owner   => 'root',
     group   => 'root',
   }
