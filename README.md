@@ -46,8 +46,8 @@ What is this module capable of doing?
  * Managing the init.d service file
  * Managing apt mirrors, repositories, snapshots and publications
  
-The aptly service will listen on port you configure (example: 80) on every interfaces (configurable)
-using the `aptly serve -listen=":80"` command.
+The aptly service will listen on port you configure (example: 8080) on every interfaces (configurable)
+using the `aptly serve -listen=":8080"` command.
 
 If you want to make the repository being served by an apache, nginx or whatever
 else, just disable the service and setup the http server you want for the HTTP(S)
@@ -362,7 +362,7 @@ Default: `true` (service enabled)
 
 Port for the Aptly webserver
 
-Default : `80`
+Default : `8080`
 
 ##### `bind`
 
@@ -470,7 +470,7 @@ Default : `false`
 
 Port for the Aptly API service.
 
-Default : `8080`
+Default : `8081`
 
 ##### `api_bind`
 

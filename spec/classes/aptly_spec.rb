@@ -53,11 +53,11 @@ describe 'aptly', type: :class do
 
         it do
           is_expected.to create_file('/etc/init.d/aptly')\
-            .with_mode('0744')\
+            .with_mode('0755')\
             .with_owner('root')\
             .with_group('root')\
             .with_content(/^DAEMON_USER=aptly$/)\
-            .with_content(/-config=\\"\/etc\/aptly.conf\\"/)
+            .with_content(/-config=\/etc\/aptly.conf/)
         end
 
         it do
@@ -109,7 +109,7 @@ describe 'aptly', type: :class do
         it do
           should create_file('/var/aptly')\
             .with_ensure('directory')\
-            .with_mode('0755')\
+            .with_mode('0644')\
             .with_owner('aptly')\
             .with_group('aptly')\
             .with_recurse(true)
@@ -140,7 +140,7 @@ describe 'aptly', type: :class do
 
         it do
           is_expected.to create_file('/etc/init.d/aptly')\
-            .with_mode('0744')\
+            .with_mode('0755')\
             .with_owner('root')\
             .with_group('root')\
             .with_content(/^DAEMON_USER=reposvc$/)
@@ -175,13 +175,13 @@ describe 'aptly', type: :class do
 
         it do
           is_expected.to create_file('/etc/init.d/aptly')\
-            .with_content(/-config=\\"\/home\/aptly\/.aptly.cfg\\"/)
+            .with_content(/-config=\/home\/aptly\/.aptly.cfg/)
         end
 
         it do
           should create_file('/aptly')\
             .with_ensure('directory')\
-            .with_mode('0755')\
+            .with_mode('0644')\
             .with_owner('reposvc')\
             .with_group('repogrp')
         end
@@ -240,7 +240,7 @@ describe 'aptly', type: :class do
 
           it do
             is_expected.to create_file('/etc/init.d/aptly')\
-              .with_mode('0744')\
+              .with_mode('0755')\
               .with_owner('root')\
               .with_group('root')\
               .with_content(/^DAEMON_USER=reposvc$/)
@@ -350,10 +350,10 @@ describe 'aptly', type: :class do
     context 'Enable no-lock on the API' do
       let(:params)  { { enable_api: true, api_nolock: true } }
       it { is_expected.to contain_service('aptly-api').with_ensure('running') }
-
+      
       it do
         is_expected.to create_file('/etc/init.d/aptly-api')\
-          .with_mode('0744')\
+          .with_mode('0755')\
           .with_owner('root')\
           .with_group('root')\
           .with_content(/-no-lock=true/)
