@@ -39,7 +39,7 @@ class aptly::install {
     case $::osfamily {
       'Debian': {
 
-        include 'apt'
+        include '::apt'
 
         apt::source { 'aptly':
           location => $aptly::repo_location,

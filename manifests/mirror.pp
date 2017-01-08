@@ -29,6 +29,6 @@ define aptly::mirror (
     architectures => $architectures,
     components    => $components,
     with_sources  => $with_sources,
-    with_udebs    => $with_udebs
+    with_udebs    => $with_udebs,
   }
 }
