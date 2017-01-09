@@ -594,11 +594,11 @@ Type of source to publish. Supported values are:
 
 Default: `undef`
 
-##### `source_name`
+##### `distribution`
 
-Name of the source to publish.
+Distribution name to publish.
 
-Default: `undef`
+Default: `"${::lsbdistcodename}-${name}"`
 
 ##### `ensure`
 

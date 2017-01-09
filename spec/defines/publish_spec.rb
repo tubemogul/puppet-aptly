@@ -6,7 +6,8 @@ describe 'aptly::publish' do
     let(:params) do
       {
         source_type: 'snapshot',
-        source_name: '2016-07-30-daily-snapshot'
+        distribution: 'jessie-2016-07-30-daily-snapshot',
+        name: '2016-07-30-daily-snapshot'
       }
     end
 

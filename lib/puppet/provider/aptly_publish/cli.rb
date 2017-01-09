@@ -12,7 +12,8 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
     Puppet_X::Aptly::Cli.execute(
       object: :publish,
       action: resource[:source_type],
-      arguments: [name]
+      arguments: [name],
+      flags: { 'distribution' => resource[:distribution] }
     )
   end
 

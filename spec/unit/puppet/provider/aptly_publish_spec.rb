@@ -6,7 +6,8 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
     Puppet::Type.type(:aptly_publish).new(
       name: 'test-snap',
       ensure: 'present',
-      source_type: :snapshot
+      source_type: :snapshot,
+      distribution: 'jessie-test-snap'
     )
   end
 
@@ -25,7 +26,8 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
       Puppet_X::Aptly::Cli.expects(:execute).with(
         object: :publish,
         action: :snapshot,
-        arguments: ['test-snap']
+        arguments: ['test-snap'],
+        flags: { 'distribution' => 'jessie-test-snap' }
       )
       provider.create
     end
