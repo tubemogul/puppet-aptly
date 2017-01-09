@@ -7,6 +7,7 @@ describe 'aptly', type: :class do
         osfamily: osfamily,
         lsbdistid: lsbdistid,
         lsbdistcodename: lsbdistcodename,
+        architecture: 'amd64',
         puppetversion: Puppet.version
       }
     end
@@ -104,7 +105,7 @@ describe 'aptly', type: :class do
             .with_group('aptly')
         end
         it { should create_file('/etc/aptly.conf').with_content(/"downloadConcurrency": 4,/) }
-        it { should create_file('/etc/aptly.conf').with_content(/"architectures": \[""\],/) }
+        it { should create_file('/etc/aptly.conf').with_content(/"architectures": \["amd64"\],/) }
 
         it do
           should create_file('/var/aptly')\
@@ -368,7 +369,8 @@ describe 'aptly', type: :class do
         let(:facts) do
           {
             osfamily: osfamily,
-            operatingsystem: os
+            operatingsystem: os,
+            architecture: 'amd64'
           }
         end
 
@@ -381,7 +383,8 @@ describe 'aptly', type: :class do
         let(:facts) do
           {
             osfamily: osfamily,
-            operatingsystem: os
+            operatingsystem: os,
+            architecture: 'amd64'
           }
         end
 
@@ -395,7 +398,8 @@ describe 'aptly', type: :class do
         let(:facts) do
           {
             osfamily: osfamily,
-            operatingsystem: os
+            operatingsystem: os,
+            architecture: 'amd64'
           }
         end
 
