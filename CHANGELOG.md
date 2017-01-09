@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
 ## [3.0.0] - 2017-01-08
 ### Added
 - Add the support for Debian 8 in the metadata.json to be able to find the
