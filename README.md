@@ -411,7 +411,7 @@ Default: `/var/aptly`
 
 Architectures managed by the repo.
 
-Default: `[]` (empty means all architectures)
+Default: `["amd64"]`
 
 ##### `ppa_dist`
 
