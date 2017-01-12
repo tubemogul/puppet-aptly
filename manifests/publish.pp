@@ -4,17 +4,18 @@
 #
 define aptly::publish (
   $source_type,
-  $source_name = $name,
-  $ensure      = 'present',
+  $distribution = "${::lsbdistcodename}-${name}",
+  $ensure       = 'present',
 ) {
   validate_string(
     $source_type,
-    $source_name
+    $distribution
   )
 
-  aptly_publish { $source_name:
-    ensure      => $ensure,
-    source_type => $source_type,
-    notify      => Class['aptly::service'],
+  aptly_publish { $name:
+    ensure       => $ensure,
+    source_type  => $source_type,
+    distribution => $distribution,
+    notify       => Class['aptly::service'],
   }
 }
