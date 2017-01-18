@@ -5,6 +5,8 @@ describe 'aptly::mirror' do
     let(:title) { 'debian-main' }
     let(:params) do
       {
+        uid: '450',
+        gid: '450',
         location: 'http://ftp.us.debian.org/debian',
         distribution: 'jessie',
         architectures: %w(amd64 i386),
@@ -17,6 +19,8 @@ describe 'aptly::mirror' do
     it 'should call the aptly_mirror provider' do
       should contain_aptly_mirror('debian-main')\
         .with_ensure('present')\
+        .with_uid('450')\
+        .with_gid('450')\
         .with_location('http://ftp.us.debian.org/debian')\
         .with_distribution('jessie')\
         .with_architectures(%w(amd64 i386))\
@@ -30,6 +34,8 @@ describe 'aptly::mirror' do
     let(:title) { 'debian-main' }
     let(:params) do
       {
+        uid: '450',
+        gid: '450',
         location: 'my_bad_location',
         distribution: 'jessie',
         architectures: %w(amd64 i386),

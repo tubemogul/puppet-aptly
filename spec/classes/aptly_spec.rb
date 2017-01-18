@@ -351,7 +351,7 @@ describe 'aptly', type: :class do
     context 'Enable no-lock on the API' do
       let(:params)  { { enable_api: true, api_nolock: true } }
       it { is_expected.to contain_service('aptly-api').with_ensure('running') }
-      
+
       it do
         is_expected.to create_file('/etc/init.d/aptly-api')\
           .with_mode('0755')\

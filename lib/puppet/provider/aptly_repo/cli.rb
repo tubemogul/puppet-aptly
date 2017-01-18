@@ -10,6 +10,8 @@ Puppet::Type.type(:aptly_repo).provide(:cli) do
     Puppet.info("Creating Aptly Repository #{name}")
 
     Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
       object: :repo,
       action: 'create',
       arguments: [name],
@@ -24,6 +26,8 @@ Puppet::Type.type(:aptly_repo).provide(:cli) do
     Puppet.info("Destroying Aptly Repository #{name}")
 
     Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
       object: :repo,
       action: 'drop',
       arguments: [name],
@@ -35,6 +39,8 @@ Puppet::Type.type(:aptly_repo).provide(:cli) do
     Puppet.debug("Check if Repository #{name} exists")
 
     Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
       object: :repo,
       action: 'list',
       flags: { 'raw' => 'true' },

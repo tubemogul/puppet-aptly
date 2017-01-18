@@ -15,6 +15,8 @@ describe Puppet_X::Aptly::Cli do
       [:mirror, :repo, :snapshot, :publish, :package, :db].each do |objname|
         it "should accept #{objname}" do
           expect(Puppet_X::Aptly::Cli.execute(
+                   uid: '450',
+                   gid: '450',
                    object: objname
           )).to eq("aptly  #{objname}")
         end
@@ -24,6 +26,8 @@ describe Puppet_X::Aptly::Cli do
     describe 'action parameter' do
       it 'should accept it' do
         expect(Puppet_X::Aptly::Cli.execute(
+                 uid: '450',
+                 gid: '450',
                  object: :publish,
                  action: 'list'
         )).to eq('aptly  publish list')
@@ -33,6 +37,8 @@ describe Puppet_X::Aptly::Cli do
     describe 'arguments parameter' do
       it 'should accept an array' do
         expect(Puppet_X::Aptly::Cli.execute(
+                 uid: '450',
+                 gid: '450',
                  object: :mirror,
                  action: 'create',
                  arguments: ['debian-main', 'http://ftp.us.debian.org']
@@ -43,6 +49,8 @@ describe Puppet_X::Aptly::Cli do
     describe 'flags parameter' do
       it 'should accept a Hash' do
         expect(Puppet_X::Aptly::Cli.execute(
+                 uid: '450',
+                 gid: '450',
                  object: :mirror,
                  action: 'create',
                  arguments: ['debian-main', 'http://ftp.us.debian.org'],

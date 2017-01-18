@@ -494,18 +494,26 @@ Default : `true`
 
 #### Define aptly::mirror
 
-##### `location`
-
-Location of the repository to mirror.
-
-Default: `undef`
-
 ##### `ensure`
 
 Ensures if the mirror must be `present` (should exist) or `absent` (or be
 destroyed).
 
 Default: `present`
+
+##### `uid`
+
+UID of the OS user which will run the cli
+
+##### `gid`
+
+GID of the OS user which will run the cli
+
+##### `location`
+
+Location of the repository to mirror.
+
+Default: `undef`
 
 ##### `distribution`
 
@@ -546,6 +554,14 @@ destroyed).
 
 Default: `present`
 
+##### `uid`
+
+UID of the OS user which will run the cli
+
+##### `gid`
+
+GID of the OS user which will run the cli
+
 ##### `default_distribution`
 
 Default distribution (used only when publishing).
@@ -559,6 +575,21 @@ Default component (used only when publishing).
 Default: `main`
 
 #### Define aptly::snapshot
+
+##### `ensure`
+
+Ensures if the snapshot must be `present` (should exist) or `absent` (or be
+destroyed).
+
+Default: `present`
+
+##### `uid`
+
+UID of the OS user which will run the cli
+
+##### `gid`
+
+GID of the OS user which will run the cli
 
 ##### `source_type`
 
@@ -576,14 +607,22 @@ Name of the source to create snapshot from.
 
 Default: `undef`
 
+#### Define aptly::publish
+
 ##### `ensure`
 
-Ensures if the snapshot must be `present` (should exist) or `absent` (or be
+Ensures that the publication is `present` (should exist) or `absent` (or should be
 destroyed).
 
 Default: `present`
 
-#### Define aptly::publish
+##### `uid`
+
+UID of the OS user which will run the cli
+
+##### `gid`
+
+GID of the OS user which will run the cli
 
 ##### `source_type`
 
@@ -599,15 +638,6 @@ Default: `undef`
 Distribution name to publish.
 
 Default: `"${::lsbdistcodename}-${name}"`
-
-##### `ensure`
-
-Ensures that the publication is `present` (should exist) or `absent` (or should be
-destroyed).
-
-Default: `present`
-
-
 
 ## Limitations
 

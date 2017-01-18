@@ -9,6 +9,8 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
   def create
     Puppet.info("Creating Aptly Mirror #{name}")
     Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
       object: :mirror,
       action: 'create',
       arguments: [name, resource[:location], resource[:distribution], [resource[:components]].join(' ')],
@@ -22,6 +24,8 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
     if resource[:update]
       Puppet.info("Updating Aptly Mirror #{name}")
       Puppet_X::Aptly::Cli.execute(
+        uid: resource[:uid],
+        gid: resource[:gid],
         object: :mirror,
         action: 'update',
         arguments: [name]
@@ -35,6 +39,8 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
     optsforce = resource[:force] ? 'force' : ''
 
     Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
       object: :mirror,
       action: 'drop',
       arguments: [name],
@@ -46,6 +52,8 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
     Puppet.debug("Check if #{name} exists")
 
     Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
       object: :mirror,
       action: 'list',
       flags: { 'raw' => 'true' },

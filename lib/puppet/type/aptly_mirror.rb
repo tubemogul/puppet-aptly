@@ -20,6 +20,16 @@ Puppet::Type.newtype(:aptly_mirror) do
     defaultto :true
   end
 
+  newparam(:uid) do
+    desc 'UID of the OS user which will run the cli'
+    defaultto '450'
+  end
+
+  newparam(:gid) do
+    desc 'GID of the OS user which will run the cli'
+    defaultto '450'
+  end
+
   newparam(:location) do
     desc 'The URL for the source Debian repository'
     validate do |value|
@@ -40,13 +50,13 @@ Puppet::Type.newtype(:aptly_mirror) do
     defaultto :undef
   end
 
-  newparam(:components, array_matching: :all) do
-    desc 'List of APT Debian components requested. Example : main'
+  newparam(:architectures, array_matching: :all) do
+    desc 'List of architectures to mirror'
     defaultto :undef
   end
 
-  newparam(:architectures, array_matching: :all) do
-    desc 'List of architectures to mirror'
+  newparam(:components, array_matching: :all) do
+    desc 'List of APT Debian components requested. Example : main'
     defaultto :undef
   end
 
