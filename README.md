@@ -505,9 +505,13 @@ Default: `present`
 
 UID of the OS user which will run the cli
 
+Default: `450`
+
 ##### `gid`
 
 GID of the OS user which will run the cli
+
+Default: `450`
 
 ##### `location`
 
@@ -558,9 +562,13 @@ Default: `present`
 
 UID of the OS user which will run the cli
 
+Default: `450`
+
 ##### `gid`
 
 GID of the OS user which will run the cli
+
+Default: `450`
 
 ##### `default_distribution`
 
@@ -587,9 +595,13 @@ Default: `present`
 
 UID of the OS user which will run the cli
 
+Default: `450`
+
 ##### `gid`
 
 GID of the OS user which will run the cli
+
+Default: `450`
 
 ##### `source_type`
 
@@ -620,9 +632,13 @@ Default: `present`
 
 UID of the OS user which will run the cli
 
+Default: `450`
+
 ##### `gid`
 
 GID of the OS user which will run the cli
+
+Default: `450`
 
 ##### `source_type`
 
