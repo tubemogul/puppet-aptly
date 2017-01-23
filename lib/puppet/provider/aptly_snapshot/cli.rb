@@ -21,6 +21,8 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
     end
 
     Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
       object: :snapshot,
       action: 'create',
       arguments: [name, from, resource[:source_name]]
@@ -31,6 +33,8 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
     Puppet.info("Destroying Aptly Snapshot #{name}")
 
     Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
       object: :snapshot,
       action: 'drop',
       arguments: [name]
@@ -41,6 +45,8 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
     Puppet.debug("Check if #{name} exists")
 
     Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
       object: :snapshot,
       action: 'list',
       flags: { 'raw' => 'true' },

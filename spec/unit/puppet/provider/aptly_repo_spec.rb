@@ -22,6 +22,8 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
   describe '#create' do
     it 'should create the repo' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :repo,
         action: 'create',
         arguments: ['foo'],
@@ -37,6 +39,8 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
   describe '#destroy' do
     it 'should drop the repo' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :repo,
         action: 'drop',
         arguments: ['foo'],
@@ -49,6 +53,8 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
   describe '#exists?' do
     it 'should check the repo list' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :repo,
         action: 'list',
         flags: { 'raw' => 'true' },
@@ -58,6 +64,8 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
     end
     it 'should handle without repo' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :repo,
         action: 'list',
         flags: { 'raw' => 'true' },

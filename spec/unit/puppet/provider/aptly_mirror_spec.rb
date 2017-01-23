@@ -24,6 +24,8 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
   describe '#create' do
     it 'should create and update the mirror' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :mirror,
         action: 'create',
         arguments: ['debian-main', 'http://ftp.us.debian.org', 'test', 'undef'],
@@ -34,6 +36,8 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
         }
       )
       Puppet_X::Aptly::Cli.expects(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :mirror,
         action: 'update',
         arguments: ['debian-main']
@@ -43,6 +47,8 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
 
     it 'should not update when update is false' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :mirror,
         action: 'create',
         arguments: ['debian-main', 'http://ftp.us.debian.org', 'test', 'undef'],
@@ -53,6 +59,8 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
         }
       )
       Puppet_X::Aptly::Cli.expects(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :mirror,
         action: 'update',
         arguments: ['debian-main']
@@ -71,6 +79,8 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
   describe '#destroy' do
     it 'should drop the mirror' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :mirror,
         action: 'drop',
         arguments: ['debian-main'],
@@ -83,6 +93,8 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
   describe '#exists?' do
     it 'should check the mirror list' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :mirror,
         action: 'list',
         flags: { 'raw' => 'true' },
@@ -92,6 +104,8 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
     end
     it 'should handle without mirror' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :mirror,
         action: 'list',
         flags: { 'raw' => 'true' },

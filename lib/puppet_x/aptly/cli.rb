@@ -28,6 +28,8 @@ module Puppet_X
       #
       # @return [String] or an exception in case of error
       def self.execute(options = {})
+        uid = options.fetch(:uid)
+        gid = options.fetch(:gid)
         object = options.fetch(:object, :mirror)
         action = options.fetch(:action, '')
         exceptions = options.fetch(:exceptions, :true)
@@ -43,7 +45,7 @@ module Puppet_X
 
         begin
           Puppet.debug("Executing: #{cmd}")
-          result = Puppet::Util::Execution.execute(cmd)
+          result = Puppet::Util::Execution.execute(cmd, uid: uid, gid: gid)
         rescue => e
           raise Puppet::Error, e.message if exceptions
           e.message

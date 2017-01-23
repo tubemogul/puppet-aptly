@@ -24,6 +24,8 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
   describe '#create' do
     it 'should publish the snapshot' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :publish,
         action: :snapshot,
         arguments: ['test-snap'],
@@ -36,6 +38,8 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
   describe '#destroy' do
     it 'should drop the publication' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :publish,
         action: 'drop',
         arguments: ['test-snap'],
@@ -48,6 +52,8 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
   describe '#exists?' do
     it 'should check the publications list' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :publish,
         action: 'list',
         flags: { 'raw' => 'true' },
@@ -57,6 +63,8 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
     end
     it 'should handle empty publications' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
+        uid: '450',
+        gid: '450',
         object: :publish,
         action: 'list',
         flags: { 'raw' => 'true' },

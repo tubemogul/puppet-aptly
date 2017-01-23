@@ -5,6 +5,8 @@
 define aptly::mirror (
   $location,
   $ensure        = 'present',
+  $uid           = '450',
+  $gid           = '450',
   $distribution  = $::lsbdistcodename,
   $architectures = [],
   $components    = [],
@@ -24,6 +26,8 @@ define aptly::mirror (
 
   aptly_mirror { $name:
     ensure        => $ensure,
+    uid           => $uid,
+    gid           => $gid,
     location      => $location,
     distribution  => $distribution,
     architectures => $architectures,

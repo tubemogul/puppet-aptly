@@ -7,6 +7,8 @@ define aptly::snapshot (
   $source_type,
   $source_name,
   $ensure = 'present',
+  $uid    = '450',
+  $gid    = '450',
 ) {
   validate_string(
     $source_type,
@@ -15,6 +17,8 @@ define aptly::snapshot (
 
   aptly_snapshot { $name:
     ensure      => $ensure,
+    uid         => $uid,
+    gid         => $gid,
     source_type => $source_type,
     source_name => $source_name,
   }

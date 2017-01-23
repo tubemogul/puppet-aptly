@@ -10,6 +10,8 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
     Puppet.info("Publishing Aptly #{resource[:source_type]} #{name}")
 
     Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
       object: :publish,
       action: resource[:source_type],
       arguments: [name],
@@ -21,6 +23,8 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
     Puppet.info("Destroying Aptly Publish #{name}")
 
     Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
       object: :publish,
       action: 'drop',
       arguments: [name],
@@ -32,6 +36,8 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
     Puppet.debug("Check if #{name} exists")
 
     Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
       object: :publish,
       action: 'list',
       flags: { 'raw' => 'true' },
