@@ -4,7 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [3.1.0] - 2017-01-23
+## Added
+- The "distribution" parameter to the aptly::publish define
+- A uid and gid to use when running the aptly command-line to avoid to run those
+  as root and redefine the rights on the aerospike directory every time
+
+## Changed
+- Default architectures from an empty array to an array containing only amd64 to
+  avoid ending up with a default ./public/pool directory
+
+## Dropped
+- The version-dependent files have been dropped (aka Gemfile.lock)
 
 ## [3.0.0] - 2017-01-08
 ### Added
