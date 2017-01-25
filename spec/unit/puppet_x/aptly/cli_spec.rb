@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Puppet_X::Aptly::Cli do
-  include Puppet_X::Aptly::Cli
+  include described_class
   describe '#execute (stubs)' do
     before :each do
       Process.stubs(:waitpid2).with(12_345).returns([12_345, stub('child_status', exitstatus: 0)])
@@ -14,7 +14,7 @@ describe Puppet_X::Aptly::Cli do
     describe 'object parameter' do
       [:mirror, :repo, :snapshot, :publish, :package, :db].each do |objname|
         it "should accept #{objname}" do
-          expect(Puppet_X::Aptly::Cli.execute(
+          expect(described_class.execute(
                    uid: '450',
                    gid: '450',
                    object: objname
@@ -25,7 +25,7 @@ describe Puppet_X::Aptly::Cli do
 
     describe 'action parameter' do
       it 'should accept it' do
-        expect(Puppet_X::Aptly::Cli.execute(
+        expect(described_class.execute(
                  uid: '450',
                  gid: '450',
                  object: :publish,
@@ -36,7 +36,7 @@ describe Puppet_X::Aptly::Cli do
 
     describe 'arguments parameter' do
       it 'should accept an array' do
-        expect(Puppet_X::Aptly::Cli.execute(
+        expect(described_class.execute(
                  uid: '450',
                  gid: '450',
                  object: :mirror,
@@ -48,7 +48,7 @@ describe Puppet_X::Aptly::Cli do
 
     describe 'flags parameter' do
       it 'should accept a Hash' do
-        expect(Puppet_X::Aptly::Cli.execute(
+        expect(described_class.execute(
                  uid: '450',
                  gid: '450',
                  object: :mirror,
