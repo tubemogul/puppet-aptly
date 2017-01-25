@@ -37,7 +37,11 @@ module Puppet_X
         flags = options.fetch(:flags, {})
 
         cmd = 'aptly '
-        cmd << flags.map { |k, v| v.to_s == '' ? "-#{k}" : "-#{k}=#{v}".strip unless v == 'undef' }.join(' ')
+        cmd << flags.map do |k, v|
+          unless v == 'undef'
+            v.to_s == '' ? "-#{k}" : "-#{k}=#{v}".strip
+          end
+        end.join(' ')
 
         raise Puppet::Error, "Unknown aptly object: #{object}" unless [:mirror, :repo, :snapshot, :publish, :package, :db].include? object
         cmd << " #{object} #{action} "
