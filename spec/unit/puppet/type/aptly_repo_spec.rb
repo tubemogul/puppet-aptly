@@ -46,10 +46,12 @@ describe Puppet::Type.type(:aptly_repo) do
   end
 
   describe 'default_distribution parameter' do
-    it 'do not support non-string as a value' do
+    it 'do not support numbers as a value' do
       expect do
         repo[:default_distribution] = 1234
       end.to raise_error(Puppet::Error, %r{is not a valid distribution})
+    end
+    it 'do not support arrays as a value' do
       expect do
         repo[:default_distribution] = %w(foo bar)
       end.to raise_error(Puppet::Error, %r{is not a valid distribution})
@@ -62,10 +64,12 @@ describe Puppet::Type.type(:aptly_repo) do
       expect(repo[:default_component]).to eq('contrib')
     end
 
-    it 'do not support non-string as a value' do
+    it 'do not support numbers as a value' do
       expect do
         repo[:default_component] = 1234
       end.to raise_error(Puppet::Error, %r{is not a valid component})
+    end
+    it 'do not support arrays as a value' do
       expect do
         repo[:default_component] = %w(foo bar)
       end.to raise_error(Puppet::Error, %r{is not a valid component})

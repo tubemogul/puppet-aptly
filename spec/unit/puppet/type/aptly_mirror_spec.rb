@@ -59,10 +59,12 @@ describe Puppet::Type.type(:aptly_mirror) do
   end
 
   describe 'location parameter' do
-    it 'do not support non-string as a value' do
+    it 'do not support numbers as a value' do
       expect do
         mirror[:location] = 1234
       end.to raise_error(Puppet::Error, %r{is not a valid location})
+    end
+    it 'do not support arrays as a value' do
       expect do
         mirror[:location] = %w(foo bar)
       end.to raise_error(Puppet::Error, %r{is not a valid location})
@@ -77,10 +79,12 @@ describe Puppet::Type.type(:aptly_mirror) do
   end
 
   describe 'distribution parameter' do
-    it 'do not support non-string as a value' do
+    it 'do not support numbers as a value' do
       expect do
         mirror[:distribution] = 1234
       end.to raise_error(Puppet::Error, %r{is not a valid distribution})
+    end
+    it 'do not support arrays as a value' do
       expect do
         mirror[:distribution] = %w(foo bar)
       end.to raise_error(Puppet::Error, %r{is not a valid distribution})
