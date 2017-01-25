@@ -13,7 +13,7 @@ describe Puppet_X::Aptly::Cli do
 
     describe 'object parameter' do
       [:mirror, :repo, :snapshot, :publish, :package, :db].each do |objname|
-        it "should accept #{objname}" do
+        it "accept #{objname}" do
           expect(described_class.execute(
                    uid: '450',
                    gid: '450',
@@ -24,7 +24,7 @@ describe Puppet_X::Aptly::Cli do
     end
 
     describe 'action parameter' do
-      it 'should accept it' do
+      it 'accept it' do
         expect(described_class.execute(
                  uid: '450',
                  gid: '450',
@@ -35,7 +35,7 @@ describe Puppet_X::Aptly::Cli do
     end
 
     describe 'arguments parameter' do
-      it 'should accept an array' do
+      it 'accept an array' do
         expect(described_class.execute(
                  uid: '450',
                  gid: '450',
@@ -47,7 +47,7 @@ describe Puppet_X::Aptly::Cli do
     end
 
     describe 'flags parameter' do
-      it 'should accept a Hash' do
+      it 'accept a Hash' do
         expect(described_class.execute(
                  uid: '450',
                  gid: '450',

@@ -16,7 +16,7 @@ describe 'aptly::mirror' do
       }
     end
 
-    it 'should call the aptly_mirror provider' do
+    it 'call the aptly_mirror provider' do
       should contain_aptly_mirror('debian-main')\
         .with_ensure('present')\
         .with_uid('450')\

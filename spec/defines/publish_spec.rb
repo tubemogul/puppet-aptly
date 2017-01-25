@@ -13,7 +13,7 @@ describe 'aptly::publish' do
       }
     end
 
-    it 'should call the aptly_publish provider' do
+    it 'call the aptly_publish provider' do
       is_expected.to contain_aptly_publish('2016-07-30-daily-snapshot')\
         .with_ensure('present')\
         .with_uid('450')\
