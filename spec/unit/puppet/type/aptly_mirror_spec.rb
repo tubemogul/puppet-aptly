@@ -2,7 +2,7 @@ require 'puppet'
 require 'puppet/type/aptly_mirror'
 
 describe Puppet::Type.type(:aptly_mirror) do
-  before :each do
+  before do
     @mirror = Puppet::Type.type(:aptly_mirror).new(
       name: 'trusty-main',
       location: 'http://us.archive.ubuntu.com/ubuntu/',

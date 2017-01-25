@@ -2,7 +2,7 @@ require 'puppet'
 require 'puppet/type/aptly_snapshot'
 
 describe Puppet::Type.type(:aptly_snapshot) do
-  before :each do
+  before do
     @snap = Puppet::Type.type(:aptly_snapshot).new(
       name: '20160729-global-release'
     )

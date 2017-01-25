@@ -2,7 +2,7 @@ require 'puppet'
 require 'puppet/type/aptly_publish'
 
 describe Puppet::Type.type(:aptly_publish) do
-  before :each do
+  before do
     @published = Puppet::Type.type(:aptly_publish).new(
       name: 'weekly-update'
     )

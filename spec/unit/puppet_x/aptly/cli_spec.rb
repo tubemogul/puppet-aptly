@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Puppet_X::Aptly::Cli do
   include described_class
   describe '#execute (stubs)' do
-    before :each do
+    before do
       Process.stubs(:waitpid2).with(12_345).returns([12_345, stub('child_status', exitstatus: 0)])
       # Returning the command that should have been executed
       Puppet::Util::ExecutionStub.set do |command, _args, _stdin, _stdout, _stderr|

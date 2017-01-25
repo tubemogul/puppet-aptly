@@ -2,7 +2,7 @@ require 'puppet'
 require 'puppet/type/aptly_repo'
 
 describe Puppet::Type.type(:aptly_repo) do
-  before :each do
+  before do
     @repo = Puppet::Type.type(:aptly_repo).new(
       name: 'bar'
     )
