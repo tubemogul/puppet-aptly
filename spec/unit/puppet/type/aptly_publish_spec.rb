@@ -2,8 +2,8 @@ require 'puppet'
 require 'puppet/type/aptly_publish'
 
 describe Puppet::Type.type(:aptly_publish) do
-  before do
-    @published = Puppet::Type.type(:aptly_publish).new(
+  let(:published) do
+    Puppet::Type.type(:aptly_publish).new(
       name: 'weekly-update'
     )
   end
@@ -23,8 +23,8 @@ describe Puppet::Type.type(:aptly_publish) do
   end
 
   it 'accept a name' do
-    @published[:name] = 'foobar'
-    expect(@published[:name]).to eq('foobar')
+    published[:name] = 'foobar'
+    expect(published[:name]).to eq('foobar')
   end
 
   describe 'force parameter' do
@@ -44,7 +44,7 @@ describe Puppet::Type.type(:aptly_publish) do
       end
 
       it 'have a non-nil default value' do
-        expect(@published[:force]).not_to be_nil
+        expect(published[:force]).not_to be_nil
       end
     end
   end
@@ -59,13 +59,13 @@ describe Puppet::Type.type(:aptly_publish) do
 
     [:repo, :snapshot].each do |value|
       it "accept #{value}" do
-        @published[:source_type] = value
-        expect(@published[:source_type]).to eq(value)
+        published[:source_type] = value
+        expect(published[:source_type]).to eq(value)
       end
     end
 
     it 'default to a non-nil value' do
-      expect(@published[:source_type]).not_to be_nil
+      expect(published[:source_type]).not_to be_nil
     end
   end
 end

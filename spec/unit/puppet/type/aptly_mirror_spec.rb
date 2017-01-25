@@ -2,8 +2,8 @@ require 'puppet'
 require 'puppet/type/aptly_mirror'
 
 describe Puppet::Type.type(:aptly_mirror) do
-  before do
-    @mirror = Puppet::Type.type(:aptly_mirror).new(
+  let(:mirror) do
+    Puppet::Type.type(:aptly_mirror).new(
       name: 'trusty-main',
       location: 'http://us.archive.ubuntu.com/ubuntu/',
       distribution: 'trusty'
@@ -26,8 +26,8 @@ describe Puppet::Type.type(:aptly_mirror) do
   end
 
   it 'accept a name' do
-    @mirror[:name] = 'foobar'
-    expect(@mirror[:name]).to eq('foobar')
+    mirror[:name] = 'foobar'
+    expect(mirror[:name]).to eq('foobar')
   end
 
   [:force, :with_sources, :with_udebs, :update].each do |param|
@@ -52,7 +52,7 @@ describe Puppet::Type.type(:aptly_mirror) do
         end
 
         it 'have a non-nil default value' do
-          expect(@mirror[param]).not_to be_nil
+          expect(mirror[param]).not_to be_nil
         end
       end
     end
@@ -61,10 +61,10 @@ describe Puppet::Type.type(:aptly_mirror) do
   describe 'location parameter' do
     it 'do not support non-string as a value' do
       expect do
-        @mirror[:location] = 1234
+        mirror[:location] = 1234
       end.to raise_error(Puppet::Error, %r{is not a valid location})
       expect do
-        @mirror[:location] = %w(foo bar)
+        mirror[:location] = %w(foo bar)
       end.to raise_error(Puppet::Error, %r{is not a valid location})
     end
 
@@ -79,10 +79,10 @@ describe Puppet::Type.type(:aptly_mirror) do
   describe 'distribution parameter' do
     it 'do not support non-string as a value' do
       expect do
-        @mirror[:distribution] = 1234
+        mirror[:distribution] = 1234
       end.to raise_error(Puppet::Error, %r{is not a valid distribution})
       expect do
-        @mirror[:distribution] = %w(foo bar)
+        mirror[:distribution] = %w(foo bar)
       end.to raise_error(Puppet::Error, %r{is not a valid distribution})
     end
 
@@ -96,25 +96,25 @@ describe Puppet::Type.type(:aptly_mirror) do
 
   describe 'components parameter' do
     it 'accept a string' do
-      @mirror[:components] = 'main'
-      expect(@mirror[:components]).to eq('main')
+      mirror[:components] = 'main'
+      expect(mirror[:components]).to eq('main')
     end
 
     it 'accept a full array' do
-      @mirror[:components] = %w(main contrib)
-      expect(@mirror[:components]).to eq(%w(main contrib))
+      mirror[:components] = %w(main contrib)
+      expect(mirror[:components]).to eq(%w(main contrib))
     end
   end
 
   describe 'architectures parameter' do
     it 'accept a string' do
-      @mirror[:architectures] = 'amd64'
-      expect(@mirror[:architectures]).to eq('amd64')
+      mirror[:architectures] = 'amd64'
+      expect(mirror[:architectures]).to eq('amd64')
     end
 
     it 'accept a full array' do
-      @mirror[:architectures] = %w(i386 amd64 powerpc)
-      expect(@mirror[:architectures]).to eq(%w(i386 amd64 powerpc))
+      mirror[:architectures] = %w(i386 amd64 powerpc)
+      expect(mirror[:architectures]).to eq(%w(i386 amd64 powerpc))
     end
   end
 end

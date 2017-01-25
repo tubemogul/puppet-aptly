@@ -2,11 +2,7 @@ require 'puppet'
 require 'puppet/type/aptly_snapshot'
 
 describe Puppet::Type.type(:aptly_snapshot) do
-  before do
-    @snap = Puppet::Type.type(:aptly_snapshot).new(
-      name: '20160729-global-release'
-    )
-  end
+  let(:snap) { Puppet::Type.type(:aptly_snapshot).new(name: '20160729-global-release') }
 
   describe 'validating parameters list' do
     [:name, :force, :source_type, :source_name, :description, :snapshots, :package_refs].each do |param|
@@ -23,8 +19,8 @@ describe Puppet::Type.type(:aptly_snapshot) do
   end
 
   it 'accept a name' do
-    @snap[:name] = 'foobar'
-    expect(@snap[:name]).to eq('foobar')
+    snap[:name] = 'foobar'
+    expect(snap[:name]).to eq('foobar')
   end
 
   describe 'force parameter' do
@@ -44,7 +40,7 @@ describe Puppet::Type.type(:aptly_snapshot) do
       end
 
       it 'have a non-nil default value' do
-        expect(@snap[:force]).not_to be_nil
+        expect(snap[:force]).not_to be_nil
       end
     end
   end
@@ -59,21 +55,21 @@ describe Puppet::Type.type(:aptly_snapshot) do
 
     [:mirror, :repository, :empty].each do |value|
       it "accept #{value}" do
-        @snap[:source_type] = value
-        expect(@snap[:source_type]).to eq(value)
+        snap[:source_type] = value
+        expect(snap[:source_type]).to eq(value)
       end
     end
 
     it 'default to a non-nil value' do
-      expect(@snap[:source_type]).not_to be_nil
+      expect(snap[:source_type]).not_to be_nil
     end
   end
 
   describe 'string parameters list' do
     [:source_name, :description, :snapshots, :package_refs].each do |param|
       it "accept a #{param}" do
-        @snap[param] = 'foobar'
-        expect(@snap[param]).to eq('foobar')
+        snap[param] = 'foobar'
+        expect(snap[param]).to eq('foobar')
       end
     end
   end

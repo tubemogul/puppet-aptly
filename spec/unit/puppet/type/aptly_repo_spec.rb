@@ -2,11 +2,7 @@ require 'puppet'
 require 'puppet/type/aptly_repo'
 
 describe Puppet::Type.type(:aptly_repo) do
-  before do
-    @repo = Puppet::Type.type(:aptly_repo).new(
-      name: 'bar'
-    )
-  end
+  let(:repo) { Puppet::Type.type(:aptly_repo).new(name: 'bar') }
 
   describe 'validating parameters list' do
     [:name, :force, :default_component, :default_distribution].each do |param|
@@ -23,8 +19,8 @@ describe Puppet::Type.type(:aptly_repo) do
   end
 
   it 'accept a name' do
-    @repo[:name] = 'foobar'
-    expect(@repo[:name]).to eq('foobar')
+    repo[:name] = 'foobar'
+    expect(repo[:name]).to eq('foobar')
   end
 
   describe 'force parameter' do
@@ -44,7 +40,7 @@ describe Puppet::Type.type(:aptly_repo) do
       end
 
       it 'have a non-nil default value' do
-        expect(@repo[:force]).not_to be_nil
+        expect(repo[:force]).not_to be_nil
       end
     end
   end
@@ -52,26 +48,26 @@ describe Puppet::Type.type(:aptly_repo) do
   describe 'default_distribution parameter' do
     it 'do not support non-string as a value' do
       expect do
-        @repo[:default_distribution] = 1234
+        repo[:default_distribution] = 1234
       end.to raise_error(Puppet::Error, %r{is not a valid distribution})
       expect do
-        @repo[:default_distribution] = %w(foo bar)
+        repo[:default_distribution] = %w(foo bar)
       end.to raise_error(Puppet::Error, %r{is not a valid distribution})
     end
   end
 
   describe 'default_component parameter' do
     it 'accept a string' do
-      @repo[:default_component] = 'contrib'
-      expect(@repo[:default_component]).to eq('contrib')
+      repo[:default_component] = 'contrib'
+      expect(repo[:default_component]).to eq('contrib')
     end
 
     it 'do not support non-string as a value' do
       expect do
-        @repo[:default_component] = 1234
+        repo[:default_component] = 1234
       end.to raise_error(Puppet::Error, %r{is not a valid component})
       expect do
-        @repo[:default_component] = %w(foo bar)
+        repo[:default_component] = %w(foo bar)
       end.to raise_error(Puppet::Error, %r{is not a valid component})
     end
   end
