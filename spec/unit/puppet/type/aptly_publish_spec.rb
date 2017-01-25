@@ -33,7 +33,7 @@ describe Puppet::Type.type(:aptly_publish) do
         expect do
           described_class.new(name: 'weekly-update',
                               force: value)
-        end.to_not raise_error
+        end.not_to raise_error
       end
 
       it 'not accept a non-boolean' do

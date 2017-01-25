@@ -33,7 +33,7 @@ describe Puppet::Type.type(:aptly_snapshot) do
         expect do
           described_class.new(name: '20160729-global-release',
                               force: value)
-        end.to_not raise_error
+        end.not_to raise_error
       end
 
       it 'do not accept a non-boolean' do

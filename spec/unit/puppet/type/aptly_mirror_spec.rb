@@ -39,7 +39,7 @@ describe Puppet::Type.type(:aptly_mirror) do
                                 :location     => 'http://us.archive.ubuntu.com/ubuntu/',
                                 :distribution => 'trusty',
                                 param         => value)
-          end.to_not raise_error
+          end.not_to raise_error
         end
 
         it 'do not accept a non-boolean' do
