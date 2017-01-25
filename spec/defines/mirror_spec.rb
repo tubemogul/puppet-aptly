@@ -44,6 +44,6 @@ describe 'aptly::mirror' do
         with_udebs: true
       }
     end
-    it { should raise_error(Puppet::Error, /does not match/) }
+    it { should raise_error(Puppet::Error, %r{does not match}) }
   end
 end

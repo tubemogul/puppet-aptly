@@ -40,7 +40,7 @@ describe Puppet::Type.type(:aptly_repo) do
         expect do
           described_class.new(name: 'bar',
                               force: 'foo')
-        end.to raise_error(Puppet::Error, /Invalid value/)
+        end.to raise_error(Puppet::Error, %r{Invalid value})
       end
 
       it 'have a non-nil default value' do
@@ -53,10 +53,10 @@ describe Puppet::Type.type(:aptly_repo) do
     it 'do not support non-string as a value' do
       expect do
         @repo[:default_distribution] = 1234
-      end.to raise_error(Puppet::Error, /is not a valid distribution/)
+      end.to raise_error(Puppet::Error, %r{is not a valid distribution})
       expect do
         @repo[:default_distribution] = %w(foo bar)
-      end.to raise_error(Puppet::Error, /is not a valid distribution/)
+      end.to raise_error(Puppet::Error, %r{is not a valid distribution})
     end
   end
 
@@ -69,10 +69,10 @@ describe Puppet::Type.type(:aptly_repo) do
     it 'do not support non-string as a value' do
       expect do
         @repo[:default_component] = 1234
-      end.to raise_error(Puppet::Error, /is not a valid component/)
+      end.to raise_error(Puppet::Error, %r{is not a valid component})
       expect do
         @repo[:default_component] = %w(foo bar)
-      end.to raise_error(Puppet::Error, /is not a valid component/)
+      end.to raise_error(Puppet::Error, %r{is not a valid component})
     end
   end
 end

@@ -57,8 +57,8 @@ describe 'aptly', type: :class do
             .with_mode('0755')\
             .with_owner('root')\
             .with_group('root')\
-            .with_content(/^DAEMON_USER=aptly$/)\
-            .with_content(/-config=\/etc\/aptly.conf/)
+            .with_content(%r{^DAEMON_USER=aptly$})\
+            .with_content(%r{-config=/etc/aptly.conf})
         end
 
         it do
@@ -99,13 +99,13 @@ describe 'aptly', type: :class do
         it do
           should create_file('/etc/aptly.conf')\
             .with_ensure('file')\
-            .with_content(/"rootDir": "\/var\/aptly"/)\
+            .with_content(%r{"rootDir": "/var/aptly"})\
             .with_mode('0644')\
             .with_owner('aptly')\
             .with_group('aptly')
         end
-        it { should create_file('/etc/aptly.conf').with_content(/"downloadConcurrency": 4,/) }
-        it { should create_file('/etc/aptly.conf').with_content(/"architectures": \["amd64"\],/) }
+        it { should create_file('/etc/aptly.conf').with_content(%r{"downloadConcurrency": 4,}) }
+        it { should create_file('/etc/aptly.conf').with_content(%r{"architectures": \["amd64"\],}) }
 
         it do
           should create_file('/var/aptly')\
@@ -144,7 +144,7 @@ describe 'aptly', type: :class do
             .with_mode('0755')\
             .with_owner('root')\
             .with_group('root')\
-            .with_content(/^DAEMON_USER=reposvc$/)
+            .with_content(%r{^DAEMON_USER=reposvc$})
         end
 
         it do
@@ -168,7 +168,7 @@ describe 'aptly', type: :class do
         it do
           should create_file('/home/aptly/.aptly.cfg')\
             .with_ensure('file')\
-            .with_content(/"rootDir": "\/aptly"/)\
+            .with_content(%r{"rootDir": "/aptly"})\
             .with_mode('0644')\
             .with_owner('reposvc')\
             .with_group('repogrp')
@@ -176,7 +176,7 @@ describe 'aptly', type: :class do
 
         it do
           is_expected.to create_file('/etc/init.d/aptly')\
-            .with_content(/-config=\/home\/aptly\/.aptly.cfg/)
+            .with_content(%r{-config=/home/aptly/.aptly.cfg})
         end
 
         it do
@@ -244,7 +244,7 @@ describe 'aptly', type: :class do
               .with_mode('0755')\
               .with_owner('root')\
               .with_group('root')\
-              .with_content(/^DAEMON_USER=reposvc$/)
+              .with_content(%r{^DAEMON_USER=reposvc$})
           end
 
           it { is_expected.to contain_file('/etc/apt/sources.list.d/aptly.list') }
@@ -260,14 +260,14 @@ describe 'aptly', type: :class do
     # Testing the parameters related to the config
     context 'limiting to specific architectures' do
       let(:params) { { architectures: %w(amd64 i386) } }
-      it { should create_file('/etc/aptly.conf').with_content(/"architectures": \["amd64", "i386"\],/) }
+      it { should create_file('/etc/aptly.conf').with_content(%r{"architectures": \["amd64", "i386"\],}) }
     end
 
     context 'using custom config properties' do
       let(:params) { { properties: { 'gpgDisableVerify' => 'true' } } }
-      it { should create_file('/etc/aptly.conf').with_content(/"gpgDisableVerify": true,/) }
+      it { should create_file('/etc/aptly.conf').with_content(%r{"gpgDisableVerify": true,}) }
       # Should not have the default values
-      it { should_not create_file('/etc/aptly.conf').with_content(/"gpgDisableSign": false,/) }
+      it { should_not create_file('/etc/aptly.conf').with_content(%r{"gpgDisableSign": false,}) }
     end
 
     context 'adding an s3 publish endpoint' do
@@ -286,8 +286,8 @@ describe 'aptly', type: :class do
           }
         } }
       end
-      it { should create_file('/etc/aptly.conf').with_content(/"bucket":"repo"/) }
-      it { should create_file('/etc/aptly.conf').with_content(/"region":"us-east-1"/) }
+      it { should create_file('/etc/aptly.conf').with_content(%r{"bucket":"repo"}) }
+      it { should create_file('/etc/aptly.conf').with_content(%r{"region":"us-east-1"}) }
     end
 
     context 'adding an swift publish endpoint' do
@@ -308,7 +308,7 @@ describe 'aptly', type: :class do
           }
         } }
       end
-      it { should create_file('/etc/aptly.conf').with_content(/"container":"repo"/) }
+      it { should create_file('/etc/aptly.conf').with_content(%r{"container":"repo"}) }
     end
 
     # Testing the service
@@ -337,7 +337,7 @@ describe 'aptly', type: :class do
     end
     context 'Uncorrect API Bind IP address' do
       let(:params) { { api_bind: 'I_AM_A_BAD_IP' } }
-      it { should raise_error(Puppet::Error, /API Bind IP address is not correct/) }
+      it { should raise_error(Puppet::Error, %r{API Bind IP address is not correct}) }
     end
 
     context 'Enable API service' do
@@ -357,7 +357,7 @@ describe 'aptly', type: :class do
           .with_mode('0755')\
           .with_owner('root')\
           .with_group('root')\
-          .with_content(/-no-lock=true/)
+          .with_content(%r{-no-lock=true})
       end
     end
   end
@@ -375,7 +375,7 @@ describe 'aptly', type: :class do
         end
 
         let(:params) { { install_repo: true } }
-        it { expect { is_expected.to contain_package('aptly') }.to raise_error(Puppet::Error, /Installation of the repository not supported on #{os}/) }
+        it { expect { is_expected.to contain_package('aptly') }.to raise_error(Puppet::Error, %r{Installation of the repository not supported on #{os}}) }
       end
     end
     context 'untested operating system for versionned installations without repo' do

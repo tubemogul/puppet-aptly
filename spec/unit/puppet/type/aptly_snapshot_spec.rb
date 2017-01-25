@@ -40,7 +40,7 @@ describe Puppet::Type.type(:aptly_snapshot) do
         expect do
           described_class.new(name: '20160729-global-release',
                               force: 'foo')
-        end.to raise_error(Puppet::Error, /Invalid value/)
+        end.to raise_error(Puppet::Error, %r{Invalid value})
       end
 
       it 'have a non-nil default value' do
@@ -54,7 +54,7 @@ describe Puppet::Type.type(:aptly_snapshot) do
       expect do
         described_class.new(name: '20160729-global-release',
                             source_type: 'foobar')
-      end.to raise_error(Puppet::Error, /Invalid value.*Valid values are mirror, repository, empty\./)
+      end.to raise_error(Puppet::Error, %r{Invalid value.*Valid values are mirror, repository, empty\.})
     end
 
     [:mirror, :repository, :empty].each do |value|

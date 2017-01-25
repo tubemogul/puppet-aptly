@@ -40,7 +40,7 @@ describe Puppet::Type.type(:aptly_publish) do
         expect do
           described_class.new(name: 'weekly-update',
                               force: 'foo')
-        end.to raise_error(Puppet::Error, /Invalid value/)
+        end.to raise_error(Puppet::Error, %r{Invalid value})
       end
 
       it 'have a non-nil default value' do
@@ -54,7 +54,7 @@ describe Puppet::Type.type(:aptly_publish) do
       expect do
         described_class.new(name: 'weekly-update',
                             source_type: 'foobar')
-      end.to raise_error(Puppet::Error, /Invalid value.*Valid values are repo, snapshot\./)
+      end.to raise_error(Puppet::Error, %r{Invalid value.*Valid values are repo, snapshot\.})
     end
 
     [:repo, :snapshot].each do |value|

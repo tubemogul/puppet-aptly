@@ -48,7 +48,7 @@ describe Puppet::Type.type(:aptly_mirror) do
                                 :location     => 'http://us.archive.ubuntu.com/ubuntu/',
                                 :distribution => 'trusty',
                                 param         => 'foo')
-          end.to raise_error(Puppet::Error, /Invalid value/)
+          end.to raise_error(Puppet::Error, %r{Invalid value})
         end
 
         it 'have a non-nil default value' do
@@ -62,17 +62,17 @@ describe Puppet::Type.type(:aptly_mirror) do
     it 'do not support non-string as a value' do
       expect do
         @mirror[:location] = 1234
-      end.to raise_error(Puppet::Error, /is not a valid location/)
+      end.to raise_error(Puppet::Error, %r{is not a valid location})
       expect do
         @mirror[:location] = %w(foo bar)
-      end.to raise_error(Puppet::Error, /is not a valid location/)
+      end.to raise_error(Puppet::Error, %r{is not a valid location})
     end
 
     it 'require it' do
       expect do
         Puppet::Type.type(:aptly_mirror).new(name: 'trusty-main',
                                              distribution: 'trusty')
-      end.to raise_error(Puppet::Error, /is not a valid location/)
+      end.to raise_error(Puppet::Error, %r{is not a valid location})
     end
   end
 
@@ -80,17 +80,17 @@ describe Puppet::Type.type(:aptly_mirror) do
     it 'do not support non-string as a value' do
       expect do
         @mirror[:distribution] = 1234
-      end.to raise_error(Puppet::Error, /is not a valid distribution/)
+      end.to raise_error(Puppet::Error, %r{is not a valid distribution})
       expect do
         @mirror[:distribution] = %w(foo bar)
-      end.to raise_error(Puppet::Error, /is not a valid distribution/)
+      end.to raise_error(Puppet::Error, %r{is not a valid distribution})
     end
 
     it 'require it' do
       expect do
         described_class.new(name: 'trusty-main',
                             location: 'http://us.archive.ubuntu.com/ubuntu/')
-      end.to raise_error(Puppet::Error, /is not a valid distribution/)
+      end.to raise_error(Puppet::Error, %r{is not a valid distribution})
     end
   end
 
