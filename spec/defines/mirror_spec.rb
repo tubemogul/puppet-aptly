@@ -17,7 +17,7 @@ describe 'aptly::mirror' do
     end
 
     it 'call the aptly_mirror provider' do
-      should contain_aptly_mirror('debian-main').\
+      is_expected.to contain_aptly_mirror('debian-main').\
         with_ensure('present').\
         with_uid('450').\
         with_gid('450').\
@@ -44,6 +44,6 @@ describe 'aptly::mirror' do
         with_udebs: true
       }
     end
-    it { should raise_error(Puppet::Error, %r{does not match}) }
+    it { is_expected.to raise_error(Puppet::Error, %r{does not match}) }
   end
 end

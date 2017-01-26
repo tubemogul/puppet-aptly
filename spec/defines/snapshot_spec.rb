@@ -13,7 +13,7 @@ describe 'aptly::snapshot' do
     end
 
     it 'call the aptly_snapshot provider' do
-      should contain_aptly_snapshot('2016-07-30-daily').\
+      is_expected.to contain_aptly_snapshot('2016-07-30-daily').\
         with_ensure('present').\
         with_uid('450').\
         with_gid('450').\

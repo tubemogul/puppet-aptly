@@ -85,7 +85,7 @@ describe 'aptly', type: :class do
         # aptly::service
         ###
         it do
-          should create_service('aptly').\
+          is_expected.to create_service('aptly').\
             with_ensure('running').\
             with_enable('true').\
             with_hasstatus('true').\
@@ -96,18 +96,18 @@ describe 'aptly', type: :class do
         # aptly::config
         ###
         it do
-          should create_file('/etc/aptly.conf').\
+          is_expected.to create_file('/etc/aptly.conf').\
             with_ensure('file').\
             with_content(%r{"rootDir": "/var/aptly"}).\
             with_mode('0644').\
             with_owner('aptly').\
             with_group('aptly')
         end
-        it { should create_file('/etc/aptly.conf').with_content(%r{"downloadConcurrency": 4,}) }
-        it { should create_file('/etc/aptly.conf').with_content(%r{"architectures": \["amd64"\],}) }
+        it { is_expected.to create_file('/etc/aptly.conf').with_content(%r{"downloadConcurrency": 4,}) }
+        it { is_expected.to create_file('/etc/aptly.conf').with_content(%r{"architectures": \["amd64"\],}) }
 
         it do
-          should create_file('/var/aptly').\
+          is_expected.to create_file('/var/aptly').\
             with_ensure('directory').\
             with_mode('0644').\
             with_owner('aptly').\
@@ -165,7 +165,7 @@ describe 'aptly', type: :class do
         it { is_expected.not_to contain_exec('apt_update') }
 
         it do
-          should create_file('/home/aptly/.aptly.cfg').\
+          is_expected.to create_file('/home/aptly/.aptly.cfg').\
             with_ensure('file').\
             with_content(%r{"rootDir": "/aptly"}).\
             with_mode('0644').\
@@ -178,7 +178,7 @@ describe 'aptly', type: :class do
         end
 
         it do
-          should create_file('/aptly').\
+          is_expected.to create_file('/aptly').\
             with_ensure('directory').\
             with_mode('0644').\
             with_owner('reposvc').\
@@ -257,14 +257,14 @@ describe 'aptly', type: :class do
     # Testing the parameters related to the config
     context 'limiting to specific architectures' do
       let(:params) { { architectures: %w(amd64 i386) } }
-      it { should create_file('/etc/aptly.conf').with_content(%r{"architectures": \["amd64", "i386"\],}) }
+      it { is_expected.to create_file('/etc/aptly.conf').with_content(%r{"architectures": \["amd64", "i386"\],}) }
     end
 
     context 'using custom config properties' do
       let(:params) { { properties: { 'gpgDisableVerify' => 'true' } } }
-      it { should create_file('/etc/aptly.conf').with_content(%r{"gpgDisableVerify": true,}) }
+      it { is_expected.to create_file('/etc/aptly.conf').with_content(%r{"gpgDisableVerify": true,}) }
       # Should not have the default values
-      it { should_not create_file('/etc/aptly.conf').with_content(%r{"gpgDisableSign": false,}) }
+      it { is_expected.not_to create_file('/etc/aptly.conf').with_content(%r{"gpgDisableSign": false,}) }
     end
 
     context 'adding an s3 publish endpoint' do
@@ -283,8 +283,8 @@ describe 'aptly', type: :class do
           }
         } }
       end
-      it { should create_file('/etc/aptly.conf').with_content(%r{"bucket":"repo"}) }
-      it { should create_file('/etc/aptly.conf').with_content(%r{"region":"us-east-1"}) }
+      it { is_expected.to create_file('/etc/aptly.conf').with_content(%r{"bucket":"repo"}) }
+      it { is_expected.to create_file('/etc/aptly.conf').with_content(%r{"region":"us-east-1"}) }
     end
 
     context 'adding an swift publish endpoint' do
@@ -305,15 +305,15 @@ describe 'aptly', type: :class do
           }
         } }
       end
-      it { should create_file('/etc/aptly.conf').with_content(%r{"container":"repo"}) }
+      it { is_expected.to create_file('/etc/aptly.conf').with_content(%r{"container":"repo"}) }
     end
 
     # Testing the service
     context 'enabling the service' do
       let(:params) { { enable_service: true } }
-      it { should create_class('aptly::service') }
+      it { is_expected.to create_class('aptly::service') }
       it do
-        should create_service('aptly').\
+        is_expected.to create_service('aptly').\
           with_ensure('running').\
           with_enable('true').\
           with_hasstatus('true').\
@@ -323,9 +323,9 @@ describe 'aptly', type: :class do
 
     context 'Disable the service' do
       let(:params) { { enable_service: false } }
-      it { should create_class('aptly::service') }
+      it { is_expected.to create_class('aptly::service') }
       it do
-        should create_service('aptly').\
+        is_expected.to create_service('aptly').\
           with_ensure('stopped').\
           with_enable('false').\
           with_hasstatus('true').\
@@ -334,12 +334,12 @@ describe 'aptly', type: :class do
     end
     context 'Uncorrect API Bind IP address' do
       let(:params) { { api_bind: 'I_AM_A_BAD_IP' } }
-      it { should raise_error(Puppet::Error, %r{API Bind IP address is not correct}) }
+      it { is_expected.to raise_error(Puppet::Error, %r{API Bind IP address is not correct}) }
     end
 
     context 'Enable API service' do
       let(:params)  { { enable_api: true } }
-      it { should contain_service('aptly-api').with_ensure('running') }
+      it { is_expected.to contain_service('aptly-api').with_ensure('running') }
     end
 
     context 'Enable no-lock on the API' do
@@ -399,8 +399,8 @@ describe 'aptly', type: :class do
 
         let(:params) { { version: 'installed', install_repo: false } }
         it { expect(Puppet::Util::Warnings.send('warnonce', "Module aptly not tested against #{os}")) }
-        it { should contain_file('/etc/init.d/aptly-api') }
-        it { should contain_package('aptly').with_ensure('installed') }
+        it { is_expected.to contain_file('/etc/init.d/aptly-api') }
+        it { is_expected.to contain_package('aptly').with_ensure('installed') }
       end
     end
   end
