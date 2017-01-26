@@ -40,40 +40,39 @@ describe 'aptly', type: :class do
         it { is_expected.to contain_class('apt::params') }
 
         it do
-          is_expected.to contain_apt__source('aptly')\
-            .with_location('http://repo.aptly.info')\
-            .with_release('squeeze')\
-            .with_repos('main')\
-            .with_key('id' => 'DF32BC15E2145B3FA151AED19E3E53F19C7DE460', 'server' => 'keys.gnupg.net')\
-            .with_include('src' => false, 'deb' => true)\
-            .that_notifies('Class[apt::update]')
+          is_expected.to contain_apt__source('aptly').\
+            with_location('http://repo.aptly.info').\
+            with_release('squeeze').\
+            with_repos('main').\
+            with_key('id' => 'DF32BC15E2145B3FA151AED19E3E53F19C7DE460', 'server' => 'keys.gnupg.net').\
+            with_include('src' => false, 'deb' => true).\
+            that_notifies('Class[apt::update]')
 
-          is_expected.to contain_class('apt::update')\
-            .that_comes_before('Package[aptly]')
+          is_expected.to contain_class('apt::update').that_comes_before('Package[aptly]')
         end
 
         it do
-          is_expected.to create_file('/etc/init.d/aptly')\
-            .with_mode('0755')\
-            .with_owner('root')\
-            .with_group('root')\
-            .with_content(%r{^DAEMON_USER=aptly$})\
-            .with_content(%r{-config=/etc/aptly.conf})
+          is_expected.to create_file('/etc/init.d/aptly').\
+            with_mode('0755').\
+            with_owner('root').\
+            with_group('root').\
+            with_content(%r{^DAEMON_USER=aptly$}).\
+            with_content(%r{-config=/etc/aptly.conf})
         end
 
         it do
-          is_expected.to contain_user('aptly')\
-            .with_ensure('present')\
-            .with_uid(450)\
-            .with_gid('aptly')\
-            .with_shell('/bin/bash')
+          is_expected.to contain_user('aptly').\
+            with_ensure('present').\
+            with_uid(450).\
+            with_gid('aptly').\
+            with_shell('/bin/bash')
         end
 
         it do
-          is_expected.to contain_group('aptly')\
-            .with_ensure('present')\
-            .with_gid(450)\
-            .that_comes_before('User[aptly]')
+          is_expected.to contain_group('aptly').\
+            with_ensure('present').\
+            with_gid(450).\
+            that_comes_before('User[aptly]')
         end
 
         it { is_expected.to contain_file('/etc/apt/sources.list.d/aptly.list') }
@@ -86,34 +85,34 @@ describe 'aptly', type: :class do
         # aptly::service
         ###
         it do
-          should create_service('aptly')\
-            .with_ensure('running')\
-            .with_enable('true')\
-            .with_hasstatus('true')\
-            .with_hasrestart('true')
+          should create_service('aptly').\
+            with_ensure('running').\
+            with_enable('true').\
+            with_hasstatus('true').\
+            with_hasrestart('true')
         end
 
         ###
         # aptly::config
         ###
         it do
-          should create_file('/etc/aptly.conf')\
-            .with_ensure('file')\
-            .with_content(%r{"rootDir": "/var/aptly"})\
-            .with_mode('0644')\
-            .with_owner('aptly')\
-            .with_group('aptly')
+          should create_file('/etc/aptly.conf').\
+            with_ensure('file').\
+            with_content(%r{"rootDir": "/var/aptly"}).\
+            with_mode('0644').\
+            with_owner('aptly').\
+            with_group('aptly')
         end
         it { should create_file('/etc/aptly.conf').with_content(%r{"downloadConcurrency": 4,}) }
         it { should create_file('/etc/aptly.conf').with_content(%r{"architectures": \["amd64"\],}) }
 
         it do
-          should create_file('/var/aptly')\
-            .with_ensure('directory')\
-            .with_mode('0644')\
-            .with_owner('aptly')\
-            .with_group('aptly')\
-            .with_recurse(true)
+          should create_file('/var/aptly').\
+            with_ensure('directory').\
+            with_mode('0644').\
+            with_owner('aptly').\
+            with_group('aptly').\
+            with_recurse(true)
         end
       end
     end
@@ -140,51 +139,50 @@ describe 'aptly', type: :class do
         it { is_expected.not_to contain_class('apt::update') }
 
         it do
-          is_expected.to create_file('/etc/init.d/aptly')\
-            .with_mode('0755')\
-            .with_owner('root')\
-            .with_group('root')\
-            .with_content(%r{^DAEMON_USER=reposvc$})
+          is_expected.to create_file('/etc/init.d/aptly').\
+            with_mode('0755').\
+            with_owner('root').\
+            with_group('root').\
+            with_content(%r{^DAEMON_USER=reposvc$})
         end
 
         it do
-          is_expected.to contain_user('reposvc')\
-            .with_ensure('present')\
-            .with_uid(42)\
-            .with_gid('repogrp')\
-            .with_shell('/bin/bash')
+          is_expected.to contain_user('reposvc').\
+            with_ensure('present').\
+            with_uid(42).\
+            with_gid('repogrp').\
+            with_shell('/bin/bash')
         end
 
         it do
-          is_expected.to contain_group('repogrp')\
-            .with_ensure('present')\
-            .with_gid(666)\
-            .that_comes_before('User[reposvc]')
+          is_expected.to contain_group('repogrp').\
+            with_ensure('present').\
+            with_gid(666).\
+            that_comes_before('User[reposvc]')
         end
 
         it { is_expected.not_to contain_file('/etc/apt/sources.list.d/aptly.list') }
         it { is_expected.not_to contain_exec('apt_update') }
 
         it do
-          should create_file('/home/aptly/.aptly.cfg')\
-            .with_ensure('file')\
-            .with_content(%r{"rootDir": "/aptly"})\
-            .with_mode('0644')\
-            .with_owner('reposvc')\
-            .with_group('repogrp')
+          should create_file('/home/aptly/.aptly.cfg').\
+            with_ensure('file').\
+            with_content(%r{"rootDir": "/aptly"}).\
+            with_mode('0644').\
+            with_owner('reposvc').\
+            with_group('repogrp')
         end
 
         it do
-          is_expected.to create_file('/etc/init.d/aptly')\
-            .with_content(%r{-config=/home/aptly/.aptly.cfg})
+          is_expected.to create_file('/etc/init.d/aptly').with_content(%r{-config=/home/aptly/.aptly.cfg})
         end
 
         it do
-          should create_file('/aptly')\
-            .with_ensure('directory')\
-            .with_mode('0644')\
-            .with_owner('reposvc')\
-            .with_group('repogrp')
+          should create_file('/aptly').\
+            with_ensure('directory').\
+            with_mode('0644').\
+            with_owner('reposvc').\
+            with_group('repogrp')
         end
       end
 
@@ -212,39 +210,38 @@ describe 'aptly', type: :class do
           it { is_expected.to contain_class('apt::update') }
 
           it do
-            is_expected.to contain_apt__source('aptly')\
-              .with_location('http://repo.mycmpany.example.com')\
-              .with_release('dummy_release')\
-              .with_repos('whatever')\
-              .with_key('id' => 'ABC12345', 'server' => 'my.internal.keyserver')\
-              .with_include('src' => false, 'deb' => true)\
-              .that_notifies('Class[apt::update]')\
+            is_expected.to contain_apt__source('aptly').\
+              with_location('http://repo.mycmpany.example.com').\
+              with_release('dummy_release').\
+              with_repos('whatever').\
+              with_key('id' => 'ABC12345', 'server' => 'my.internal.keyserver').\
+              with_include('src' => false, 'deb' => true).\
+              that_notifies('Class[apt::update]')
+          end
 
-            is_expected.to contain_class('apt::update')\
-              .that_comes_before('Package[aptly]')
+          it { is_expected.to contain_class('apt::update').that_comes_before('Package[aptly]') }
+
+          it do
+            is_expected.to contain_user('reposvc').\
+              with_ensure('present').\
+              with_uid(42).\
+              with_gid('repogrp').\
+              with_shell('/bin/bash')
           end
 
           it do
-            is_expected.to contain_user('reposvc')\
-              .with_ensure('present')\
-              .with_uid(42)\
-              .with_gid('repogrp')\
-              .with_shell('/bin/bash')
+            is_expected.to contain_group('repogrp').\
+              with_ensure('present').\
+              with_gid(666).\
+              that_comes_before('User[reposvc]')
           end
 
           it do
-            is_expected.to contain_group('repogrp')\
-              .with_ensure('present')\
-              .with_gid(666)\
-              .that_comes_before('User[reposvc]')
-          end
-
-          it do
-            is_expected.to create_file('/etc/init.d/aptly')\
-              .with_mode('0755')\
-              .with_owner('root')\
-              .with_group('root')\
-              .with_content(%r{^DAEMON_USER=reposvc$})
+            is_expected.to create_file('/etc/init.d/aptly').\
+              with_mode('0755').\
+              with_owner('root').\
+              with_group('root').\
+              with_content(%r{^DAEMON_USER=reposvc$})
           end
 
           it { is_expected.to contain_file('/etc/apt/sources.list.d/aptly.list') }
@@ -316,11 +313,11 @@ describe 'aptly', type: :class do
       let(:params) { { enable_service: true } }
       it { should create_class('aptly::service') }
       it do
-        should create_service('aptly')\
-          .with_ensure('running')\
-          .with_enable('true')\
-          .with_hasstatus('true')\
-          .with_hasrestart('true')
+        should create_service('aptly').\
+          with_ensure('running').\
+          with_enable('true').\
+          with_hasstatus('true').\
+          with_hasrestart('true')
       end
     end
 
@@ -328,11 +325,11 @@ describe 'aptly', type: :class do
       let(:params) { { enable_service: false } }
       it { should create_class('aptly::service') }
       it do
-        should create_service('aptly')\
-          .with_ensure('stopped')\
-          .with_enable('false')\
-          .with_hasstatus('true')\
-          .with_hasrestart('true')
+        should create_service('aptly').\
+          with_ensure('stopped').\
+          with_enable('false').\
+          with_hasstatus('true').\
+          with_hasrestart('true')
       end
     end
     context 'Uncorrect API Bind IP address' do
@@ -342,10 +339,7 @@ describe 'aptly', type: :class do
 
     context 'Enable API service' do
       let(:params)  { { enable_api: true } }
-      it do
-        should contain_service('aptly-api')\
-          .with_ensure('running')
-      end
+      it { should contain_service('aptly-api').with_ensure('running') }
     end
 
     context 'Enable no-lock on the API' do
@@ -353,11 +347,11 @@ describe 'aptly', type: :class do
       it { is_expected.to contain_service('aptly-api').with_ensure('running') }
 
       it do
-        is_expected.to create_file('/etc/init.d/aptly-api')\
-          .with_mode('0755')\
-          .with_owner('root')\
-          .with_group('root')\
-          .with_content(%r{-no-lock=true})
+        is_expected.to create_file('/etc/init.d/aptly-api').\
+          with_mode('0755').\
+          with_owner('root').\
+          with_group('root').\
+          with_content(%r{-no-lock=true})
       end
     end
   end
