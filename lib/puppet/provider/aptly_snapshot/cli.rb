@@ -18,7 +18,7 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
              'empty'
            else
              raise Puppet::Error, "#{resource[:source_type]} is not supported"
-    end
+           end
 
     Puppet_X::Aptly::Cli.execute(
       uid: resource[:uid],
