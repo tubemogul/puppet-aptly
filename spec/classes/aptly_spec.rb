@@ -186,71 +186,69 @@ describe 'aptly', type: :class do
         end
       end
 
-      context 'params enforced on supported os' do
-        describe "aptly class with a version and the repo installation parameters on #{osfamily}" do
-          let(:params) do
-            {
-              version: '0.0.1',
-              user: 'reposvc',
-              uid: 42,
-              group: 'repogrp',
-              gid: 666,
-              install_repo: true,
-              repo_location: 'http://repo.mycmpany.example.com',
-              repo_release: 'dummy_release',
-              repo_repos: 'whatever',
-              repo_keyserver: 'my.internal.keyserver',
-              repo_key: 'ABC12345'
-            }
-          end
-
-          it { is_expected.to contain_package('aptly').with_ensure('0.0.1').with_provider('apt') }
-          it { is_expected.to contain_class('apt') }
-          it { is_expected.to contain_class('apt::params') }
-          it { is_expected.to contain_class('apt::update') }
-
-          it do
-            is_expected.to contain_apt__source('aptly').\
-              with_location('http://repo.mycmpany.example.com').\
-              with_release('dummy_release').\
-              with_repos('whatever').\
-              with_key('id' => 'ABC12345', 'server' => 'my.internal.keyserver').\
-              with_include('src' => false, 'deb' => true).\
-              that_notifies('Class[apt::update]')
-          end
-
-          it { is_expected.to contain_class('apt::update').that_comes_before('Package[aptly]') }
-
-          it do
-            is_expected.to contain_user('reposvc').\
-              with_ensure('present').\
-              with_uid(42).\
-              with_gid('repogrp').\
-              with_shell('/bin/bash')
-          end
-
-          it do
-            is_expected.to contain_group('repogrp').\
-              with_ensure('present').\
-              with_gid(666).\
-              that_comes_before('User[reposvc]')
-          end
-
-          it do
-            is_expected.to create_file('/etc/init.d/aptly').\
-              with_mode('0755').\
-              with_owner('root').\
-              with_group('root').\
-              with_content(%r{^DAEMON_USER=reposvc$})
-          end
-
-          it { is_expected.to contain_file('/etc/apt/sources.list.d/aptly.list') }
-          it { is_expected.to contain_file('preferences.d').with_ensure('directory') }
-          it { is_expected.to contain_file('sources.list.d').with_ensure('directory') }
-          it { is_expected.to contain_file('sources.list') }
-          it { is_expected.to contain_exec('apt_update') }
-          it { is_expected.to contain_anchor('apt_key ABC12345 present') }
+      context "aptly class with a version and the repo installation parameters on #{osfamily}" do
+        let(:params) do
+          {
+            version: '0.0.1',
+            user: 'reposvc',
+            uid: 42,
+            group: 'repogrp',
+            gid: 666,
+            install_repo: true,
+            repo_location: 'http://repo.mycmpany.example.com',
+            repo_release: 'dummy_release',
+            repo_repos: 'whatever',
+            repo_keyserver: 'my.internal.keyserver',
+            repo_key: 'ABC12345'
+          }
         end
+
+        it { is_expected.to contain_package('aptly').with_ensure('0.0.1').with_provider('apt') }
+        it { is_expected.to contain_class('apt') }
+        it { is_expected.to contain_class('apt::params') }
+        it { is_expected.to contain_class('apt::update') }
+
+        it do
+          is_expected.to contain_apt__source('aptly').\
+            with_location('http://repo.mycmpany.example.com').\
+            with_release('dummy_release').\
+            with_repos('whatever').\
+            with_key('id' => 'ABC12345', 'server' => 'my.internal.keyserver').\
+            with_include('src' => false, 'deb' => true).\
+            that_notifies('Class[apt::update]')
+        end
+
+        it { is_expected.to contain_class('apt::update').that_comes_before('Package[aptly]') }
+
+        it do
+          is_expected.to contain_user('reposvc').\
+            with_ensure('present').\
+            with_uid(42).\
+            with_gid('repogrp').\
+            with_shell('/bin/bash')
+        end
+
+        it do
+          is_expected.to contain_group('repogrp').\
+            with_ensure('present').\
+            with_gid(666).\
+            that_comes_before('User[reposvc]')
+        end
+
+        it do
+          is_expected.to create_file('/etc/init.d/aptly').\
+            with_mode('0755').\
+            with_owner('root').\
+            with_group('root').\
+            with_content(%r{^DAEMON_USER=reposvc$})
+        end
+
+        it { is_expected.to contain_file('/etc/apt/sources.list.d/aptly.list') }
+        it { is_expected.to contain_file('preferences.d').with_ensure('directory') }
+        it { is_expected.to contain_file('sources.list.d').with_ensure('directory') }
+        it { is_expected.to contain_file('sources.list') }
+        it { is_expected.to contain_exec('apt_update') }
+        it { is_expected.to contain_anchor('apt_key ABC12345 present') }
       end
     end
 
