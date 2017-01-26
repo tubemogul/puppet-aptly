@@ -34,7 +34,7 @@ Puppet::Type.newtype(:aptly_mirror) do
     desc 'The URL for the source Debian repository'
     validate do |value|
       unless value.instance_of? String
-        raise ArgumentError, '%s is not a valid location (should be a string)' % value
+        raise ArgumentError, format('%s is not a valid location (should be a string)', value)
       end
     end
     defaultto :undef
@@ -44,7 +44,7 @@ Puppet::Type.newtype(:aptly_mirror) do
     desc 'The distribution to mirror'
     validate do |value|
       unless value.instance_of? String
-        raise ArgumentError, '%s is not a valid distribution (should be a string)' % value
+        raise ArgumentError, format('%s is not a valid distribution (should be a string)', value)
       end
     end
     defaultto :undef

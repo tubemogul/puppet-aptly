@@ -14,13 +14,13 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
   end
 
   [:create, :destroy, :exists?].each do |method|
-    it "should have a(n) #{method}" do
+    it "have a(n) #{method}" do
       expect(provider).to respond_to(method)
     end
   end
 
   describe '#create' do
-    it 'should create the repo' do
+    it 'create the repo' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
         uid: '450',
         gid: '450',
@@ -37,7 +37,7 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
   end
 
   describe '#destroy' do
-    it 'should drop the repo' do
+    it 'drop the repo' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
         uid: '450',
         gid: '450',
@@ -51,7 +51,7 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
   end
 
   describe '#exists?' do
-    it 'should check the repo list' do
+    it 'check the repo list' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         uid: '450',
         gid: '450',
@@ -62,7 +62,7 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
       ).returns "foo\ntest-snap\nbar"
       expect(provider.exists?).to eq(true)
     end
-    it 'should handle without repo' do
+    it 'handle without repo' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         uid: '450',
         gid: '450',

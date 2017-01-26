@@ -16,13 +16,13 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
   end
 
   [:create, :destroy, :exists?].each do |method|
-    it "should have a(n) #{method}" do
+    it "have a(n) #{method}" do
       expect(provider).to respond_to(method)
     end
   end
 
   describe '#create' do
-    it 'should create and update the mirror' do
+    it 'create and update the mirror' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
         uid: '450',
         gid: '450',
@@ -45,7 +45,7 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
       provider.create
     end
 
-    it 'should not update when update is false' do
+    it 'do not update when update is false' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
         uid: '450',
         gid: '450',
@@ -77,7 +77,7 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
   end
 
   describe '#destroy' do
-    it 'should drop the mirror' do
+    it 'drop the mirror' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
         uid: '450',
         gid: '450',
@@ -91,7 +91,7 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
   end
 
   describe '#exists?' do
-    it 'should check the mirror list' do
+    it 'check the mirror list' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         uid: '450',
         gid: '450',
@@ -102,7 +102,7 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
       ).returns "foo\ndebian-main\nbar"
       expect(provider.exists?).to eq(true)
     end
-    it 'should handle without mirror' do
+    it 'handle without mirror' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         uid: '450',
         gid: '450',

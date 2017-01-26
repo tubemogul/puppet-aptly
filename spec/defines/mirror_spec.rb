@@ -16,17 +16,17 @@ describe 'aptly::mirror' do
       }
     end
 
-    it 'should call the aptly_mirror provider' do
-      should contain_aptly_mirror('debian-main')\
-        .with_ensure('present')\
-        .with_uid('450')\
-        .with_gid('450')\
-        .with_location('http://ftp.us.debian.org/debian')\
-        .with_distribution('jessie')\
-        .with_architectures(%w(amd64 i386))\
-        .with_components(%w(main contrib))\
-        .with_with_sources(true)\
-        .with_with_udebs(true)
+    it 'call the aptly_mirror provider' do
+      is_expected.to contain_aptly_mirror('debian-main').\
+        with_ensure('present').\
+        with_uid('450').\
+        with_gid('450').\
+        with_location('http://ftp.us.debian.org/debian').\
+        with_distribution('jessie').\
+        with_architectures(%w(amd64 i386)).\
+        with_components(%w(main contrib)).\
+        with_with_sources(true).\
+        with_with_udebs(true)
     end
   end
 
@@ -44,6 +44,6 @@ describe 'aptly::mirror' do
         with_udebs: true
       }
     end
-    it { should raise_error(Puppet::Error, /does not match/) }
+    it { is_expected.to raise_error(Puppet::Error, %r{does not match}) }
   end
 end

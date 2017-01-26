@@ -16,13 +16,13 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
   end
 
   [:create, :destroy, :exists?].each do |method|
-    it "should have a(n) #{method}" do
+    it "have a(n) #{method}" do
       expect(provider).to respond_to(method)
     end
   end
 
   describe '#create' do
-    it 'should publish the snapshot' do
+    it 'publish the snapshot' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
         uid: '450',
         gid: '450',
@@ -36,7 +36,7 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
   end
 
   describe '#destroy' do
-    it 'should drop the publication' do
+    it 'drop the publication' do
       Puppet_X::Aptly::Cli.expects(:execute).with(
         uid: '450',
         gid: '450',
@@ -50,7 +50,7 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
   end
 
   describe '#exists?' do
-    it 'should check the publications list' do
+    it 'check the publications list' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         uid: '450',
         gid: '450',
@@ -61,7 +61,7 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
       ).returns "foo\ntest-snap\nbar"
       expect(provider.exists?).to eq(true)
     end
-    it 'should handle empty publications' do
+    it 'handle empty publications' do
       Puppet_X::Aptly::Cli.stubs(:execute).with(
         uid: '450',
         gid: '450',
