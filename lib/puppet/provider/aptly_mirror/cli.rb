@@ -21,16 +21,15 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
       }
     )
 
-    if resource[:update]
-      Puppet.info("Updating Aptly Mirror #{name}")
-      Puppet_X::Aptly::Cli.execute(
-        uid: resource[:uid],
-        gid: resource[:gid],
-        object: :mirror,
-        action: 'update',
-        arguments: [name]
-      )
-    end
+    return unless resource[:update]
+    Puppet.info("Updating Aptly Mirror #{name}")
+    Puppet_X::Aptly::Cli.execute(
+      uid: resource[:uid],
+      gid: resource[:gid],
+      object: :mirror,
+      action: 'update',
+      arguments: [name]
+    )
   end
 
   def destroy
