@@ -35,7 +35,7 @@ Puppet::Type.newtype(:aptly_publish) do
     desc 'Distribution name to publish'
     validate do |value|
       unless value.instance_of? String
-        raise ArgumentError, '%s is not a valid distribution (should be a string)' % value
+        raise ArgumentError, format('%s is not a valid distribution (should be a string)', value)
       end
     end
     defaultto ''
