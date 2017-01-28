@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Code quality tests in travis using rubocop and rubocop-spec
+
+### Fixed
+- Massive code quality cleanup based on rubocop and rubocop-spec standards
 
 ## [3.1.0] - 2017-01-23
 ### Added
