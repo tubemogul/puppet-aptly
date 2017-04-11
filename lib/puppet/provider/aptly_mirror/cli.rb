@@ -17,7 +17,8 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
       flags: {
         'architectures' => [resource[:architectures]].join(','),
         'with-sources'  => resource[:with_sources],
-        'with-udebs'    => resource[:with_udebs]
+        'with-udebs'    => resource[:with_udebs],
+        'keyring'       => resource[:keyring]
       }
     )
 

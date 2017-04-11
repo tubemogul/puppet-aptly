@@ -12,6 +12,7 @@ define aptly::mirror (
   $components    = [],
   $with_sources  = false,
   $with_udebs    = false,
+  $keyring       = '/etc/apt/trusted.gpg'
 ) {
   validate_string( $distribution)
   validate_array(
