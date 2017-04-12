@@ -14,7 +14,10 @@ define aptly::mirror (
   $with_udebs    = false,
   $keyring       = '/etc/apt/trusted.gpg'
 ) {
-  validate_string( $distribution)
+  validate_string(
+    $distribution,
+    $keyring
+  )
   validate_array(
     $architectures,
     $components
@@ -35,5 +38,6 @@ define aptly::mirror (
     components    => $components,
     with_sources  => $with_sources,
     with_udebs    => $with_udebs,
+    keyring       => $keyring,
   }
 }
