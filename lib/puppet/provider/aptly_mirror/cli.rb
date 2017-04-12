@@ -29,7 +29,10 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
       gid: resource[:gid],
       object: :mirror,
       action: 'update',
-      arguments: [name]
+      arguments: [name],
+      flags: {
+        'keyring' => resource[:keyring]
+      }
     )
   end
 
