@@ -61,7 +61,7 @@ Puppet::Type.newtype(:aptly_mirror) do
   end
 
   newparam(:keyring) do
-    desc 'Set path to keyring. Default - /etc/apt/trusted.gpg'
+    desc 'Set path to keyring. Default /etc/apt/trusted.gpg'
     defaultto "/etc/apt/trusted.gpg"
   end
 

@@ -50,7 +50,6 @@ module Puppet_X
         begin
           Puppet.debug("Executing: #{cmd}")
           result = Puppet::Util::Execution.execute(cmd, uid: uid, gid: gid)
-          Puppet.debug("Command output: #{result}")
         rescue => e
           raise Puppet::Error, e.message if exceptions
           e.message
