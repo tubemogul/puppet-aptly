@@ -662,7 +662,7 @@ This module has been tested against Puppet 3.8 with Ubuntu clients.
 The spec tests work on Puppet 3.7+ and 4.x.
 
 To work on Debian OS family servers, it requires the apt module from Puppetlabs
-to be installed if you want to have this module manage your aptly repository (optionnal).
+to be installed if you want to have this module manage your aptly repository (optional).
 
 The implementation for the installation on other operating systems has not been
 done yet but should be pretty straightforward to do. Just ask which one you want
