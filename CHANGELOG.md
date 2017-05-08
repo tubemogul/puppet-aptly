@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [3.1.1] - 2017-01-28
 ### Added
 - Code quality tests in travis using rubocop and rubocop-spec
+- Create mirror/repo/snapshot/publication easily from Hiera
 
 ### Fixed
 - Massive code quality cleanup based on rubocop and rubocop-spec standards
