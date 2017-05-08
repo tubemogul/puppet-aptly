@@ -55,9 +55,9 @@ class aptly::install {
           },
         }
 
-        Apt::Source['aptly'] ~>
-        Class['apt::update'] ->
-        Package['aptly']
+        Apt::Source['aptly']
+        ~> Class['apt::update']
+        -> Package['aptly']
       }
       default: {
         fail("Installation of the repository not supported on ${::operatingsystem}")

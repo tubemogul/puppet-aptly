@@ -75,10 +75,10 @@ class aptly (
     'API Bind IP address is not correct'
   )
 
-  class { '::aptly::install': } ->
-  class { '::aptly::config':  } ~>
-  class { '::aptly::service': } ->
-  Class['::aptly']
+  class { '::aptly::install': }
+  -> class { '::aptly::config':  }
+  ~> class { '::aptly::service': }
+  -> Class['::aptly']
 
   create_resources('::aptly::mirror', $mirrors)
   create_resources('::aptly::repo', $repos)
