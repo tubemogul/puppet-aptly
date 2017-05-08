@@ -30,6 +30,12 @@ class aptly (
   $api_bind             = $aptly::params::api_bind,
   $api_nolock           = $aptly::params::api_nolock,
   $manage_xz_utils      = $aptly::params::manage_xz_utils,
+
+  ### Hiera lookups ###
+  $mirrors              = {},
+  $repos                = {},
+  $snapshots            = {},
+  $publications         = {},
 ) inherits aptly::params {
 
   validate_string(
@@ -73,4 +79,9 @@ class aptly (
   class { '::aptly::config':  } ~>
   class { '::aptly::service': } ->
   Class['::aptly']
+
+  create_resources('::aptly::mirror', $mirrors)
+  create_resources('::aptly::repo', $repos)
+  create_resources('::aptly::snapshot', $snapshots)
+  create_resources('::aptly::publish', $publications)
 }
