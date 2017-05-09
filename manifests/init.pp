@@ -30,6 +30,8 @@ class aptly (
   $api_bind             = $aptly::params::api_bind,
   $api_nolock           = $aptly::params::api_nolock,
   $manage_xz_utils      = $aptly::params::manage_xz_utils,
+  $repos                = {},
+  $mirrors              = {}
 ) inherits aptly::params {
 
   validate_string(
@@ -72,5 +74,6 @@ class aptly (
   class { '::aptly::install': } ->
   class { '::aptly::config':  } ~>
   class { '::aptly::service': } ->
+  class { '::aptly::resources': } ->
   Class['::aptly']
 }
