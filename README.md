@@ -176,6 +176,20 @@ aptly::mirror { 'debian_stable':
 }
 ```
 
+Or using hiera:
+```yaml
+apty::mirror:
+  debian_stable:
+    location: 'http://ftp.us.debian.org/debian/',
+    distribution: stable
+    components:
+      - main
+    architectures:
+      - amd64
+  ...
+  ...
+```
+
 **Note:** This module does not manage the gpg keys directly, so if you don't take care of adding the gpg file of your target repository,
 you'll end up with the following error:
 
@@ -257,6 +271,13 @@ aptly::repo {'my_custom_repo':
 aptly::repo {'tubemogul_apps':
   default_component => 'stable',
 }
+```
+
+Or using hiera:
+```yaml
+aptly::repos:
+  tubemogul_apps:
+    default_component: stable
 ```
 
 Once you've done that, you can add packages using the `aptly repo add tubemogul_apps my_package.deb` or using the API.
