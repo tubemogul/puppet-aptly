@@ -9,8 +9,8 @@ describe 'aptly::mirror' do
         gid: '450',
         location: 'http://ftp.us.debian.org/debian',
         distribution: 'jessie',
-        architectures: %w(amd64 i386),
-        components: %w(main contrib),
+        architectures: %w[amd64 i386],
+        components: %w[main contrib],
         with_sources: true,
         with_udebs: true
       }
@@ -23,8 +23,8 @@ describe 'aptly::mirror' do
         with_gid('450').\
         with_location('http://ftp.us.debian.org/debian').\
         with_distribution('jessie').\
-        with_architectures(%w(amd64 i386)).\
-        with_components(%w(main contrib)).\
+        with_architectures(%w[amd64 i386]).\
+        with_components(%w[main contrib]).\
         with_with_sources(true).\
         with_with_udebs(true)
     end
@@ -38,12 +38,13 @@ describe 'aptly::mirror' do
         gid: '450',
         location: 'my_bad_location',
         distribution: 'jessie',
-        architectures: %w(amd64 i386),
-        components: %w(main contrib),
+        architectures: %w[amd64 i386],
+        components: %w[main contrib],
         with_sources: true,
         with_udebs: true
       }
     end
+
     it { is_expected.to raise_error(Puppet::Error, %r{does not match}) }
   end
 end

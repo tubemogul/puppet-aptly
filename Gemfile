@@ -8,9 +8,9 @@ group :test do
   gem 'rspec-core', '< 3.2.0' if RUBY_VERSION < '1.9'
   gem 'rspec-puppet'
   gem 'rspec-puppet-facts'
-  gem 'rubocop-rspec', :require => false if RUBY_VERSION >= '2.3.0'
+  gem 'rubocop-rspec', require: false if RUBY_VERSION >= '2.3.0'
   gem 'simplecov', '>= 0.11.0'
-  gem 'simplecov-console', if RUBY_VERSION < '2.0.0' then '< 0.4.0' end
+  gem 'simplecov-console'
 
   gem 'puppet-lint-absolute_classname-check'
   gem 'puppet-lint-classes_and_types_beginning_with_digits-check'

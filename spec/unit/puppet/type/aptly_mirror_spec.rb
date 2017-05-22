@@ -66,7 +66,7 @@ describe Puppet::Type.type(:aptly_mirror) do
     end
     it 'do not support arrays as a value' do
       expect do
-        mirror[:location] = %w(foo bar)
+        mirror[:location] = %w[foo bar]
       end.to raise_error(Puppet::Error, %r{is not a valid location})
     end
 
@@ -86,7 +86,7 @@ describe Puppet::Type.type(:aptly_mirror) do
     end
     it 'do not support arrays as a value' do
       expect do
-        mirror[:distribution] = %w(foo bar)
+        mirror[:distribution] = %w[foo bar]
       end.to raise_error(Puppet::Error, %r{is not a valid distribution})
     end
 
@@ -105,8 +105,8 @@ describe Puppet::Type.type(:aptly_mirror) do
     end
 
     it 'accept a full array' do
-      mirror[:components] = %w(main contrib)
-      expect(mirror[:components]).to eq(%w(main contrib))
+      mirror[:components] = %w[main contrib]
+      expect(mirror[:components]).to eq(%w[main contrib])
     end
   end
 
@@ -117,8 +117,8 @@ describe Puppet::Type.type(:aptly_mirror) do
     end
 
     it 'accept a full array' do
-      mirror[:architectures] = %w(i386 amd64 powerpc)
-      expect(mirror[:architectures]).to eq(%w(i386 amd64 powerpc))
+      mirror[:architectures] = %w[i386 amd64 powerpc]
+      expect(mirror[:architectures]).to eq(%w[i386 amd64 powerpc])
     end
   end
 end

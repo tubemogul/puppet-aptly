@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'aptly', type: :class do
-  [%w(Debian ubuntu trusty), %w(Debian debian jessie)].each do |osfamily, lsbdistid, lsbdistcodename|
+  [%w[Debian ubuntu trusty], %w[Debian debian jessie]].each do |osfamily, lsbdistid, lsbdistcodename|
     let(:facts) do
       {
         osfamily: osfamily,
@@ -11,18 +11,17 @@ describe 'aptly', type: :class do
         puppetversion: Puppet.version
       }
     end
+
     context 'default installation with installation repo on supported os' do
       describe "aptly class without any parameters on #{osfamily}" do
         let(:params) { {} }
 
         it { is_expected.to compile.with_all_deps }
-
         it { is_expected.to create_class('aptly') }
         it { is_expected.to contain_class('aptly::params') }
         it { is_expected.to contain_class('aptly::install').that_comes_before('Class[aptly::config]') }
         it { is_expected.to contain_class('aptly::config') }
         it { is_expected.to contain_class('aptly::service').that_subscribes_to('Class[aptly::config]') }
-
         it { is_expected.to contain_service('aptly') }
         it { is_expected.to contain_package('aptly').with_ensure('installed') }
       end
@@ -254,12 +253,14 @@ describe 'aptly', type: :class do
 
     # Testing the parameters related to the config
     context 'limiting to specific architectures' do
-      let(:params) { { architectures: %w(amd64 i386) } }
+      let(:params) { { architectures: %w[amd64 i386] } }
+
       it { is_expected.to create_file('/etc/aptly.conf').with_content(%r{"architectures": \["amd64", "i386"\],}) }
     end
 
     context 'using custom config properties' do
       let(:params) { { properties: { 'gpgDisableVerify' => 'true' } } }
+
       it { is_expected.to create_file('/etc/aptly.conf').with_content(%r{"gpgDisableVerify": true,}) }
       # Should not have the default values
       it { is_expected.not_to create_file('/etc/aptly.conf').with_content(%r{"gpgDisableSign": false,}) }
@@ -281,6 +282,7 @@ describe 'aptly', type: :class do
           }
         } }
       end
+
       it { is_expected.to create_file('/etc/aptly.conf').with_content(%r{"bucket":"repo"}) }
       it { is_expected.to create_file('/etc/aptly.conf').with_content(%r{"region":"us-east-1"}) }
     end
@@ -303,12 +305,14 @@ describe 'aptly', type: :class do
           }
         } }
       end
+
       it { is_expected.to create_file('/etc/aptly.conf').with_content(%r{"container":"repo"}) }
     end
 
     # Testing the service
     context 'enabling the service' do
       let(:params) { { enable_service: true } }
+
       it { is_expected.to create_class('aptly::service') }
       it do
         is_expected.to create_service('aptly').\
@@ -321,6 +325,7 @@ describe 'aptly', type: :class do
 
     context 'Disable the service' do
       let(:params) { { enable_service: false } }
+
       it { is_expected.to create_class('aptly::service') }
       it do
         is_expected.to create_service('aptly').\
@@ -332,16 +337,19 @@ describe 'aptly', type: :class do
     end
     context 'Uncorrect API Bind IP address' do
       let(:params) { { api_bind: 'I_AM_A_BAD_IP' } }
+
       it { is_expected.to raise_error(Puppet::Error, %r{API Bind IP address is not correct}) }
     end
 
     context 'Enable API service' do
       let(:params)  { { enable_api: true } }
+
       it { is_expected.to contain_service('aptly-api').with_ensure('running') }
     end
 
     context 'Enable no-lock on the API' do
       let(:params)  { { enable_api: true, api_nolock: true } }
+
       it { is_expected.to contain_service('aptly-api').with_ensure('running') }
 
       it do
@@ -355,7 +363,7 @@ describe 'aptly', type: :class do
   end
 
   # Other OS-related tests
-  [%w(Solaris Nexenta)].each do |osfamily, os|
+  [%w[Solaris Nexenta]].each do |osfamily, os|
     context 'unsupported operating system for repo installations' do
       describe "aptly install class without any parameters on #{osfamily}/#{os}" do
         let(:facts) do
@@ -365,8 +373,8 @@ describe 'aptly', type: :class do
             architecture: 'amd64'
           }
         end
-
         let(:params) { { install_repo: true } }
+
         it { expect { is_expected.to contain_package('aptly') }.to raise_error(Puppet::Error, %r{Installation of the repository not supported on #{os}}) }
       end
     end
@@ -379,8 +387,8 @@ describe 'aptly', type: :class do
             architecture: 'amd64'
           }
         end
-
         let(:params) { { version: '0.0.1', install_repo: false } }
+
         it { expect(Puppet::Util::Warnings.send('warnonce', "Module aptly not tested against #{os}")) }
         it { is_expected.to contain_package('aptly').with_ensure('0.0.1') }
       end
@@ -394,8 +402,8 @@ describe 'aptly', type: :class do
             architecture: 'amd64'
           }
         end
-
         let(:params) { { version: 'installed', install_repo: false } }
+
         it { expect(Puppet::Util::Warnings.send('warnonce', "Module aptly not tested against #{os}")) }
         it { is_expected.to contain_file('/etc/init.d/aptly-api') }
         it { is_expected.to contain_package('aptly').with_ensure('installed') }
