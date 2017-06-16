@@ -2,6 +2,9 @@ require: rubocop-rspec
 AllCops:
   Include:
     - ./**/*.rb
+    - '**/Gemfile'
+    - '**/Guardfile'
+    - '**/Rakefile'
   Exclude:
     - files/**/*
     - vendor/**/*
@@ -34,6 +37,9 @@ Lint/ShadowingOuterLocalVariable:
 
 Lint/LiteralInInterpolation:
   Enabled: True
+
+Style/SymbolArray:
+  Enabled: False
 
 Style/HashSyntax:
   Enabled: True

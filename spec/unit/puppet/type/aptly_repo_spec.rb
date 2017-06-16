@@ -53,7 +53,7 @@ describe Puppet::Type.type(:aptly_repo) do
     end
     it 'do not support arrays as a value' do
       expect do
-        repo[:default_distribution] = %w(foo bar)
+        repo[:default_distribution] = %w[foo bar]
       end.to raise_error(Puppet::Error, %r{is not a valid distribution})
     end
   end
@@ -71,7 +71,7 @@ describe Puppet::Type.type(:aptly_repo) do
     end
     it 'do not support arrays as a value' do
       expect do
-        repo[:default_component] = %w(foo bar)
+        repo[:default_component] = %w[foo bar]
       end.to raise_error(Puppet::Error, %r{is not a valid component})
     end
   end
