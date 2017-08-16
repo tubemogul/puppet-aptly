@@ -110,6 +110,11 @@ describe 'aptly', type: :class do
             with_ensure('directory').\
             with_mode('0644').\
             with_owner('aptly').\
+            with_group('aptly')
+          is_expected.to create_file('/var/aptly/db').\
+            with_ensure('directory').\
+            with_mode('0644').\
+            with_owner('aptly').\
             with_group('aptly').\
             with_recurse(true)
         end
