@@ -49,7 +49,11 @@ module Puppet_X
 
         begin
           Puppet.debug("Executing: #{cmd}")
-          result = Puppet::Util::Execution.execute(cmd, uid: uid, gid: gid)
+
+          # Avoid permission issues by switching to world-readable directory
+          result = Dir.chdir '/' do
+            Puppet::Util::Execution.execute(cmd, uid: uid, gid: gid, failonfail: true)
+          end
         rescue => e
           raise Puppet::Error, e.message if exceptions
           e.message
