@@ -9,13 +9,21 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
   def create
     Puppet.info("Publishing Aptly #{resource[:source_type]} #{name}")
 
+    flags = {
+      'distribution' => resource[:distribution]
+    }
+
+    if resource[:architectures] != :undef
+      flags['architectures'] = [resource[:architectures]].join(',')
+    end
+
     Puppet_X::Aptly::Cli.execute(
-      uid: resource[:uid],
-      gid: resource[:gid],
-      object: :publish,
-      action: resource[:source_type],
+      uid:       resource[:uid],
+      gid:       resource[:gid],
+      object:    :publish,
+      action:    resource[:source_type],
       arguments: [name, resource[:prefix]],
-      flags: { 'distribution' => resource[:distribution] }
+      flags:     flags
     )
   end
 

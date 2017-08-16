@@ -10,7 +10,8 @@ describe 'aptly::publish' do
         source_type: 'snapshot',
         distribution: 'jessie-2016-07-30-daily-snapshot',
         name: '2016-07-30-daily-snapshot',
-        prefix: 'test-prefix'
+        prefix: 'test-prefix',
+        architectures: ['amd64']
       }
     end
 
@@ -20,7 +21,8 @@ describe 'aptly::publish' do
         with_uid('450').\
         with_gid('450').\
         with_source_type('snapshot').\
-        with_prefix('test-prefix')
+        with_prefix('test-prefix').\
+        with_architectures(['amd64'])
     end
   end
 end

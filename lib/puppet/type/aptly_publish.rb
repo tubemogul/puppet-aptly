@@ -45,4 +45,9 @@ Puppet::Type.newtype(:aptly_publish) do
     desc 'Prefix to publish under'
     defaultto '.'
   end
+
+  newparam(:architectures, array_matching: :all) do
+    desc 'List of architectures to publish'
+    defaultto :undef
+  end
 end

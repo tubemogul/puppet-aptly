@@ -8,12 +8,27 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
       ensure: 'present',
       source_type: :snapshot,
       distribution: 'jessie-test-snap',
+      prefix: 'test-prefix',
+      architectures: ['amd64,i386']
+    )
+  end
+
+  let(:resource_with_all_architectures) do
+    Puppet::Type.type(:aptly_publish).new(
+      name: 'test-snap',
+      ensure: 'present',
+      source_type: :snapshot,
+      distribution: 'jessie-test-snap',
       prefix: 'test-prefix'
     )
   end
 
   let(:provider) do
     described_class.new(resource)
+  end
+
+  let(:provider_with_all_architectures) do
+    described_class.new(resource_with_all_architectures)
   end
 
   [:create, :destroy, :exists?].each do |method|
@@ -30,9 +45,26 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
         object: :publish,
         action: :snapshot,
         arguments: ['test-snap', 'test-prefix'],
-        flags: { 'distribution' => 'jessie-test-snap' }
+        flags: {
+          'architectures' => 'amd64,i386',
+          'distribution'  => 'jessie-test-snap'
+        }
       )
       provider.create
+    end
+
+    it 'publish the snapshot (all architectures)' do
+      Puppet_X::Aptly::Cli.expects(:execute).with(
+        uid: '450',
+        gid: '450',
+        object: :publish,
+        action: :snapshot,
+        arguments: ['test-snap', 'test-prefix'],
+        flags: {
+          'distribution'  => 'jessie-test-snap'
+        }
+      )
+      provider_with_all_architectures.create
     end
   end
 

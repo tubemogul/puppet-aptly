@@ -4,11 +4,12 @@
 #
 define aptly::publish (
   $source_type,
-  $ensure       = 'present',
-  $uid          = '450',
-  $gid          = '450',
-  $distribution = "${::lsbdistcodename}-${name}",
-  $prefix       = '.',
+  $ensure        = 'present',
+  $uid           = '450',
+  $gid           = '450',
+  $distribution  = "${::lsbdistcodename}-${name}",
+  $prefix        = '.',
+  $architectures = undef,
 ) {
   validate_string(
     $source_type,
@@ -17,12 +18,13 @@ define aptly::publish (
   )
 
   aptly_publish { $name:
-    ensure       => $ensure,
-    uid          => $uid,
-    gid          => $gid,
-    source_type  => $source_type,
-    distribution => $distribution,
-    prefix       => $prefix,
-    notify       => Class['aptly::service'],
+    ensure        => $ensure,
+    uid           => $uid,
+    gid           => $gid,
+    source_type   => $source_type,
+    distribution  => $distribution,
+    architectures => $architectures,
+    prefix        => $prefix,
+    notify        => Class['aptly::service'],
   }
 }

@@ -32,6 +32,11 @@ describe Puppet::Type.type(:aptly_publish) do
     expect(published[:prefix]).to eq('foobar')
   end
 
+  it 'accept architectures' do
+    published[:architectures] = ['amd64']
+    expect(published[:architectures]).to eq(['amd64'])
+  end
+
   describe 'force parameter' do
     [:true, :false].each do |value|
       it "support #{value} as a value" do
