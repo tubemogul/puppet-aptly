@@ -40,4 +40,9 @@ Puppet::Type.newtype(:aptly_publish) do
     end
     defaultto ''
   end
+
+  newparam(:prefix) do
+    desc 'Prefix to publish under'
+    defaultto '.'
+  end
 end

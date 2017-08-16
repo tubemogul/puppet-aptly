@@ -7,7 +7,8 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
       name: 'test-snap',
       ensure: 'present',
       source_type: :snapshot,
-      distribution: 'jessie-test-snap'
+      distribution: 'jessie-test-snap',
+      prefix: 'test-prefix'
     )
   end
 
@@ -28,7 +29,7 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
         gid: '450',
         object: :publish,
         action: :snapshot,
-        arguments: ['test-snap'],
+        arguments: ['test-snap', 'test-prefix'],
         flags: { 'distribution' => 'jessie-test-snap' }
       )
       provider.create
@@ -42,7 +43,7 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
         gid: '450',
         object: :publish,
         action: 'drop',
-        arguments: ['test-snap'],
+        arguments: ['test-snap', 'test-prefix'],
         flags: { 'force-drop' => 'true' }
       )
       provider.destroy
@@ -58,7 +59,7 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
         action: 'list',
         flags: { 'raw' => 'true' },
         exceptions: false
-      ).returns "foo\ntest-snap\nbar"
+      ).returns ". foo\ntest-prefix test-snap\n. bar"
       expect(provider.exists?).to eq(true)
     end
     it 'handle empty publications' do

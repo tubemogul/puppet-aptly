@@ -9,7 +9,7 @@ describe Puppet::Type.type(:aptly_publish) do
   end
 
   describe 'validating parameters list' do
-    [:name, :force, :source_type].each do |param|
+    [:name, :force, :source_type, :prefix].each do |param|
       it "have a #{param} parameter" do
         expect(described_class.attrtype(param)).to eq(:param)
       end
@@ -25,6 +25,11 @@ describe Puppet::Type.type(:aptly_publish) do
   it 'accept a name' do
     published[:name] = 'foobar'
     expect(published[:name]).to eq('foobar')
+  end
+
+  it 'accept a prefix' do
+    published[:prefix] = 'foobar'
+    expect(published[:prefix]).to eq('foobar')
   end
 
   describe 'force parameter' do

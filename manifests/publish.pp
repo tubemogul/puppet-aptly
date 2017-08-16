@@ -8,10 +8,12 @@ define aptly::publish (
   $uid          = '450',
   $gid          = '450',
   $distribution = "${::lsbdistcodename}-${name}",
+  $prefix       = '.',
 ) {
   validate_string(
     $source_type,
-    $distribution
+    $distribution,
+    $prefix,
   )
 
   aptly_publish { $name:
@@ -20,6 +22,7 @@ define aptly::publish (
     gid          => $gid,
     source_type  => $source_type,
     distribution => $distribution,
+    prefix       => $prefix,
     notify       => Class['aptly::service'],
   }
 }

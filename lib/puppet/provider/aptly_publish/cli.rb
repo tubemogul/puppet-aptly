@@ -14,7 +14,7 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
       gid: resource[:gid],
       object: :publish,
       action: resource[:source_type],
-      arguments: [name],
+      arguments: [name, resource[:prefix]],
       flags: { 'distribution' => resource[:distribution] }
     )
   end
@@ -27,7 +27,7 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
       gid: resource[:gid],
       object: :publish,
       action: 'drop',
-      arguments: [name],
+      arguments: [name, resource[:prefix]],
       flags: { 'force-drop' => resource[:force] ? 'true' : 'false' }
     )
   end
@@ -42,6 +42,6 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
       action: 'list',
       flags: { 'raw' => 'true' },
       exceptions: false
-    ).lines.map(&:chomp).include? name
+    ).lines.map(&:chomp).include? "#{resource[:prefix]} #{name}"
   end
 end
