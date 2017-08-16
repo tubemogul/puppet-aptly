@@ -70,4 +70,10 @@ class aptly (
   )
 
   class { '::aptly::install': } -> class { '::aptly::config':  } ~> class { '::aptly::service': } -> Class['::aptly']
+
+  # Ensure Aptly is installed and configured before using it
+  Class['::aptly::config'] -> Aptly::Mirror <| |>
+  Class['::aptly::config'] -> Aptly::Publish <| |>
+  Class['::aptly::config'] -> Aptly::Repo <| |>
+  Class['::aptly::config'] -> Aptly::Snapshot <| |>
 }
