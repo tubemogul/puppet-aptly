@@ -37,6 +37,11 @@ describe Puppet::Type.type(:aptly_publish) do
     expect(published[:architectures]).to eq(['amd64'])
   end
 
+  it 'accept label' do
+    published[:label] = 'Debian-Security'
+    expect(published[:label]).to eq('Debian-Security')
+  end
+
   describe 'force parameter' do
     [:true, :false].each do |value|
       it "support #{value} as a value" do

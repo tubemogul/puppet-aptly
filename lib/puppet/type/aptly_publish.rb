@@ -50,4 +50,9 @@ Puppet::Type.newtype(:aptly_publish) do
     desc 'List of architectures to publish'
     defaultto :undef
   end
+
+  newparam(:label) do
+    desc 'Label to publish with'
+    defaultto ''
+  end
 end

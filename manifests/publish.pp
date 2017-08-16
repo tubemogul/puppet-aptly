@@ -10,6 +10,7 @@ define aptly::publish (
   $distribution  = "${::lsbdistcodename}-${name}",
   $prefix        = '.',
   $architectures = undef,
+  $label         = '',
 ) {
   validate_string(
     $source_type,
@@ -25,6 +26,7 @@ define aptly::publish (
     distribution  => $distribution,
     architectures => $architectures,
     prefix        => $prefix,
+    label         => $label,
     notify        => Class['aptly::service'],
   }
 }

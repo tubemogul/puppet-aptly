@@ -11,7 +11,8 @@ describe 'aptly::publish' do
         distribution: 'jessie-2016-07-30-daily-snapshot',
         name: '2016-07-30-daily-snapshot',
         prefix: 'test-prefix',
-        architectures: ['amd64']
+        architectures: ['amd64'],
+        label: 'Debian-Security'
       }
     end
 
@@ -22,7 +23,8 @@ describe 'aptly::publish' do
         with_gid('450').\
         with_source_type('snapshot').\
         with_prefix('test-prefix').\
-        with_architectures(['amd64'])
+        with_architectures(['amd64']).\
+        with_label('Debian-Security')
     end
   end
 end

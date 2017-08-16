@@ -9,7 +9,8 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
       source_type: :snapshot,
       distribution: 'jessie-test-snap',
       prefix: 'test-prefix',
-      architectures: ['amd64,i386']
+      architectures: ['amd64,i386'],
+      label: 'Debian-Security'
     )
   end
 
@@ -47,7 +48,8 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
         arguments: ['test-snap', 'test-prefix'],
         flags: {
           'architectures' => 'amd64,i386',
-          'distribution'  => 'jessie-test-snap'
+          'distribution'  => 'jessie-test-snap',
+          'label'         => 'Debian-Security'
         }
       )
       provider.create
@@ -61,7 +63,8 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
         action: :snapshot,
         arguments: ['test-snap', 'test-prefix'],
         flags: {
-          'distribution'  => 'jessie-test-snap'
+          'distribution' => 'jessie-test-snap',
+          'label'        => ''
         }
       )
       provider_with_all_architectures.create
