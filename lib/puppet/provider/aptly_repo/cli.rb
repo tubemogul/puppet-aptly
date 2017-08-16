@@ -43,8 +43,7 @@ Puppet::Type.type(:aptly_repo).provide(:cli) do
       gid: resource[:gid],
       object: :repo,
       action: 'list',
-      flags: { 'raw' => 'true' },
-      exceptions: false
+      flags: { 'raw' => 'true' }
     ).lines.map(&:chomp).include? name
   end
 end

@@ -55,8 +55,7 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
       gid: resource[:gid],
       object: :mirror,
       action: 'list',
-      flags: { 'raw' => 'true' },
-      exceptions: false
+      flags: { 'raw' => 'true' }
     ).lines.map(&:chomp).include? name
   end
 end

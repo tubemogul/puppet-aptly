@@ -40,8 +40,7 @@ Puppet::Type.type(:aptly_publish).provide(:cli) do
       gid: resource[:gid],
       object: :publish,
       action: 'list',
-      flags: { 'raw' => 'true' },
-      exceptions: false
+      flags: { 'raw' => 'true' }
     ).lines.map(&:chomp).include? "#{resource[:prefix]} #{name}"
   end
 end

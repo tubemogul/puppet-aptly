@@ -57,8 +57,7 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
         gid: '450',
         object: :repo,
         action: 'list',
-        flags: { 'raw' => 'true' },
-        exceptions: false
+        flags: { 'raw' => 'true' }
       ).returns "foo\ntest-snap\nbar"
       expect(provider.exists?).to eq(true)
     end
@@ -68,8 +67,7 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
         gid: '450',
         object: :repo,
         action: 'list',
-        flags: { 'raw' => 'true' },
-        exceptions: false
+        flags: { 'raw' => 'true' }
       ).returns ''
       expect(provider.exists?).to eq(false)
     end

@@ -49,8 +49,7 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
       gid: resource[:gid],
       object: :snapshot,
       action: 'list',
-      flags: { 'raw' => 'true' },
-      exceptions: false
+      flags: { 'raw' => 'true' }
     ).lines.map(&:chomp).include? name
   end
 end

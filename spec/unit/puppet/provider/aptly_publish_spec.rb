@@ -57,8 +57,7 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
         gid: '450',
         object: :publish,
         action: 'list',
-        flags: { 'raw' => 'true' },
-        exceptions: false
+        flags: { 'raw' => 'true' }
       ).returns ". foo\ntest-prefix test-snap\n. bar"
       expect(provider.exists?).to eq(true)
     end
@@ -68,8 +67,7 @@ describe Puppet::Type.type(:aptly_publish).provider(:cli) do
         gid: '450',
         object: :publish,
         action: 'list',
-        flags: { 'raw' => 'true' },
-        exceptions: false
+        flags: { 'raw' => 'true' }
       ).returns ''
       expect(provider.exists?).to eq(false)
     end
