@@ -6,11 +6,12 @@ class aptly::install {
 
   if $aptly::manage_user {
     user { $aptly::user:
-      ensure  => present,
-      uid     => $aptly::uid,
-      gid     => $aptly::group,
-      shell   => '/bin/bash',
-      require => Group[$aptly::group],
+      ensure     => present,
+      uid        => $aptly::uid,
+      gid        => $aptly::group,
+      shell      => '/bin/bash',
+      managehome => true
+      require    => Group[$aptly::group],
     }
 
     group { $aptly::group:

@@ -60,6 +60,11 @@ Puppet::Type.newtype(:aptly_mirror) do
     defaultto :undef
   end
 
+  newparam(:keyring) do
+    desc 'Set path to keyring. Default /etc/apt/trusted.gpg'
+    defaultto "/etc/apt/trusted.gpg"
+  end
+
   newparam(:with_sources, boolean: true, parent: Puppet::Parameter::Boolean) do
     desc 'Whether to mirror the source packages or not'
     defaultto :false
