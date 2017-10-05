@@ -15,6 +15,7 @@ class aptly::params {
   $port            = '8080'
   $bind            = '0.0.0.0'
   $config_filepath = '/etc/aptly.conf'
+  $manage_user     = true
   $user            = 'aptly'
   $uid             = 450
   $group           = 'aptly'

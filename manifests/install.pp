@@ -4,7 +4,7 @@
 #
 class aptly::install {
 
-  if ! defined(User[$aptly::user]) {
+  if $aptly::manage_user {
     user { $aptly::user:
       ensure  => present,
       uid     => $aptly::uid,
@@ -12,9 +12,7 @@ class aptly::install {
       shell   => '/bin/bash',
       require => Group[$aptly::group],
     }
-  }
 
-  if ! defined(Group[$aptly::group]) {
     group { $aptly::group:
       ensure => present,
       gid    => $aptly::gid,
