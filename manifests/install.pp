@@ -4,7 +4,7 @@
 #
 class aptly::install {
 
-  if $manage_user {
+  if $aptly::manage_user {
     user { $aptly::user:
       ensure  => present,
       uid     => $aptly::uid,
