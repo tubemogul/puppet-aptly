@@ -377,6 +377,11 @@ Path of the configuration file to be used by the aptly service.
 
 Default: `/etc/aptly.conf`
 
+##### `manage_user`
+Whethere should this module manage aptly user or not
+
+Default: `true`
+
 ##### `user`
 
 OS user which will run the service.
