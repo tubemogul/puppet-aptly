@@ -31,6 +31,7 @@ class aptly (
   $api_bind             = $aptly::params::api_bind,
   $api_nolock           = $aptly::params::api_nolock,
   $manage_xz_utils      = $aptly::params::manage_xz_utils,
+  $recurse_root_dir     = $aptly::params::recurse_root_dir,
 ) inherits aptly::params {
 
   validate_string(
@@ -52,7 +53,8 @@ class aptly (
     $install_repo,
     $enable_service,
     $enable_api,
-    $api_nolock)
+    $api_nolock,
+    $recurse_root_dir)
   validate_array($architectures)
   validate_hash($properties)
   validate_hash($s3_publish_endpoints)
