@@ -110,8 +110,7 @@ describe 'aptly', type: :class do
             with_ensure('directory').\
             with_mode('0644').\
             with_owner('aptly').\
-            with_group('aptly').\
-            with_recurse(true)
+            with_group('aptly')
         end
       end
     end
