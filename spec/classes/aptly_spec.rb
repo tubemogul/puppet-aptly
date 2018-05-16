@@ -43,7 +43,7 @@ describe 'aptly', type: :class do
             with_location('http://repo.aptly.info').\
             with_release('squeeze').\
             with_repos('main').\
-            with_key('id' => 'DF32BC15E2145B3FA151AED19E3E53F19C7DE460', 'server' => 'keys.gnupg.net').\
+            with_key('id' => '26DA9D8630302E0B86A7A2CBED75B5A4483DA07C', 'server' => 'pool.sks-keyservers.net').\
             with_include('src' => false, 'deb' => true).\
             that_notifies('Class[apt::update]')
 

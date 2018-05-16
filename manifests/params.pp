@@ -9,8 +9,8 @@ class aptly::params {
   $repo_location   = 'http://repo.aptly.info'
   $repo_release    = 'squeeze'
   $repo_repos      = 'main'
-  $repo_keyserver  = 'keys.gnupg.net'
-  $repo_key        = 'DF32BC15E2145B3FA151AED19E3E53F19C7DE460'
+  $repo_keyserver  = 'pool.sks-keyservers.net'
+  $repo_key        = '26DA9D8630302E0B86A7A2CBED75B5A4483DA07C'
   $enable_service  = true
   $port            = '8080'
   $bind            = '0.0.0.0'
