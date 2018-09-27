@@ -1,7 +1,7 @@
 {
   "rootDir": "<%= scope.lookupvar('aptly::root_dir') -%>",
   "architectures": ["<%= scope.lookupvar('aptly::architectures').join('", "') %>"],
-<% scope.lookupvar('aptly::properties').each do |k, v| -%>
+<% scope.lookupvar('aptly::properties').sort.each do |k, v| -%>
   "<%= k -%>": <%= v %>,
 <% end -%>
   "ppaDistributorID": "<%= scope.lookupvar('aptly::ppa_dist') %>",
