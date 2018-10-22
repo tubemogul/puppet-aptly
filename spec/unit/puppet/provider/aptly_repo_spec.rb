@@ -28,8 +28,9 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
         action: 'create',
         arguments: ['foo'],
         flags: {
-          'component' => 'main',
-          'distribution' => ''
+          'component'    => 'main',
+          'distribution' => '',
+          'config'       => '/etc/aptly.conf'
         }
       )
       provider.create
@@ -44,7 +45,7 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
         object: :repo,
         action: 'drop',
         arguments: ['foo'],
-        flags: { 'force' => 'true' }
+        flags: { 'force' => 'true', 'config' => '/etc/aptly.conf' }
       )
       provider.destroy
     end
@@ -57,7 +58,7 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
         gid: '450',
         object: :repo,
         action: 'list',
-        flags: { 'raw' => 'true' },
+        flags: { 'raw' => 'true', 'config' => '/etc/aptly.conf' },
         exceptions: false
       ).returns "foo\ntest-snap\nbar"
       expect(provider.exists?).to eq(true)
@@ -68,7 +69,7 @@ describe Puppet::Type.type(:aptly_repo).provider(:cli) do
         gid: '450',
         object: :repo,
         action: 'list',
-        flags: { 'raw' => 'true' },
+        flags: { 'raw' => 'true', 'config' => '/etc/aptly.conf' },
         exceptions: false
       ).returns ''
       expect(provider.exists?).to eq(false)

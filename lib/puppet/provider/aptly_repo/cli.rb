@@ -17,7 +17,8 @@ Puppet::Type.type(:aptly_repo).provide(:cli) do
       arguments: [name],
       flags: {
         'component'    => resource[:default_component],
-        'distribution' => resource[:default_distribution]
+        'distribution' => resource[:default_distribution],
+        'config'       => resource[:config_filepath]
       }
     )
   end
@@ -31,7 +32,7 @@ Puppet::Type.type(:aptly_repo).provide(:cli) do
       object: :repo,
       action: 'drop',
       arguments: [name],
-      flags: { 'force' => resource[:force] ? 'true' : 'false' }
+      flags: { 'force' => resource[:force] ? 'true' : 'false', 'config' => resource[:config_filepath] }
     )
   end
 
@@ -43,7 +44,7 @@ Puppet::Type.type(:aptly_repo).provide(:cli) do
       gid: resource[:gid],
       object: :repo,
       action: 'list',
-      flags: { 'raw' => 'true' },
+      flags: { 'raw' => 'true', 'config' => resource[:config_filepath] },
       exceptions: false
     ).lines.map(&:chomp).include? name
   end

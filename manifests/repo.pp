@@ -6,6 +6,7 @@ define aptly::repo (
   $ensure               = 'present',
   $uid                  = '450',
   $gid                  = '450',
+  $config_filepath      = '/etc/aptly.conf',
   $default_distribution = $::lsbdistcodename,
   $default_component    = 'main',
 ) {
@@ -18,6 +19,7 @@ define aptly::repo (
     ensure               => $ensure,
     uid                  => $uid,
     gid                  => $gid,
+    config_filepath      => $config_filepath,
     default_distribution => $default_distribution,
     default_component    => $default_component,
   }

@@ -30,6 +30,11 @@ Puppet::Type.newtype(:aptly_mirror) do
     defaultto '450'
   end
 
+  newparam(:config_filepath) do
+    desc 'Path of the configuration file to be used by the aptly service.'
+    defaultto '/etc/aptly.conf'
+  end
+
   newparam(:location) do
     desc 'The URL for the source Debian repository'
     validate do |value|

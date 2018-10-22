@@ -25,6 +25,11 @@ Puppet::Type.newtype(:aptly_repo) do
     defaultto '450'
   end
 
+  newparam(:config_filepath) do
+    desc 'Path of the configuration file to be used by the aptly service.'
+    defaultto '/etc/aptly.conf'
+  end
+
   newparam(:default_distribution) do
     desc 'Default distribution when publishing'
     validate do |value|
