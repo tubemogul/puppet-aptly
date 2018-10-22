@@ -4,14 +4,15 @@
 #
 define aptly::mirror (
   $location,
-  $ensure        = 'present',
-  $uid           = '450',
-  $gid           = '450',
-  $distribution  = $::lsbdistcodename,
-  $architectures = [],
-  $components    = [],
-  $with_sources  = false,
-  $with_udebs    = false,
+  $ensure          = 'present',
+  $uid             = '450',
+  $gid             = '450',
+  $config_filepath = '/etc/aptly.conf',
+  $distribution    = $::lsbdistcodename,
+  $architectures   = [],
+  $components      = [],
+  $with_sources    = false,
+  $with_udebs      = false,
 ) {
   validate_string( $distribution)
   validate_array(
@@ -25,14 +26,15 @@ define aptly::mirror (
   validate_re($location, ['\Ahttps?:\/\/', '\Aftp:\/\/', '\A\/\w+'])
 
   aptly_mirror { $name:
-    ensure        => $ensure,
-    uid           => $uid,
-    gid           => $gid,
-    location      => $location,
-    distribution  => $distribution,
-    architectures => $architectures,
-    components    => $components,
-    with_sources  => $with_sources,
-    with_udebs    => $with_udebs,
+    ensure          => $ensure,
+    uid             => $uid,
+    gid             => $gid,
+    config_filepath => $config_filepath,
+    location        => $location,
+    distribution    => $distribution,
+    architectures   => $architectures,
+    components      => $components,
+    with_sources    => $with_sources,
+    with_udebs      => $with_udebs,
   }
 }

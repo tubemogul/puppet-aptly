@@ -32,7 +32,8 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
         flags: {
           'architectures' => 'undef',
           'with-sources'  => false,
-          'with-udebs'    => false
+          'with-udebs'    => false,
+          'config'        => '/etc/aptly.conf'
         }
       )
       Puppet_X::Aptly::Cli.expects(:execute).with(
@@ -40,7 +41,8 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
         gid: '450',
         object: :mirror,
         action: 'update',
-        arguments: ['debian-main']
+        arguments: ['debian-main'],
+        flags: { 'config' => '/etc/aptly.conf' }
       )
       provider.create
     end
@@ -55,7 +57,8 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
         flags: {
           'architectures' => 'undef',
           'with-sources'  => false,
-          'with-udebs'    => false
+          'with-udebs'    => false,
+          'config'        => '/etc/aptly.conf'
         }
       )
       Puppet_X::Aptly::Cli.expects(:execute).with(
@@ -63,7 +66,8 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
         gid: '450',
         object: :mirror,
         action: 'update',
-        arguments: ['debian-main']
+        arguments: ['debian-main'],
+        flags: { 'config' => '/etc/aptly.conf' }
       ).never
       resource2 = Puppet::Type.type(:aptly_mirror).new(
         name: 'debian-main',
@@ -84,7 +88,7 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
         object: :mirror,
         action: 'drop',
         arguments: ['debian-main'],
-        flags: { 'force' => '' }
+        flags: { 'force' => '', 'config' => '/etc/aptly.conf' }
       )
       provider.destroy
     end
@@ -97,7 +101,7 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
         gid: '450',
         object: :mirror,
         action: 'list',
-        flags: { 'raw' => 'true' },
+        flags: { 'raw' => 'true', 'config' => '/etc/aptly.conf' },
         exceptions: false
       ).returns "foo\ndebian-main\nbar"
       expect(provider.exists?).to eq(true)
@@ -108,7 +112,7 @@ describe Puppet::Type.type(:aptly_mirror).provider(:cli) do
         gid: '450',
         object: :mirror,
         action: 'list',
-        flags: { 'raw' => 'true' },
+        flags: { 'raw' => 'true', 'config' => '/etc/aptly.conf' },
         exceptions: false
       ).returns ''
       expect(provider.exists?).to eq(false)

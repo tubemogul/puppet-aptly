@@ -25,6 +25,11 @@ Puppet::Type.newtype(:aptly_snapshot) do
     defaultto '450'
   end
 
+  newparam(:config_filepath) do
+    desc 'Path of the configuration file to be used by the aptly service.'
+    defaultto '/etc/aptly.conf'
+  end
+
   newparam(:source_type) do
     desc 'Type of the source for the snapshot : mirror, repo, or empty. Defaults to repository.'
     newvalues(:mirror, :repository, :empty)

@@ -6,9 +6,10 @@
 define aptly::snapshot (
   $source_type,
   $source_name,
-  $ensure = 'present',
-  $uid    = '450',
-  $gid    = '450',
+  $ensure          = 'present',
+  $uid             = '450',
+  $gid             = '450',
+  $config_filepath = '/etc/aptly.conf',
 ) {
   validate_string(
     $source_type,
@@ -16,10 +17,11 @@ define aptly::snapshot (
   )
 
   aptly_snapshot { $name:
-    ensure      => $ensure,
-    uid         => $uid,
-    gid         => $gid,
-    source_type => $source_type,
-    source_name => $source_name,
+    ensure          => $ensure,
+    uid             => $uid,
+    gid             => $gid,
+    config_filepath => $config_filepath,
+    source_type     => $source_type,
+    source_name     => $source_name,
   }
 }
