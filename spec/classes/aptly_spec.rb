@@ -1,19 +1,13 @@
 require 'spec_helper'
 
 describe 'aptly', type: :class do
-  [%w[Debian ubuntu trusty], %w[Debian debian jessie]].each do |osfamily, lsbdistid, lsbdistcodename|
+  on_supported_os.each do |os, os_facts|
     let(:facts) do
-      {
-        osfamily: osfamily,
-        lsbdistid: lsbdistid,
-        lsbdistcodename: lsbdistcodename,
-        architecture: 'amd64',
-        puppetversion: Puppet.version
-      }
+      os_facts
     end
 
     context 'default installation with installation repo on supported os' do
-      describe "aptly class without any parameters on #{osfamily}" do
+      describe "aptly class without any parameters on #{os}" do
         let(:params) { {} }
 
         it { is_expected.to compile.with_all_deps }
@@ -28,7 +22,7 @@ describe 'aptly', type: :class do
     end
 
     context 'default params on supported os - testing child classes' do
-      describe "aptly class with all default parameters on #{osfamily}" do
+      describe "aptly class with all default parameters on #{os}" do
         let(:params) { {} }
 
         ###
@@ -117,7 +111,7 @@ describe 'aptly', type: :class do
     end
 
     context 'different params enforced on supported os' do
-      describe "aptly class without repo and custom user on #{osfamily}" do
+      describe "aptly class without repo and custom user on #{os}" do
         let(:params) do
           {
             version: 'installed',
@@ -185,7 +179,7 @@ describe 'aptly', type: :class do
         end
       end
 
-      context "aptly class with a version and the repo installation parameters on #{osfamily}" do
+      context "aptly class with a version and the repo installation parameters on #{os}" do
         let(:params) do
           {
             version: '0.0.1',
