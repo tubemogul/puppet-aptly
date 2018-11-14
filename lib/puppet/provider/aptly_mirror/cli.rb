@@ -17,7 +17,8 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
       flags: {
         'architectures' => [resource[:architectures]].join(','),
         'with-sources'  => resource[:with_sources],
-        'with-udebs'    => resource[:with_udebs]
+        'with-udebs'    => resource[:with_udebs],
+        'config'        => resource[:config_filepath],
       }
     )
 
@@ -28,7 +29,8 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
       gid: resource[:gid],
       object: :mirror,
       action: 'update',
-      arguments: [name]
+      arguments: [name],
+      flags: { 'config' => resource[:config_filepath] }
     )
   end
 
@@ -43,7 +45,7 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
       object: :mirror,
       action: 'drop',
       arguments: [name],
-      flags: { optsforce => '' }
+      flags: { optsforce => '', 'config' => resource[:config_filepath] }
     )
   end
 
@@ -55,7 +57,7 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
       gid: resource[:gid],
       object: :mirror,
       action: 'list',
-      flags: { 'raw' => 'true' },
+      flags: { 'raw' => 'true', 'config' => resource[:config_filepath] },
       exceptions: false
     ).lines.map(&:chomp).include? name
   end

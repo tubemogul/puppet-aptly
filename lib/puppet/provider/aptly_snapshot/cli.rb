@@ -25,7 +25,8 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
       gid: resource[:gid],
       object: :snapshot,
       action: 'create',
-      arguments: [name, from, resource[:source_name]]
+      arguments: [name, from, resource[:source_name]],
+      flags: { 'config' => resource[:config_filepath] }
     )
   end
 
@@ -37,7 +38,8 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
       gid: resource[:gid],
       object: :snapshot,
       action: 'drop',
-      arguments: [name]
+      arguments: [name],
+      flags: { 'config' => resource[:config_filepath] }
     )
   end
 
@@ -49,7 +51,7 @@ Puppet::Type.type(:aptly_snapshot).provide(:cli) do
       gid: resource[:gid],
       object: :snapshot,
       action: 'list',
-      flags: { 'raw' => 'true' },
+      flags: { 'raw' => 'true', 'config' => resource[:config_filepath] },
       exceptions: false
     ).lines.map(&:chomp).include? name
   end
