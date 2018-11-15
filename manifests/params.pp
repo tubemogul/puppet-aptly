@@ -20,10 +20,6 @@ class aptly::params {
   $uid             = 450
   $group           = 'aptly'
   $gid             = 450
-  $root_dir        = '/var/aptly'
-  $architectures   = [$::architecture]
-  $ppa_dist        = 'ubuntu'
-  $ppa_codename    = ''
   $properties      = {
     'downloadConcurrency'         => 4,
     'downloadSpeedLimit'          => 0,
@@ -34,9 +30,19 @@ class aptly::params {
     'gpgDisableSign'              => false,
     'gpgDisableVerify'            => false,
     'downloadSourcePackages'      => false,
+    'rootDir'                     => '/var/aptly',
+    'architectures'               => [$::architecture],
+    'ppaDistributorID'            => 'ubuntu',
+    'ppaCodename'                 => '',
+    'S3PublishEndpoints'          => {},
+    'SwiftPublishEndpoints'       => {},
     }
-  $s3_publish_endpoints = {}
-  $swift_publish_endpoints = {}
+  $root_dir                 = $properties['rootDir']
+  $architectures            = $properties['architectures']
+  $ppa_dist                 = $properties['ppaDistributorID']
+  $ppa_codename             = $properties['ppaCodename']
+  $s3_publish_endpoints     = $properties['S3PublishEndpoints']
+  $swift_publish_endpoints  = $properties['SwiftPublishEndpoints']
   $enable_api           = false
   $api_port             = 8081
   $api_bind             = '0.0.0.0'

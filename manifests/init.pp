@@ -70,5 +70,12 @@ class aptly (
     'API Bind IP address is not correct'
   )
 
+  deprecation('root_dir', 'Please configure this via properties => rootDir')
+  deprecation('architectures', 'Please configure this via properties => architectures')
+  deprecation('ppa_dist', 'Please configure this via properties => ppaDistributorID')
+  deprecation('ppa_codename', 'Please configure this via properties => ppaCodename')
+  deprecation('s3_publish_endpoints', 'Please configure this via properties => S3PublishEndpoints')
+  deprecation('swift_publish_endpoints', 'Please configure this via properties => SwiftPublishEndpoints')
+
   class { '::aptly::install': } -> class { '::aptly::config':  } ~> class { '::aptly::service': } -> Class['::aptly']
 }

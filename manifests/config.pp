@@ -11,12 +11,24 @@ class aptly::config {
     group => $aptly::group,
   }
 
-  file { $aptly::config_filepath:
-    ensure  => file,
-    content => template('aptly/aptly.conf.erb'),
+  # This can be removed once the parameters in here are removed
+  $backwards_compatibility_config = {
+    'rootDir'               => $aptly::root_dir,
+    'architectures'         => $aptly::architectures,
+    'ppaDistributorID'      => $aptly::ppa_dist,
+    'ppaCodename'           => $aptly::ppa_codename,
+    'S3PublishEndpoints'    => $aptly::s3_publish_endpoints,
+    'SwiftPublishEndpoints' => $aptly::swift_publish_endpoints,
   }
 
-  file { $aptly::root_dir:
+  $config = deep_merge($aptly::params::properties, $aptly::properties, $backwards_compatibility_config)
+
+  file { $aptly::config_filepath:
+    ensure  => file,
+    content => to_json_pretty($config),
+  }
+
+  file { $config['rootDir']:
     ensure  => directory,
     mode    => '0644',
     recurse => true,
