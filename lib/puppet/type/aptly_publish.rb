@@ -36,6 +36,10 @@ Puppet::Type.newtype(:aptly_publish) do
     defaultto :snapshot
   end
 
+  newparam(:endpoint) do
+    desc 'The publication endpoint'
+  end
+
   newparam(:distribution) do
     desc 'Distribution name to publish'
     validate do |value|
