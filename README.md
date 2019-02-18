@@ -45,7 +45,7 @@ What is this module capable of doing?
  * Enabling/starting or disabling the API
  * Managing the init.d service file
  * Managing apt mirrors, repositories, snapshots and publications
- 
+
 The aptly service will listen on port you configure (example: 8080) on every interfaces (configurable)
 using the `aptly serve -listen=":8080"` command.
 
@@ -659,6 +659,12 @@ Default: `undef`
 Distribution name to publish.
 
 Default: `"${::lsbdistcodename}-${name}"`
+
+##### `endpoint`
+
+The endpoint to publish to.
+
+Default: `undef`
 
 ## Limitations
 

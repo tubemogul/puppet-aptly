@@ -9,6 +9,7 @@ define aptly::publish (
   $gid             = '450',
   $config_filepath = '/etc/aptly.conf',
   $distribution    = "${::lsbdistcodename}-${name}",
+  $endpoint        = undef,
 ) {
   validate_string(
     $source_type,
@@ -22,6 +23,7 @@ define aptly::publish (
     config_filepath => $config_filepath,
     source_type     => $source_type,
     distribution    => $distribution,
+    endpoint        => $endpoint,
     notify          => Class['aptly::service'],
   }
 }
