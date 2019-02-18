@@ -20,6 +20,5 @@ define aptly::publish (
     gid          => $gid,
     source_type  => $source_type,
     distribution => $distribution,
-    notify       => Class['aptly::service'],
   }
 }
