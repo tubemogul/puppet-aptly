@@ -69,4 +69,14 @@ Puppet::Type.newtype(:aptly_mirror) do
     desc 'Whether to download .udeb packages or not'
     defaultto :false
   end
+
+  newparam(:filter) do
+    desc 'package query that is applied to packages in the mirror'
+    defaultto :undef
+  end
+
+  newparam(:filter_with_deps, boolean: false, parent: Puppet::Parameter::Boolean) do
+    desc 'when filtering, include dependencies of matching packages as well'
+    defaultto :false
+  end
 end

@@ -15,9 +15,11 @@ Puppet::Type.type(:aptly_mirror).provide(:cli) do
       action: 'create',
       arguments: [name, resource[:location], resource[:distribution], [resource[:components]].join(' ')],
       flags: {
-        'architectures' => [resource[:architectures]].join(','),
-        'with-sources'  => resource[:with_sources],
-        'with-udebs'    => resource[:with_udebs]
+        'architectures'     => [resource[:architectures]].join(','),
+        'with-sources'      => resource[:with_sources],
+        'with-udebs'        => resource[:with_udebs],
+        'filter'            => resource[:filter],
+        'filter-with-deps'  => resource[:filter_with_deps],
       }
     )
 
