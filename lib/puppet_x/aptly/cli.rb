@@ -38,14 +38,14 @@ module Puppet_X
 
         cmd = 'aptly '
         cmd << flags.map do |k, v|
-          unless v == 'undef'
+          unless v.equal?(:undef) || v.nil? || v == 'undef'
             v.to_s == '' ? "-#{k}" : "-#{k}=#{v}".strip
           end
         end.join(' ')
 
         raise Puppet::Error, "Unknown aptly object: #{object}" unless [:mirror, :repo, :snapshot, :publish, :package, :db].include? object
         cmd << " #{object} #{action} "
-        cmd << arguments.delete_if { |val| val == 'undef' }.join(' ')
+        cmd << arguments.delete_if { |val| val.equal?(:undef) || val.nil? || val == 'undef' }.join(' ')
 
         begin
           Puppet.debug("Executing: #{cmd}")
